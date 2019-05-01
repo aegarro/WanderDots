@@ -66,6 +66,7 @@ public class DotListAdapter extends RecyclerView.Adapter<DotListAdapter.ViewHold
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(this.ctx, DotDetailActivity.class);
+            intent.putExtra("title", title.getText());
             this.ctx.startActivity(intent);
         }
     }
