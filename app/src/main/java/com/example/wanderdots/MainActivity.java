@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         main_list.setLayoutManager(new LinearLayoutManager(this));
         main_list.setAdapter(dotListAdapter);
 
-
         dotList.add(new Dot(32, "Avila Caves", "Cool Caves", 33.1, 127.6, 36));
         dotList.add(new Dot(32, "Bishops Peak", "Cool Caves", 3.2, 127.6, 36));
         dotList.add(new Dot(32, "Terrace Hill", "Cool Caves", 66.4, 127.6, 36));
@@ -43,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         dotList.add(new Dot(32, "Cuesta Ridge", "Cool Caves", 0.5, 127.6, 36));
         dotListAdapter.notifyDataSetChanged();
 
-
         newDotBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
         /* TODO: this needs to be wrapped in an if to see if the user is
             is already logged in */
