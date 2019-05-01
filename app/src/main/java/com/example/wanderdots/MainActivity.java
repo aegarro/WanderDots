@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         newDotBtn = (FloatingActionButton) findViewById(R.id.new_dot_btn);
         main_list = (RecyclerView) findViewById(R.id.main_recycler_view);
         dotList = new ArrayList<Dot>();
-        dotListAdapter = new DotListAdapter(dotList, this);
+        dotListAdapter = new DotListAdapter(dotList, MainActivity.this);
 
         main_list.setHasFixedSize(true);
         main_list.setLayoutManager(new LinearLayoutManager(this));
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         /* TODO: this needs to be wrapped in an if to see if the user is
             is already logged in */
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        /*Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);*/
     }
 }

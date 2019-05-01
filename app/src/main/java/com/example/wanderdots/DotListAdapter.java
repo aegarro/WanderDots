@@ -18,6 +18,7 @@ public class DotListAdapter extends RecyclerView.Adapter<DotListAdapter.ViewHold
 
     public DotListAdapter(ArrayList<Dot> dotList, Context ctx){
         this.dotList = dotList;
+        this.ctx = ctx;
     }
 
     @NonNull
