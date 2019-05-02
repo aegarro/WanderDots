@@ -20,6 +20,12 @@ public class Dot {
 
     private String[] requiredFields = {"_id", "name", "description", "location", "categories", "adventures", "creator", "pictureIds"} ;
 
+    public Dot(String name, double latitude, double longitude){
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public Dot(JSONObject dot){
         if(!isValidDot(dot))
             throw new RuntimeException("Dot Validation Error: Given dot missing " + getMissingField(dot)) ;

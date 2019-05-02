@@ -6,12 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/the_map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:layout_constraintBottom_toTopOf="@+id/guideline55"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".MapsActivity" />
+
+
     <android.support.constraint.Guideline
-        android:id="@+id/guideline45"
+        android:id="@+id/guideline55"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.45" />
+        app:layout_constraintGuide_percent="0.55" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/main_recycler_view"
@@ -20,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline45" >
+        app:layout_constraintTop_toTopOf="@+id/guideline55" >
 
     </android.support.v7.widget.RecyclerView>
 
@@ -39,17 +52,16 @@
         android:id="@+id/toggleButton3"
         android:layout_width="150dp"
         android:layout_height="47dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="130dp"
+        android:layout_marginEnd="131dp"
         android:layout_marginBottom="8dp"
         android:checked="true"
         android:text="ToggleButton"
         android:textOff="@string/FindViewAlternateState"
         android:textOn="@string/FindViewMainState"
-        app:layout_constraintBottom_toBottomOf="@+id/main_recycler_view"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/guideline55"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.35000002" />
+        app:layout_constraintTop_toBottomOf="@+id/the_map" />
 </android.support.constraint.ConstraintLayout>
