@@ -34,4 +34,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton3"
+        android:layout_width="150dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:checked="true"
+        android:text="ToggleButton"
+        android:textOff="@string/FindViewAlternateState"
+        android:textOn="@string/FindViewMainState"
+        app:layout_constraintBottom_toBottomOf="@+id/main_recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.35000002" />
 </android.support.constraint.ConstraintLayout>

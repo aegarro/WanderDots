@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import WanderDots.Dot;
+
 public class DotListAdapter extends RecyclerView.Adapter<DotListAdapter.ViewHolder> {
 
     public ArrayList<Dot> dotList;
@@ -25,13 +27,12 @@ public class DotListAdapter extends RecyclerView.Adapter<DotListAdapter.ViewHold
     @Override
     public DotListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dot_list_item, viewGroup, false);
-        this.ctx = ctx;
         return new ViewHolder(view, ctx, dotList);
     }
 
     @Override
     public void onBindViewHolder(@NonNull DotListAdapter.ViewHolder viewHolder, int i) {
-        viewHolder.title.setText(dotList.get(i).getTitle());
+        viewHolder.title.setText(dotList.get(i).getName());
         viewHolder.distance.setText(new Double(dotList.get(i).getLatitude()).toString());
         viewHolder.rating.setText("5 Stars");
     }
@@ -48,7 +49,7 @@ public class DotListAdapter extends RecyclerView.Adapter<DotListAdapter.ViewHold
         public TextView title;
         public TextView distance;
         public TextView rating;
-        ArrayList<Dot> dotList = new ArrayList<Dot>();
+        ArrayList<Dot> dotList ;
         Context ctx;
 
         public ViewHolder(@NonNull View itemView, Context ctx, ArrayList<Dot> dots){
@@ -58,9 +59,9 @@ public class DotListAdapter extends RecyclerView.Adapter<DotListAdapter.ViewHold
             this.dotList = dots;
             itemView.setOnClickListener(this);
 
-            title = (TextView) mView.findViewById(R.id.dot_item_title);
-            distance = (TextView) mView.findViewById(R.id.dot_item_dist);
-            rating = (TextView) mView.findViewById(R.id.dot_item_rating);
+            title = mView.findViewById(R.id.dot_item_title);
+            distance = mView.findViewById(R.id.dot_item_dist);
+            rating = mView.findViewById(R.id.dot_item_rating);
         }
 
         @Override
