@@ -2,12 +2,20 @@ package com.example.wanderdots;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
@@ -15,8 +23,13 @@ import WanderDots.Dot;
 
 public class DotListAdapter extends RecyclerView.Adapter<DotListAdapter.ViewHolder> {
 
+    private static final String TAG = "DotListAdapter";
+    private static float METERS_TO_MILES = 0.000621371f;
+
     public ArrayList<Dot> dotList;
     Context ctx;
+    Location currentPosition;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
 
     public DotListAdapter(ArrayList<Dot> dotList, Context ctx){
         this.dotList = dotList;
@@ -33,7 +46,11 @@ public class DotListAdapter extends RecyclerView.Adapter<DotListAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull DotListAdapter.ViewHolder viewHolder, int i) {
         viewHolder.title.setText(dotList.get(i).getName());
-        viewHolder.distance.setText(new Double(dotList.get(i).getLatitude()).toString());
+        if(currentPosition == null){
+            viewHolder.distance.setText("0 mi");
+        }else{
+            viewHolder.distance.setText(calculateDistance(dotList.get(i), currentPosition));
+        }
         viewHolder.rating.setText("5 Stars");
     }
 
@@ -49,7 +66,7 @@ public class DotListAdapter extends RecyclerView.Adapter<DotListAdapter.ViewHold
         public TextView title;
         public TextView distance;
         public TextView rating;
-        ArrayList<Dot> dotList ;
+        ArrayList<Dot> dotList;
         Context ctx;
 
         public ViewHolder(@NonNull View itemView, Context ctx, ArrayList<Dot> dots){
@@ -62,6 +79,7 @@ public class DotListAdapter extends RecyclerView.Adapter<DotListAdapter.ViewHold
             title = mView.findViewById(R.id.dot_item_title);
             distance = mView.findViewById(R.id.dot_item_dist);
             rating = mView.findViewById(R.id.dot_item_rating);
+
         }
 
         @Override
@@ -70,5 +88,18 @@ public class DotListAdapter extends RecyclerView.Adapter<DotListAdapter.ViewHold
             intent.putExtra("title", title.getText());
             this.ctx.startActivity(intent);
         }
+    }
+
+    public void setLocation(Location loc){
+        currentPosition = loc;
+    }
+
+    /* Calculates distance from dot to devices current location */
+    private String calculateDistance(Dot dot, Location loc){
+        float result[] = new float[1];
+        Location.distanceBetween(dot.getLatitude(), dot.getLongitude(), loc.getLatitude(), loc.getLongitude(), result);
+        result[0] = result[0] * METERS_TO_MILES; // Convert meters to miles
+        String dis = String.format("%.1f", result[0]); // Format String to one decimal
+        return dis + " mi";
     }
 }

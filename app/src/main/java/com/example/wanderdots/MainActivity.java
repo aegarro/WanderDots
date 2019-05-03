@@ -191,6 +191,8 @@ public class MainActivity extends AppCompatActivity implements Response.ErrorLis
                         if (task.isSuccessful()){
                             Log.d(TAG, "onComplete: found location");
                             Location currentLocation = (Location) task.getResult();
+                            dotListAdapter.setLocation(currentLocation);
+                            dotListAdapter.notifyDataSetChanged();
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
                         } else{
                             Log.d(TAG, "onComplete: current location is null");
