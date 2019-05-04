@@ -2,4 +2,5 @@
     <string name="app_name">WanderDots</string>
     <string name="FindViewMainState">Dots</string>
     <string name="FindViewAlternateState">Adventures</string>
+    <string name="title_activity_find_view">FindView</string>
 </resources>
