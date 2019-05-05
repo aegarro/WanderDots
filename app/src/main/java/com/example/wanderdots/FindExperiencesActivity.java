@@ -15,6 +15,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -36,7 +38,7 @@ import WanderDots.Server.Get.GetAdventures;
 import WanderDots.Server.Get.GetDots;
 
 public class FindExperiencesActivity extends AppCompatActivity implements OnMapReadyCallback,
-        View.OnClickListener, Observer{
+        View.OnClickListener, Observer, CompoundButton.OnCheckedChangeListener {
 
     private static final String TAG = "MainActivity";
     private static final float DEFAULT_ZOOM = 11f;
@@ -92,6 +94,9 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         getAdventures = new GetAdventures(this.getApplicationContext(), this) ;
         getDots.loadDots();
         getAdventures.loadAdventures();
+
+        ToggleButton toggle = (ToggleButton) findViewById(R.id.listToggleButton) ;
+        toggle.setOnCheckedChangeListener(this)  ;
     }
 
     private void setAdapterOnFocus(RecyclerView.Adapter<DotListAdapter.ViewHolder> newAdapter){
@@ -114,6 +119,16 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
             updateList(this.adventureList, getAdventures.getAdventures()) ;
             this.adventureListAdapter.notifyDataSetChanged();
             this.addDotsToMap();
+        }
+    }
+
+
+
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+            setAdapterOnFocus(dotListAdapter);
+        } else {
+            setAdapterOnFocus(adventureListAdapter);
         }
     }
 
