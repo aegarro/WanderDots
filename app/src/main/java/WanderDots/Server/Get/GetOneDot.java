@@ -39,11 +39,11 @@ public class GetOneDot implements ErrorListener, Listener<String> {
     }
 
     /* Sends request for dot with given ID to server
-     * @param {String} dotID - The id of the dot to get
+     * @param {String} dotID - The id of the dot to Get
      * @return VOID
      */
     public void loadDot(String dotID){
-        String url ="http://10.0.2.2:5000/api/get/dots/" + dotID ;
+        String url ="http://10.0.2.2:5000/api/Get/dots/" + dotID ;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, this, this);
         queue.addToRequestQueue(stringRequest);
     }

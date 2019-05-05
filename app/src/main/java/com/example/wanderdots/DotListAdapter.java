@@ -20,18 +20,19 @@ import com.google.android.gms.tasks.Task;
 import java.util.ArrayList;
 
 import WanderDots.Dot;
+import WanderDots.Experience;
 
-public class DotListAdapter extends RecyclerView.Adapter<DotListAdapter.ViewHolder> {
+public class DotListAdapter <T extends Experience > extends RecyclerView.Adapter<DotListAdapter.ViewHolder> {
 
     private static final String TAG = "DotListAdapter";
     private static float METERS_TO_MILES = 0.000621371f;
 
-    public ArrayList<Dot> dotList;
+    public ArrayList<T> dotList;
     Context ctx;
     Location currentPosition;
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
-    public DotListAdapter(ArrayList<Dot> dotList, Context ctx){
+    public DotListAdapter(ArrayList<T> dotList, Context ctx){
         this.dotList = dotList;
         this.ctx = ctx;
     }
@@ -66,10 +67,10 @@ public class DotListAdapter extends RecyclerView.Adapter<DotListAdapter.ViewHold
         public TextView title;
         public TextView distance;
         public TextView rating;
-        ArrayList<Dot> dotList;
+        ArrayList<T> dotList;
         Context ctx;
 
-        public ViewHolder(@NonNull View itemView, Context ctx, ArrayList<Dot> dots){
+        public ViewHolder(@NonNull View itemView, Context ctx, ArrayList<T> dots){
             super(itemView);
             mView = itemView;
             this.ctx = ctx;
@@ -95,9 +96,9 @@ public class DotListAdapter extends RecyclerView.Adapter<DotListAdapter.ViewHold
     }
 
     /* Calculates distance from dot to devices current location */
-    private String calculateDistance(Dot dot, Location loc){
+    private String calculateDistance(T object, Location loc){
         float result[] = new float[1];
-        Location.distanceBetween(dot.getLatitude(), dot.getLongitude(), loc.getLatitude(), loc.getLongitude(), result);
+        Location.distanceBetween(object.getLatitude(), object.getLongitude(), loc.getLatitude(), loc.getLongitude(), result);
         result[0] = result[0] * METERS_TO_MILES; // Convert meters to miles
         String dis = String.format("%.1f", result[0]); // Format String to one decimal
         return dis + " mi";

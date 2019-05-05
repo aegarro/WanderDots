@@ -16,7 +16,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import com.android.volley.Response;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,10 +29,14 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
+import WanderDots.Adventure;
 import WanderDots.Dot;
+import WanderDots.Observer ;
+import WanderDots.Server.Get.GetAdventures;
 import WanderDots.Server.Get.GetDots;
 
-public class FindExperiencesActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, Response.Listener<ArrayList<Dot>> {
+public class FindExperiencesActivity extends AppCompatActivity implements OnMapReadyCallback,
+        View.OnClickListener, Observer{
 
     private static final String TAG = "MainActivity";
     private static final float DEFAULT_ZOOM = 11f;
@@ -42,18 +45,21 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
 
-    private FloatingActionButton newDotBtn;
-    private RecyclerView main_list;
+    private FloatingActionButton newDotButton;
+    private RecyclerView mainList;
     private GoogleMap mMap;
 
     private ArrayList<Dot> dotList ;
-    private DotListAdapter dotListAdapter;
+    private DotListAdapter<Dot> dotListAdapter;
 
-    /* Whether or not user has pemitted us to access the devices location */
-    private Boolean mLocationPermissionGranted = false;
+    private ArrayList<Adventure> adventureList ;
+    private DotListAdapter<Adventure> adventureListAdapter ;
+
+    private Boolean mLocationPermissionGranted = false ; // Whether user has permitted us to access the devices location
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
     private GetDots getDots ;
+    private GetAdventures getAdventures ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,38 +67,62 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         setContentView(R.layout.find_view);
 
         /* Connect GUI elements with code here */
-        newDotBtn = (FloatingActionButton) findViewById(R.id.new_dot_btn);
-        main_list = (RecyclerView) findViewById(R.id.main_recycler_view);
+        newDotButton = (FloatingActionButton) findViewById(R.id.new_dot_btn);
+        mainList = (RecyclerView) findViewById(R.id.main_recycler_view);
 
         getLocationPermission();
 
-        this.dotList = new ArrayList<Dot>() ;
+        //DOT LIST ADAPTER
+        this.dotList = new ArrayList<>() ;
         dotListAdapter = new DotListAdapter(this.dotList, this);
         dotListAdapter.notifyDataSetChanged();
 
-        main_list.setHasFixedSize(true);
-        main_list.setLayoutManager(new LinearLayoutManager(this));
-        main_list.setAdapter(dotListAdapter);
-        dotListAdapter.notifyDataSetChanged();
+        //ADVENTURE LIST ADAPTER
+        this.adventureList = new ArrayList<>() ;
+        adventureListAdapter = new DotListAdapter(this.adventureList, this) ;
+        adventureListAdapter.notifyDataSetChanged();
 
-        newDotBtn.setOnClickListener(this) ;
+        mainList.setHasFixedSize(true);
+        mainList.setLayoutManager(new LinearLayoutManager(this));
+        setAdapterOnFocus(dotListAdapter);
+
+        newDotButton.setOnClickListener(this) ;
+
         getDots = new GetDots(this.getApplicationContext(), this) ;
+        getAdventures = new GetAdventures(this.getApplicationContext(), this) ;
         getDots.loadDots();
+        getAdventures.loadAdventures();
     }
 
-    public void onResponse(ArrayList<Dot> dots){
-        updateDots(dots) ;
-        this.dotListAdapter.notifyDataSetChanged();
-        this.addDotsToMap();
-        System.out.println(dotList.size()) ;
+    private void setAdapterOnFocus(RecyclerView.Adapter<DotListAdapter.ViewHolder> newAdapter){
+       mainList.setAdapter(newAdapter);
+       newAdapter.notifyDataSetChanged();
     }
 
-    //Replaces dots in current list with new dots
-    private void updateDots(ArrayList<Dot> newDots){
-        for(Dot dot : this.dotList)
-            this.dotList.remove(dot) ;
-        for(Dot dot : newDots)
-            this.dotList.add(dot) ;
+    public void dataHasChanged(){
+        ArrayList<Dot> dots = getDots.getDots() ;
+        ArrayList<Adventure> adventures = getAdventures.getAdventures() ;
+
+        if(dots != null){
+            updateList(this.dotList, getDots.getDots()) ;
+            this.dotListAdapter.notifyDataSetChanged();
+            this.addDotsToMap();
+            System.out.println(this.dotList.size() + "number of dots in list") ;
+        }
+
+        if(adventures != null){
+            updateList(this.adventureList, getAdventures.getAdventures()) ;
+            this.adventureListAdapter.notifyDataSetChanged();
+            this.addDotsToMap();
+        }
+    }
+
+    //Replaces elements in oldList with those in newList, keeps reference to old list
+    private <T> void updateList(ArrayList<T> oldList, ArrayList<T> newList){
+        for(T thing : oldList)
+            oldList.remove(thing) ;
+        for(T newThing: newList)
+            oldList.add(newThing) ;
     }
 
     @Override
