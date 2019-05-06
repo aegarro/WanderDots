@@ -165,8 +165,8 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.d(TAG, "onMapRead: Map is ready");
-        mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+        this.mMap = googleMap;
+        this.mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
 
         if (mLocationPermissionGranted){
             getDeviceLocation();
@@ -175,13 +175,15 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
-            mMap.setMyLocationEnabled(true);
+            this.mMap.setMyLocationEnabled(true);
         }
         addDotsToMap();
     }
 
     private void addDotsToMap(){
-        for(Dot dot : dotList){
+        if(this.mMap == null)
+            return ; //in case maps loads after dot list
+        for(Dot dot : dotList){ //TODO: generalize main list so dots are added based on selection
             MarkerOptions options = new MarkerOptions()
                     .title(dot.getName())
                     .position(new LatLng(dot.getLatitude(), dot.getLongitude()));
