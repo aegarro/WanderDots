@@ -3,25 +3,26 @@ package WanderDots;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public abstract class Experience {
 
-    protected String id ;
-    protected String name ;
-    protected String creator ;
-    protected String description ;
-    protected String[] categories ;
-    protected String[] pictureIds ;
-    protected Double latitude ;
-    protected Double longitude ;
+    public String id ;
+    public String name ;
+    public String creator ;
+    public String description ;
+    public ArrayList<String> categories;
+    public ArrayList<String> pictureIds ;
+    public Double latitude ;
+    public Double longitude ;
     private String[] requiredFields = {"_id", "name", "description", "location", "categories", "creator", "pictureIds"} ;
 
-
-    public Experience(String name, double latitude, double longitude){
-        this.name = name ;
-        this.latitude = latitude ;
-        this.longitude = longitude ;
+    public Experience(){
+        this.categories = new ArrayList<String>() ;
+        this.pictureIds = new ArrayList<String>() ;
     }
 
     public Experience(JSONObject experience){
@@ -30,10 +31,10 @@ public abstract class Experience {
 
         try {
             JSONArray categories = experience.getJSONArray("categories") ;
-            this.categories = initializeStringArray(categories);
+            this.categories = createStringList(categories) ;
 
             JSONArray pictureIds = experience.getJSONArray("pictureIds") ;
-            this.pictureIds = initializeStringArray(pictureIds);
+            this.pictureIds = createStringList(pictureIds);
 
             JSONObject location = experience.getJSONObject("location") ;
             initializeLocation(location) ;
@@ -47,57 +48,98 @@ public abstract class Experience {
         }
     }
 
-    protected String[] initializeStringArray(JSONArray categories)  throws org.json.JSONException {
-        String[] categoriesList = new String[categories.length()] ;
+    public ArrayList<String> createStringList(JSONArray categories)  throws org.json.JSONException {
+        ArrayList<String> categoriesList = new ArrayList<String>() ;
         for(int i=0; i<categories.length(); i++)
-            categoriesList[i] = categories.getString(i) ;
+            categoriesList.add(categories.getString(i)) ;
         return categoriesList ;
     }
 
-    protected void initializeLocation(JSONObject location) throws org.json.JSONException {
+    public void initializeLocation(JSONObject location) throws org.json.JSONException {
         this.longitude = Double.parseDouble(location.getString("longitude")) ;
         this.latitude = Double.parseDouble(location.getString("latitude")) ;
     }
 
-    protected boolean containsRequiredFields(JSONObject object, String[] requiredFields){
+    public boolean containsRequiredFields(JSONObject object, String[] requiredFields){
         boolean result = true ;
         for(String requiredField : requiredFields)
             result = result && object.has(requiredField) ;
         return result ;
     }
 
-    protected String getMissingField(JSONObject object, String[] requiredFields){
+    public String getMissingField(JSONObject object, String[] requiredFields){
         for(String requiredField : requiredFields)
             if(!object.has(requiredField))
                 return requiredField ;
         return "All fields valid" ;
     }
 
-    public String getId() {
-        return id ;
+    public String toString() {
+        try {
+            JSONObject data = new JSONObject();
+            data.put("name", name) ;
+            data.put("description", description) ;
+            data.put("creator", creator) ;
+            data.put("categories", (Object) categories) ;
+            data.put("pictureIds", (Object) pictureIds) ;
+
+            JSONObject location = new JSONObject() ;
+            location.put("latitude", latitude) ;
+            location.put("longitude", longitude) ;
+            data.put("location", (Object) location) ;
+
+            return data.toString();
+        }catch(JSONException e) {
+           e.printStackTrace();
+        }
+        return "Experience Error: Could not convert to String" ;
     }
 
-    public String getCreator(){
-        return this.creator ;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
-        return this.name ;
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public double getLatitude() {
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Double getLatitude() {
         return latitude;
     }
 
-    public double getLongitude() {
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
         return longitude;
     }
 
-    public String[] getPhotosIds() {
-        return pictureIds;
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 }

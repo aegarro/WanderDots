@@ -5,26 +5,20 @@ import android.content.Intent;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
-import WanderDots.Dot;
 import WanderDots.Experience;
 
-public class DotListAdapter <T extends Experience > extends RecyclerView.Adapter<DotListAdapter.ViewHolder> {
+public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Adapter<ExperienceListAdapter.ViewHolder> {
 
-    private static final String TAG = "DotListAdapter";
+    private static final String TAG = "ExperienceListAdapter";
     private static float METERS_TO_MILES = 0.000621371f;
 
     public ArrayList<T> dotList;
@@ -32,20 +26,20 @@ public class DotListAdapter <T extends Experience > extends RecyclerView.Adapter
     Location currentPosition;
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
-    public DotListAdapter(ArrayList<T> dotList, Context ctx){
+    public ExperienceListAdapter(ArrayList<T> dotList, Context ctx){
         this.dotList = dotList;
         this.ctx = ctx;
     }
 
     @NonNull
     @Override
-    public DotListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ExperienceListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dot_list_item, viewGroup, false);
         return new ViewHolder(view, ctx, dotList);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DotListAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ExperienceListAdapter.ViewHolder viewHolder, int i) {
         viewHolder.title.setText(dotList.get(i).getName());
         if(currentPosition == null){
             viewHolder.distance.setText("0 mi");

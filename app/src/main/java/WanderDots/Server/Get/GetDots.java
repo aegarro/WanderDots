@@ -47,7 +47,8 @@ public class GetDots implements ErrorListener, Listener<String> {
 
     public void updateDots(ArrayList<Dot> newDots){
         this.dots = newDots ;
-        this.observer.dataHasChanged();
+        this.observer.dataHasChanged("dots");
+        System.out.println("Added " + newDots.size() + " new dots!") ;
     }
 
     public void onResponse(String response) {

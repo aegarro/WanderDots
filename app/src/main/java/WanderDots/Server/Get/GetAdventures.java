@@ -46,7 +46,7 @@ public class GetAdventures implements ErrorListener, Listener<String> {
 
     private void updateAdventures(ArrayList<Adventure> newAdventures){
         this.adventures = newAdventures ;
-        observer.dataHasChanged();
+        observer.dataHasChanged("adventures");
     }
 
     public void onResponse(String response) {

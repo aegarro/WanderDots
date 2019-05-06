@@ -48,14 +48,14 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
 
     private FloatingActionButton newDotButton;
-    private RecyclerView mainList;
+    private RecyclerView listContainer;
     private GoogleMap mMap;
 
     private ArrayList<Dot> dotList ;
-    private DotListAdapter<Dot> dotListAdapter;
-
+    private ExperienceListAdapter<Dot> dotListAdapter;
     private ArrayList<Adventure> adventureList ;
-    private DotListAdapter<Adventure> adventureListAdapter ;
+    private ExperienceListAdapter<Adventure> adventureListAdapter ;
+    private ExperienceListAdapter mainListAdapter ;
 
     private Boolean mLocationPermissionGranted = false ; // Whether user has permitted us to access the devices location
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -67,79 +67,68 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.find_view);
-
-        /* Connect GUI elements with code here */
-        newDotButton = (FloatingActionButton) findViewById(R.id.new_dot_btn);
-        mainList = (RecyclerView) findViewById(R.id.main_recycler_view);
-
         getLocationPermission();
+
+        //SET CREATEBUTTON HANDLER
+        this.newDotButton = (FloatingActionButton) findViewById(R.id.new_dot_btn);
+        this.newDotButton.setOnClickListener(this) ;
+
+        //SET TOGGLE BUTTON HANDLER
+        ToggleButton toggle = (ToggleButton) findViewById(R.id.listToggleButton) ;
+        toggle.setOnCheckedChangeListener(this)  ;
 
         //DOT LIST ADAPTER
         this.dotList = new ArrayList<>() ;
-        dotListAdapter = new DotListAdapter(this.dotList, this);
-        dotListAdapter.notifyDataSetChanged();
+        this.dotListAdapter = new ExperienceListAdapter(this.dotList, this);
+        this.dotListAdapter.notifyDataSetChanged();
 
         //ADVENTURE LIST ADAPTER
         this.adventureList = new ArrayList<>() ;
-        adventureListAdapter = new DotListAdapter(this.adventureList, this) ;
-        adventureListAdapter.notifyDataSetChanged();
+        this.adventureListAdapter = new ExperienceListAdapter(this.adventureList, this) ;
+        this.adventureListAdapter.notifyDataSetChanged();
 
-        mainList.setHasFixedSize(true);
-        mainList.setLayoutManager(new LinearLayoutManager(this));
-        setAdapterOnFocus(dotListAdapter);
+        //MAIN LIST ADAPTER
+        this.mainListAdapter = dotListAdapter ;
+        this.listContainer = (RecyclerView) findViewById(R.id.main_recycler_view);
+        this.listContainer.setHasFixedSize(true);
+        this.listContainer.setLayoutManager(new LinearLayoutManager(this));
+        setAdapterOnFocus(mainListAdapter);
 
-        newDotButton.setOnClickListener(this) ;
+        //SERVER CONNECTION
+        this.getDots = new GetDots(this.getApplicationContext(), this) ;
+        this.getAdventures = new GetAdventures(this.getApplicationContext(), this) ;
+        this.getDots.loadDots();
+        this.getAdventures.loadAdventures();
 
-        getDots = new GetDots(this.getApplicationContext(), this) ;
-        getAdventures = new GetAdventures(this.getApplicationContext(), this) ;
-        getDots.loadDots();
-        getAdventures.loadAdventures();
-
-        ToggleButton toggle = (ToggleButton) findViewById(R.id.listToggleButton) ;
-        toggle.setOnCheckedChangeListener(this)  ;
     }
 
-    private void setAdapterOnFocus(RecyclerView.Adapter<DotListAdapter.ViewHolder> newAdapter){
-       mainList.setAdapter(newAdapter);
-       newAdapter.notifyDataSetChanged();
-    }
+    //Runs whenever either list has loaded, message contains name of list that changed
+    public void dataHasChanged(String message){
 
-    public void dataHasChanged(){
-        ArrayList<Dot> dots = getDots.getDots() ;
-        ArrayList<Adventure> adventures = getAdventures.getAdventures() ;
-
-        if(dots != null){
+        if(message.equals("dots")){
             updateList(this.dotList, getDots.getDots()) ;
             this.dotListAdapter.notifyDataSetChanged();
             this.addDotsToMap();
-            System.out.println(this.dotList.size() + "number of dots in list") ;
-        }
-
-        if(adventures != null){
+        } else {
             updateList(this.adventureList, getAdventures.getAdventures()) ;
             this.adventureListAdapter.notifyDataSetChanged();
             this.addDotsToMap();
         }
     }
 
-
-
+    //Runs whenever SwitchButton changes state and switches the list in view
+    @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked) {
+        if (isChecked){
             setAdapterOnFocus(dotListAdapter);
+            this.mainListAdapter = dotListAdapter ;
         } else {
             setAdapterOnFocus(adventureListAdapter);
+            this.mainListAdapter = adventureListAdapter ;
         }
     }
 
-    //Replaces elements in oldList with those in newList, keeps reference to old list
-    private <T> void updateList(ArrayList<T> oldList, ArrayList<T> newList){
-        for(T thing : oldList)
-            oldList.remove(thing) ;
-        for(T newThing: newList)
-            oldList.add(newThing) ;
-    }
-
+    //Runs whenever the NEWDOTBUTTON has been clicked, begins NewDotActivity
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this.getApplicationContext(), NewDotActivity.class);
@@ -149,41 +138,6 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     @Override
     public Context getApplicationContext() {
         return super.getApplicationContext();
-    }
-
-    private void addDotsToMap(){
-        for(Dot dot : dotList){
-            MarkerOptions options = new MarkerOptions()
-                    .title(dot.getName())
-                    .position(new LatLng(dot.getLatitude(), dot.getLongitude()));
-
-            mMap.addMarker(options);
-        }
-    }
-
-    private void getLocationPermission() {
-        Log.d(TAG, "getLocationPermission: getting location permissions");
-        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION};
-
-        if(ContextCompat.checkSelfPermission(this.getApplicationContext(), FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED) {
-            if(ContextCompat.checkSelfPermission(this.getApplicationContext(), COARSE_LOCATION) ==
-                    PackageManager.PERMISSION_GRANTED) {
-                mLocationPermissionGranted = true;
-                initMap();
-            } else {
-                ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
-            }
-        } else {
-            ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
-        }
-    }
-
-    private void initMap(){
-        Log.d(TAG, "intMap: intializing Map");
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.the_map);
-        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -226,6 +180,54 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         addDotsToMap();
     }
 
+    private void addDotsToMap(){
+        for(Dot dot : dotList){
+            MarkerOptions options = new MarkerOptions()
+                    .title(dot.getName())
+                    .position(new LatLng(dot.getLatitude(), dot.getLongitude()));
+            mMap.addMarker(options);
+        }
+    }
+
+    private void getLocationPermission() {
+        Log.d(TAG, "getLocationPermission: getting location permissions");
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION};
+
+        if(ContextCompat.checkSelfPermission(this.getApplicationContext(), FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED) {
+            if(ContextCompat.checkSelfPermission(this.getApplicationContext(), COARSE_LOCATION) ==
+                    PackageManager.PERMISSION_GRANTED) {
+                mLocationPermissionGranted = true;
+                initMap();
+            } else {
+                ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        } else {
+            ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    private void initMap(){
+        Log.d(TAG, "intMap: intializing Map");
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.the_map);
+        mapFragment.getMapAsync(this);
+    }
+
+   //Replaces elements in oldList with those in newList, keeps reference to old list
+    private <T> void updateList(ArrayList<T> oldList, ArrayList<T> newList){
+        for(T thing : oldList)
+            oldList.remove(thing) ;
+        for(T newThing: newList)
+            oldList.add(newThing) ;
+    }
+
+    //Given adapter becomes the list that is displayed in listContainer
+    private void setAdapterOnFocus(RecyclerView.Adapter<ExperienceListAdapter.ViewHolder> newAdapter){
+        listContainer.setAdapter(newAdapter);
+        newAdapter.notifyDataSetChanged();
+    }
+
     private void getDeviceLocation(){
         Log.d(TAG, "getDeviceLocation: getting devices location");
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -238,8 +240,8 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
                         if (task.isSuccessful()){
                             Log.d(TAG, "onComplete: found location");
                             Location currentLocation = (Location) task.getResult();
-                            dotListAdapter.setLocation(currentLocation);
-                            dotListAdapter.notifyDataSetChanged();
+                            mainListAdapter.setLocation(currentLocation);
+                            mainListAdapter.notifyDataSetChanged();
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
                         } else{
                             Log.d(TAG, "onComplete: current location is null");
