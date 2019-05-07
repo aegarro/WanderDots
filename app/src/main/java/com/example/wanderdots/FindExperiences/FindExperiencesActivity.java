@@ -33,9 +33,11 @@ import com.google.android.gms.tasks.Task;
 import WanderDots.Adventure;
 import WanderDots.Dot;
 import WanderDots.Server.Get.DataCreator;
+import WanderDots.Observer ;
 
 public class FindExperiencesActivity extends AppCompatActivity implements OnMapReadyCallback,
-        View.OnClickListener, CompoundButton.OnCheckedChangeListener, OnCompleteListener {
+        View.OnClickListener, CompoundButton.OnCheckedChangeListener, OnCompleteListener,
+        Observer {
 
     private static final String TAG = "MainActivity";
     private static final float DEFAULT_ZOOM = 11f;
@@ -84,6 +86,15 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         this.listContainer.setLayoutManager(new LinearLayoutManager(this));
 
         setState(dotState) ; //this must be last statement
+    }
+
+    public void dataHasChanged(String message){
+
+    }
+
+    @Override
+    public Context getApplicationContext(){
+        return super.getApplicationContext() ;
     }
 
     //Runs whenever SwitchButton changes state and switches the list in view
@@ -174,7 +185,7 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     }
 
     //Given adapter becomes the list that is displayed in listContainer
-    private void setAdapterOnFocus(RecyclerView.Adapter<ExperienceListAdapter.ViewHolder> newAdapter){
+    private void setAdapterOnFocus(RecyclerView.Adapter<ListItem> newAdapter){
         listContainer.setAdapter(newAdapter);
         newAdapter.notifyDataSetChanged();
     }
@@ -187,9 +198,8 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
             state.setAdapterLocation(currentLocation) ;
             state.getNextState().setAdapterLocation(currentLocation); //works if only two states
             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
-        } else{
+        } else
             Log.d(TAG, "onComplete: current location is null");
-        }
     }
 
     private void getDeviceLocation(){
