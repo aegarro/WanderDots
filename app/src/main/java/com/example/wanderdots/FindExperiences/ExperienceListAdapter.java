@@ -1,4 +1,4 @@
-package com.example.wanderdots;
+package com.example.wanderdots.FindExperiences;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.wanderdots.DotDetailActivity;
+import com.example.wanderdots.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 
 import java.util.ArrayList;

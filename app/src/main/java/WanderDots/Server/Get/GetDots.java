@@ -63,6 +63,10 @@ public class GetDots implements ErrorListener, Listener<String> {
         }
     }
 
+    public boolean hasValue(){
+        return this.dots != null ;
+    }
+
     public void onErrorResponse(VolleyError error) {
         this.error = error.toString() ;
     }

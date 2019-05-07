@@ -15,65 +15,69 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import WanderDots.Adventure;
-import WanderDots.Dot;
+import WanderDots.Experience;
+import WanderDots.Observer;
 import WanderDots.Server.MyRequestQueue;
-import WanderDots.Observer ;
 
 /* Returns All the Dots contained in the database
  * This methods expects the user to implements "Listener" methods throw the Volley.Response.Listener
  * This class implements a version of Listener, one for strings, but users will need one for ArrayList<Dot> (using generics).
  */
-public class GetAdventures implements ErrorListener, Listener<String> {
+public class Get<T extends Experience> implements ErrorListener, Listener<String> {
 
     private Observer observer ;
-    private ArrayList<Adventure> adventures ;
+    private String url ;
+    private ArrayList<T> data ;
     private String error ;
+    private DataCreator<T> creator ;
+    private String getDot = "http://10.0.2.2:5000/api/get/dots" ;
+    private String getAdventures = "http://10.0.2.2:5000/api/get/adventures";
 
     private MyRequestQueue queue ;
 
-    public GetAdventures(Context context, Observer observer){
+    public Get(Context context, Observer observer, boolean isDot, DataCreator<T> creator){
         this.queue = MyRequestQueue.getInstance(context);
         this.observer = observer ;
-        this.adventures = null ;
+        this.url = isDot ? getDot : getAdventures ;
+        this.data = null ;
         this.error = null ;
+        this.creator = creator ;
     }
 
-    public void loadAdventures(){
-        String url ="http://10.0.2.2:5000/api/get/adventures";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, this, this);
+    public void load(){
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, this.url, this, this) ;
         queue.addToRequestQueue(stringRequest);
     }
 
-    private void updateAdventures(ArrayList<Adventure> newAdventures){
-        this.adventures = newAdventures ;
-        observer.dataHasChanged("adventures");
+    public void update(ArrayList<T> newData){
+        this.data = newData ;
+        observer.dataHasChanged(this.url);
     }
 
     public void onResponse(String response) {
-        try {
-            JSONArray jsonAdventures = new JSONObject(response).getJSONArray("adventures") ;
-            ArrayList<Adventure> adventures = new ArrayList<Adventure>() ;
-            for(int i=0; i<jsonAdventures.length(); i++)
-                adventures.add(new Adventure(jsonAdventures.getJSONObject(i))) ;
-            updateAdventures(adventures);
-        } catch(org.json.JSONException e){
-            Log.e("GetAdventures Error:", e.toString());
-        }
-    }
-
-    public boolean hasValue(){
-        return this.adventures != null ;
+        ArrayList<T> dataFromServer = this.creator.createMany(response) ;
+        update(dataFromServer) ;
     }
 
     public void onErrorResponse(VolleyError error) {
         this.error = error.toString() ;
+        this.observer.dataHasChanged(this.url);
+        Log.d("arodr", "an error has occurred creating a request") ;
+    }
+
+    public boolean hasData(){
+        return this.data != null ;
+    }
+
+    public boolean hasError(){
+        return this.error != null ;
     }
 
     public String getError(){
         return this.error ;
     }
 
-    public ArrayList<Adventure> getAdventures(){
-        return this.adventures;
+    public ArrayList<T> getData(){
+        return this.data ;
     }
 }

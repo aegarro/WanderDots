@@ -25,27 +25,26 @@ public abstract class Experience {
         this.pictureIds = new ArrayList<String>() ;
     }
 
-    public Experience(JSONObject experience){
+    public Experience(JSONObject experience) throws org.json.JSONException{
         if(!containsRequiredFields(experience, requiredFields))
             throw new RuntimeException("Experience missing field: " + getMissingField(experience, requiredFields)) ;
+        instantiateFromJSON(experience);
+    }
 
-        try {
-            JSONArray categories = experience.getJSONArray("categories") ;
-            this.categories = createStringList(categories) ;
+    public void instantiateFromJSON(JSONObject experience) throws org.json.JSONException{
+        JSONArray categories = experience.getJSONArray("categories") ;
+        this.categories = createStringList(categories) ;
 
-            JSONArray pictureIds = experience.getJSONArray("pictureIds") ;
-            this.pictureIds = createStringList(pictureIds);
+        JSONArray pictureIds = experience.getJSONArray("pictureIds") ;
+        this.pictureIds = createStringList(pictureIds);
 
-            JSONObject location = experience.getJSONObject("location") ;
-            initializeLocation(location) ;
+        JSONObject location = experience.getJSONObject("location") ;
+        initializeLocation(location) ;
 
-            this.id = location.getString("_id") ;
-            this.description = experience.getString("description") ;
-            this.name = experience.getString("name") ;
-            this.creator = experience.getString("creator") ;
-        } catch(org.json.JSONException e){
-            Log.e("Dot Validation Error", "Dot: " + e.toString());
-        }
+        this.id = location.getString("_id") ;
+        this.description = experience.getString("description") ;
+        this.name = experience.getString("name") ;
+        this.creator = experience.getString("creator") ;
     }
 
     public ArrayList<String> createStringList(JSONArray categories)  throws org.json.JSONException {

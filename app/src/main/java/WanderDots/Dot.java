@@ -17,17 +17,18 @@ public class Dot extends Experience {
         this.adventureIds = new ArrayList<String>() ;
     }
 
-    public Dot(JSONObject dot){
+    public Dot(JSONObject dot) throws org.json.JSONException{
         super(dot) ;
 
         if(!containsRequiredFields(dot, requiredFields))
             throw new RuntimeException("Dot Validation Error: Given dot missing " + getMissingField(dot, requiredFields)) ;
+        instantiateFromJSON(dot) ;
+    }
 
-        try {
-            createStringList(dot.getJSONArray("adventures")) ;
-        } catch(org.json.JSONException e){
-            Log.e("Dot Validation Error", "Dot: " + e.toString());
-        }
+    @Override
+    public void instantiateFromJSON(JSONObject dot) throws org.json.JSONException{
+        super.instantiateFromJSON(dot) ;
+        createStringList(dot.getJSONArray("adventures")) ;
     }
 
     public void addAdventureId(String adventureID){
