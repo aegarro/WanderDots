@@ -23,7 +23,6 @@ public class NewDotActivity extends AppCompatActivity implements View.OnClickLis
         this.createButton = (Button) findViewById(R.id.CreateButton) ;
         this.nameTextbox = (EditText) findViewById(R.id.NameTextbox) ;
         this.descriptionTextbox = (EditText) findViewById(R.id.DescriptionTextbox) ;
-        this.categoriesTextbox = (EditText) findViewById(R.id.CategoriesTextbox) ;
 
         this.createButton.setOnClickListener(this);
     }
