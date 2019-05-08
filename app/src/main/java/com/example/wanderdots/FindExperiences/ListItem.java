@@ -45,6 +45,8 @@ public class ListItem <T extends Experience> extends RecyclerView.ViewHolder imp
         Log.d("arodr", DotDetailActivity.class.toString()) ;
         Intent intent = new Intent(this.ctx, DotDetailActivity.class);
         intent.putExtra("title", title.getText());
+        intent.putExtra("distance", distance.getText());
+        intent.putExtra("rating", rating.getText());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.ctx.startActivity(intent);
     }
