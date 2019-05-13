@@ -1,3 +1,5 @@
-language: java
-jdk:
-- oraclejdk9
+language: android
+components:
+    - build-tools-26.0.2
+    - android-26
+    - extra
