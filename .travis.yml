@@ -33,16 +33,17 @@ cache:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
   - $HOME/.android/build-cache
-
-before_script:
-  - chmod +x gradlew
-
-script:
-  - ./gradlew clean build
-  - ./gradlew test
   
  addons:
   sonarcloud:
     organization: "aegarro-github"
     token:
       secure: "921e739be061b105f18924b63b55d2e0679a90cf"
+      
+before_script:
+  - chmod +x gradlew
+
+script:
+  - ./gradlew clean build
+  - ./gradlew test
+  - sonar-scanner
