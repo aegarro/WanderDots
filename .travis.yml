@@ -34,7 +34,7 @@ cache:
   - $HOME/.gradle/wrapper/
   - $HOME/.android/build-cache
   
- addons:
+addons:
   sonarcloud:
     organization: "aegarro-github"
     token:
