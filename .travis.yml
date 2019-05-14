@@ -1,6 +1,8 @@
 language: android
 components:
     - build-tools-26.0.2
-    - android-26
     - extra
     - android-9
+    
+before_install:
+ - chmod +x gradlew
