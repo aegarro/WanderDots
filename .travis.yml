@@ -40,3 +40,9 @@ before_script:
 script:
   - ./gradlew clean build
   - ./gradlew test
+  
+ addons:
+  sonarcloud:
+    organization: "aegarro-github"
+    token:
+      secure: "921e739be061b105f18924b63b55d2e0679a90cf"
