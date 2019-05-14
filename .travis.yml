@@ -44,6 +44,7 @@ before_script:
   - chmod +x gradlew
 
 script:
-  - sonar-scanner
   - ./gradlew clean build
   - ./gradlew test
+  - ant build
+  - sonar-scanner
