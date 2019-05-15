@@ -40,4 +40,7 @@ public class Adventure extends Experience {
     public ArrayList<String> getDotsVisited(){
         return new ArrayList<String>(this.dotsVisited) ;
     }
+
+    //TODO: toString() (see Dot for guide)
+    //TODO: toJSON() (same as above)
 }

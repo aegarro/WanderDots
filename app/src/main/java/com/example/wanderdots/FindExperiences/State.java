@@ -33,14 +33,19 @@ public class State <T extends Experience> implements Observer {
     private boolean active ;
 
     public State(Context context, DataCreator<T> creator, boolean isDot){
-        this.data = new ArrayList<T>() ;
+        this.data = new ArrayList<>() ;
         this.adapter = new ExperienceListAdapter<>(this.data, context) ;
         this.dataGetter = new Get(context, this, isDot, creator) ;
         this.nextState = null ;
         this.map = null ;
-        this.markers = new  ArrayList<Marker>() ;
+        this.markers = new  ArrayList<>() ;
         this.dataGetter.load() ;
         this.active = false ;
+    }
+
+    public void reload(){
+        Log.d("arodr: state reload", "") ;
+        this.dataGetter.load() ;
     }
 
     //Sets this.data, and adds points to map afterwards (done bc setMap returns without data)
@@ -49,14 +54,17 @@ public class State <T extends Experience> implements Observer {
         if(dataGetter.hasError())
             Log.d("arodr", "Received error loading data:" + dataGetter.getError()) ;
         else {
-            addData(dataGetter.getData()) ;
+            Log.d("arodr: state update:", "Size: " +  dataGetter.getData().size()) ;
+            setData(dataGetter.getData()) ;
+            Log.d("arodr: state done", "new size: " + this.data.size()) ;
             if(this.map != null)
                 this.addPositionsToMap(this.map);
             this.adapter.notifyDataSetChanged();
         }
     }
 
-    private void addData(ArrayList<T> newData){
+    private void setData(ArrayList<T> newData){
+        this.data.clear();
         for(T data : newData)
             this.data.add(data) ;
     }
@@ -71,6 +79,7 @@ public class State <T extends Experience> implements Observer {
 
     // Adds positions in data to given map
     private void addPositionsToMap(GoogleMap mMap){
+        this.markers.clear() ;
         for(T point : this.data){
             MarkerOptions options = new MarkerOptions();
             options.title(point.getName()) ;

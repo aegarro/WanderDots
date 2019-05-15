@@ -1,17 +1,12 @@
 package com.example.wanderdots.FindExperiences;
 
 import android.content.Context;
-import android.content.Intent;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.View;
-import android.widget.TextView;
-
-import com.example.wanderdots.DotDetailActivity;
 import com.example.wanderdots.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 
@@ -25,8 +20,8 @@ public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Ad
     private static float METERS_TO_MILES = 0.000621371f;
 
     public ArrayList<T> dotList;
-    Context ctx;
-    Location currentPosition;
+    private Context ctx;
+    private Location currentPosition;
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
     public ExperienceListAdapter(ArrayList<T> dotList, Context ctx){
@@ -38,17 +33,19 @@ public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Ad
     @Override
     public ListItem onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dot_list_item, viewGroup, false);
-        return new ListItem(view, ctx, dotList);
+        return new ListItem(view, ctx);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ListItem viewHolder, int i) {
+        //Displays the i'th element in the List
         viewHolder.title.setText(dotList.get(i).getName());
         if(currentPosition == null)
             viewHolder.distance.setText("0 mi");
         else
             viewHolder.distance.setText(calculateDistance(dotList.get(i), currentPosition));
-        viewHolder.rating.setText("5 Stars");
+
+        viewHolder.rating.setText("5 Stars"); //TODO: Remove hardcoded rating
     }
 
     @Override

@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class Experience {
 
@@ -73,7 +74,16 @@ public abstract class Experience {
         return "All fields valid" ;
     }
 
-    public String toString() {
+    public void addCategory(String category){
+        this.categories.add(category) ;
+    }
+
+    public void addPictureId(String pictureId){
+        this.pictureIds.add(pictureId) ;
+    }
+
+
+    public JSONObject toJSON(){
         try {
             JSONObject data = new JSONObject();
             data.put("name", name) ;
@@ -87,11 +97,15 @@ public abstract class Experience {
             location.put("longitude", longitude) ;
             data.put("location", (Object) location) ;
 
-            return data.toString();
+            return data ;
         }catch(JSONException e) {
-           e.printStackTrace();
+            Log.d("arodr: toJSON(): ", e.toString()) ;
+            return null ;
         }
-        return "Experience Error: Could not convert to String" ;
+    }
+
+    public String toString() {
+        return this.toJSON().toString() ;
     }
 
     public String getId() {
@@ -140,5 +154,43 @@ public abstract class Experience {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public static String jsonifyArray(ArrayList<String> arr){
+        JSONArray stringArray = new JSONArray(arr) ;
+        return stringArray.toString() ;
+    }
+
+    public static String jsonifyArray(String[] arr){
+        try{
+            JSONArray stringArray = new JSONArray(arr) ;
+            return stringArray.toString() ;
+        }catch(JSONException e){
+            Log.d("ERROR", e.toString()) ;
+            return null ;
+        }
+    }
+
+    public String getLocationJSON(){
+        try {
+            JSONObject location = new JSONObject() ;
+            location.put("latitude", this.latitude) ;
+            location.put("longitude", this.longitude) ;
+            return location.toString() ;
+        }catch(JSONException e) {
+            Log.d("Error getLocationJSON", e.toString()) ;
+            return null ;
+        }
+    }
+
+
+    public HashMap<String, String> getHashMap(){
+        HashMap<String, String> experience = new HashMap<String, String>() ;
+        experience.put("name", this.name) ;
+        experience.put("creator", this.creator) ;
+        experience.put("description", this.description);
+        experience.put("pictureIds", jsonifyArray(this.pictureIds)) ;
+        experience.put("location", getLocationJSON() ) ;
+        return experience ;
     }
 }

@@ -107,8 +107,19 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this.getApplicationContext(), NewDotActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 69); //69 is id of activity I decided it would be
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 69) {
+            if (resultCode == RESULT_OK) {
+                this.state.reload() ;
+                this.state.getNextState().reload() ;
+            }
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -186,7 +197,7 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
 
     //Given adapter becomes the list that is displayed in listContainer
     private void setAdapterOnFocus(RecyclerView.Adapter<ListItem> newAdapter){
-        listContainer.setAdapter(newAdapter);
+        this.listContainer.setAdapter(newAdapter);
         newAdapter.notifyDataSetChanged();
     }
 
@@ -195,8 +206,8 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         if (task.isSuccessful()){
             Log.d(TAG, "onComplete: found location");
             Location currentLocation = (Location) task.getResult();
-            state.setAdapterLocation(currentLocation) ;
-            state.getNextState().setAdapterLocation(currentLocation); //works if only two states
+            this.state.setAdapterLocation(currentLocation) ;
+            this.state.getNextState().setAdapterLocation(currentLocation); //works if only two states
             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
         } else
             Log.d(TAG, "onComplete: current location is null");
@@ -204,11 +215,11 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
 
     private void getDeviceLocation(){
         Log.d(TAG, "getDeviceLocation: getting devices location");
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        this.mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         try{
             if(mLocationPermissionGranted){
                 final Task location = mFusedLocationProviderClient.getLastLocation();
-                Task task = location.addOnCompleteListener(this);
+                location.addOnCompleteListener(this);
             }
         } catch (SecurityException e){
             Log.e(TAG, "getDeviceLocation: Security Exception: " + e.getMessage());
@@ -216,7 +227,7 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     }
 
     private void moveCamera(LatLng latlng, float zoom){
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, zoom));
+        this.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, zoom));
     }
 }
 

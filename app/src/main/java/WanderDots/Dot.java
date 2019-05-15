@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Dot extends Experience {
 
@@ -39,16 +40,25 @@ public class Dot extends Experience {
         return new ArrayList<String>(this.adventureIds) ;
     }
 
-   public String toString(){
-
+    public JSONObject toJSON(){
         try {
-            JSONObject data = new JSONObject(super.toString()) ;
+            JSONObject data = super.toJSON() ;
             data.put("adventures", (Object) adventureIds);
-            return data.toString() ;
+            return data ;
         }catch(JSONException e) {
-            e.printStackTrace();
+            Log.d("arodr: toJSON:", e.toString()) ;
+            return null ;
         }
+    }
 
-        return "Dot Error: Could not convert to string" ;
+   public String toString(){
+        return this.toJSON().toString() ;
+   }
+
+   @Override
+   public HashMap<String, String> getHashMap(){
+        HashMap<String, String> dot = super.getHashMap() ;
+        dot.put("adventures", jsonifyArray(this.adventureIds)) ;
+        return dot ;
    }
 }

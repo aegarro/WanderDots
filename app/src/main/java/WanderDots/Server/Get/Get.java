@@ -2,19 +2,12 @@ package WanderDots.Server.Get;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.android.volley.Request;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-
-import WanderDots.Adventure;
 import WanderDots.Experience;
 import WanderDots.Observer;
 import WanderDots.Server.MyRequestQueue;
