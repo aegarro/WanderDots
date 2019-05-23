@@ -1,26 +1,31 @@
 package WanderDots;
 
 import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Dot extends Experience {
 
+    private static ArrayList<Dot> data ;
+    private static DotLoader loader ;
+
     private ArrayList<String> adventureIds;
     private String[] requiredFields = {"adventures"} ;
 
+    static {
+        loader = new DotLoader() ;
+        data = new ArrayList<>() ;
+    }
+
     public Dot(){
         super() ;
-        this.adventureIds = new ArrayList<String>() ;
+        this.adventureIds = new ArrayList<>() ;
     }
 
     public Dot(JSONObject dot) throws org.json.JSONException{
         super(dot) ;
-
         if(!containsRequiredFields(dot, requiredFields))
             throw new RuntimeException("Dot Validation Error: Given dot missing " + getMissingField(dot, requiredFields)) ;
         instantiateFromJSON(dot) ;
@@ -32,33 +37,49 @@ public class Dot extends Experience {
         createStringList(dot.getJSONArray("adventures")) ;
     }
 
-    public void addAdventureId(String adventureID){
-        this.adventureIds.add(adventureID) ;
-    }
-
-    public ArrayList<String> getAdventureIds(){
-        return new ArrayList<String>(this.adventureIds) ;
-    }
-
     public JSONObject toJSON(){
         try {
             JSONObject data = super.toJSON() ;
             data.put("adventures", (Object) adventureIds);
             return data ;
         }catch(JSONException e) {
-            Log.d("arodr: toJSON:", e.toString()) ;
+            Log.d("arodr: (error) toJSON", e.toString()) ;
             return null ;
         }
     }
 
-   public String toString(){
-        return this.toJSON().toString() ;
-   }
+    public String toString(){
+                                   return this.toJSON().toString() ;
+                                                                    }
 
-   @Override
-   public HashMap<String, String> getHashMap(){
-        HashMap<String, String> dot = super.getHashMap() ;
+    @Override
+    //Used for sending data to server to create adventure
+    public HashMap<String, String> toHashMap(){
+        HashMap<String, String> dot = super.toHashMap() ;
         dot.put("adventures", jsonifyArray(this.adventureIds)) ;
         return dot ;
-   }
+    }
+
+    //DO NOT REMOVE: This method triggers the static initializer of this class
+    //Beginning the loading process, without this Experience parent class recieves a null
+    //Loader object
+    public static void addObserver(Observer observer){
+        observers.add(observer) ;
+    }
+
+    public static ArrayList<Dot> getData(){
+        return data ;
+    }
+
+    public static void dataFinishedLoading(){
+        if(loader.hasError())
+            setError(loader.getError()) ;
+        else
+            data = loader.getData() ;
+        notifyObservers();
+    }
+
+    public static void reload(){
+        loader.reload();
+    }
 }

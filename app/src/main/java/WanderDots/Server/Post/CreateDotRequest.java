@@ -23,6 +23,6 @@ public class CreateDotRequest extends JsonObjectRequest {
 
     @Override
     protected Map<String, String> getParams() {
-        return dot.getHashMap() ;
+        return dot.toHashMap() ;
     }
 }

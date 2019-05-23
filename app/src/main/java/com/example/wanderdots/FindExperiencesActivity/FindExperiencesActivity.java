@@ -1,4 +1,4 @@
-package com.example.wanderdots.FindExperiences;
+package com.example.wanderdots.FindExperiencesActivity;
 
 import android.Manifest;
 import android.content.Context;
@@ -18,6 +18,9 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
+import com.example.wanderdots.FindExperiencesActivity.State.AdventureState;
+import com.example.wanderdots.FindExperiencesActivity.State.DotState;
+import com.example.wanderdots.FindExperiencesActivity.State.State;
 import com.example.wanderdots.NewDotActivity;
 import com.example.wanderdots.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -32,13 +35,12 @@ import com.google.android.gms.tasks.Task;
 
 import WanderDots.Adventure;
 import WanderDots.Dot;
-import WanderDots.Server.Get.DataCreator;
 import WanderDots.Observer ;
 
 public class FindExperiencesActivity extends AppCompatActivity implements OnMapReadyCallback,
-        View.OnClickListener, CompoundButton.OnCheckedChangeListener, OnCompleteListener,
-        Observer {
+        View.OnClickListener, CompoundButton.OnCheckedChangeListener, OnCompleteListener {
 
+    private static final int CREATE_DOT_ACTIVITY_ID = 69 ;
     private static final String TAG = "MainActivity";
     private static final float DEFAULT_ZOOM = 11f;
 
@@ -61,65 +63,58 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         setContentView(R.layout.find_view);
         validateLocationPermission();
 
+        this.listContainer = (RecyclerView) findViewById(R.id.main_recycler_view);
+        this.listContainer.setHasFixedSize(true);
+        this.listContainer.setLayoutManager(new LinearLayoutManager(this));
+
         //SET CREATEBUTTON HANDLER
         this.newDotButton = (FloatingActionButton) findViewById(R.id.new_dot_btn);
         this.newDotButton.setOnClickListener(this) ;
 
-        //SET TOGGLE BUTTON HANDLER
         ToggleButton toggle = (ToggleButton) findViewById(R.id.listToggleButton) ;
         toggle.setOnCheckedChangeListener(this)  ;
 
         //STATE
         Context context = getApplicationContext() ;
-        DataCreator<Dot> dotCreator = new DataCreator<Dot>("dot", Dot.class);
-        State dotState = new State<Dot>(context, dotCreator, true) ;
+        DotState dotState = new DotState(context) ;
+        AdventureState adventureState = new AdventureState(context) ;
 
-        DataCreator<Adventure> adventureCreator = new DataCreator<Adventure>("adventure", Adventure.class);
-        State adventureState = new State<Adventure>(context, adventureCreator, false) ;
+        dotState.setNextState(adventureState);
+        adventureState.setNextState(dotState) ;
 
-        dotState.transitionToNextState(adventureState);
-        adventureState.transitionToNextState(dotState) ;
-
-        //MAIN LIST ADAPTER
-        this.listContainer = (RecyclerView) findViewById(R.id.main_recycler_view);
-        this.listContainer.setHasFixedSize(true);
-        this.listContainer.setLayoutManager(new LinearLayoutManager(this));
-
-        setState(dotState) ; //this must be last statement
-    }
-
-    public void dataHasChanged(String message){
-
-    }
-
-    @Override
-    public Context getApplicationContext(){
-        return super.getApplicationContext() ;
+        //Setting State on Startup
+        this.listContainer.setAdapter(dotState.getAdapter());
+        this.state = dotState ;
+        dotState.enter() ;
     }
 
     //Runs whenever SwitchButton changes state and switches the list in view
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        this.state.transitionToNextState(this) ;
+        this.setState(this.state.getNextState());
+    }
+
+    private void setState(State newState){
+        this.state.exit() ;
+        this.state = newState ;
+        this.state.enter() ;
+        listContainer.swapAdapter(newState.getAdapter(), false);
     }
 
     //Runs whenever the NEWDOTBUTTON has been clicked, begins NewDotActivity
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this.getApplicationContext(), NewDotActivity.class);
-        startActivityForResult(intent, 69); //69 is id of activity I decided it would be
+        startActivityForResult(intent, CREATE_DOT_ACTIVITY_ID); //69 is id of activity I decided it would be
     }
 
     @Override
+    //Runs after CreateDotActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 69) {
-            if (resultCode == RESULT_OK) {
-                this.state.reload() ;
-                this.state.getNextState().reload() ;
-            }
-        }
+        if (requestCode == CREATE_DOT_ACTIVITY_ID)
+            if (resultCode == RESULT_OK)
+                Dot.reload() ; //Proprogates new data: Dot > DotState
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -162,15 +157,6 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         this.state.getNextState().setMap(mMap) ;
     }
 
-    public void setState(State state){
-        this.state = state ;
-        this.state.enter(this) ;
-    }
-
-    public void setListAdapter(ExperienceListAdapter adapter){ //public scope
-        setAdapterOnFocus(adapter); //this has private scope
-    }
-
     private void validateLocationPermission() {
         Log.d(TAG, "validateLocationPermission: getting location permissions");
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
@@ -193,12 +179,6 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         Log.d(TAG, "intMap: intializing Map");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.the_map);
         mapFragment.getMapAsync(this);
-    }
-
-    //Given adapter becomes the list that is displayed in listContainer
-    private void setAdapterOnFocus(RecyclerView.Adapter<ListItem> newAdapter){
-        this.listContainer.setAdapter(newAdapter);
-        newAdapter.notifyDataSetChanged();
     }
 
     @Override

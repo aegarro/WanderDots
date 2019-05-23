@@ -9,7 +9,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class Experience {
+public abstract class Experience<T> {
+
+    private static String error ;
+    protected static ArrayList<Observer> observers ;
+
+    static {
+        error = null ;
+        observers = new ArrayList<>() ;
+    }
 
     public String id ;
     public String name ;
@@ -99,7 +107,7 @@ public abstract class Experience {
 
             return data ;
         }catch(JSONException e) {
-            Log.d("arodr: toJSON(): ", e.toString()) ;
+            Log.d("arodr: ", "(error):" + e.toString()) ;
             return null ;
         }
     }
@@ -183,8 +191,7 @@ public abstract class Experience {
         }
     }
 
-
-    public HashMap<String, String> getHashMap(){
+    public HashMap<String, String> toHashMap(){
         HashMap<String, String> experience = new HashMap<String, String>() ;
         experience.put("name", this.name) ;
         experience.put("creator", this.creator) ;
@@ -192,5 +199,25 @@ public abstract class Experience {
         experience.put("pictureIds", jsonifyArray(this.pictureIds)) ;
         experience.put("location", getLocationJSON() ) ;
         return experience ;
+    }
+
+    /*
+            STATIC METHODS FOR LOADING DATA
+     */
+    protected static void setError(String string){
+        error = string ;
+    }
+
+    public static String getError(){
+        return error;
+    }
+
+    public static boolean hasError(){
+        return error != null ;
+    }
+
+    public static void notifyObservers(){
+        for(Observer observer : observers)
+            observer.subscriberHasChanged("update");
     }
 }

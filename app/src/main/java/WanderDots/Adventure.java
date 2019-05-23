@@ -2,18 +2,23 @@ package WanderDots;
 
 import android.util.Log;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Adventure extends Experience {
+
+    private static ArrayList<Adventure> data ;
+    private static AdventureLoader loader ;
 
     private ArrayList<String> dotsVisited ;
     private String[] requiredFields = {"dotsVisited"} ;
 
-    public Adventure(){
-        super() ;
-        this.dotsVisited = new ArrayList<String>() ;
+    static {
+        data = new ArrayList<>() ;
+        loader = new AdventureLoader() ;
     }
 
     public Adventure(JSONObject adventure) throws org.json.JSONException{
@@ -23,24 +28,56 @@ public class Adventure extends Experience {
         instantiateFromJSON(adventure);
     }
 
+    /*
+        JSON and String Representations
+     */
     @Override
     public void instantiateFromJSON(JSONObject adventure) throws org.json.JSONException {
         super.instantiateFromJSON(adventure);
         this.dotsVisited = createStringList(adventure.getJSONArray("dotsVisited")) ;
     }
 
-    public void addDotVisited(String dotID){
-        this.dotsVisited.add(dotID) ;
+    public String toString(){
+        return this.toJSON().toString() ;
     }
 
-    public void removeDotVisited(String dotID){
-        this.dotsVisited.remove(dotID) ;
+    public JSONObject toJSON(){
+        try {
+            JSONObject data = super.toJSON() ;
+            data.put("dotsVisited", (Object) dotsVisited) ;
+            return data ;
+        } catch(JSONException e){
+            Log.d("arodr:Adventure:toJSON", e.toString()) ;
+            return null ;
+        }
     }
 
-    public ArrayList<String> getDotsVisited(){
-        return new ArrayList<String>(this.dotsVisited) ;
+    public HashMap<String, String> toHashMap(){
+        HashMap<String, String> adventure = super.toHashMap() ;
+        adventure.put("dotsVisited", jsonifyArray(dotsVisited)) ;
+        return adventure ;
     }
 
-    //TODO: toString() (see Dot for guide)
-    //TODO: toJSON() (same as above)
+    //DO NOT REMOVE: This method triggers the static initializer of this class
+    //Beginning the loading process, without this Experience parent class recieves a null
+    //Loader object
+    public static void addObserver(Observer observer){
+        observers.add(observer) ;
+    }
+
+    public static ArrayList<Adventure> getData(){
+        return data ;
+    }
+
+    public static void dataFinishedLoading(){
+        if(loader.hasError())
+            setError(loader.getError()) ;
+        else
+            data = loader.getData() ;
+        notifyObservers();
+    }
+
+    public static void reload(){
+        loader.reload();
+    }
 }

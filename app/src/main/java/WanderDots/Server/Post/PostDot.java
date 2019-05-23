@@ -38,15 +38,15 @@ public class PostDot implements Response.Listener<JSONObject>,
         try {
             if(response.has("error")){
                this.error = response.getString("error") ;
-               this.observer.dataHasChanged("error");
+               this.observer.subscriberHasChanged("error");
             } else {
                 String dotID = response.getString("id") ;
                 this.dotID = dotID ;
-                this.observer.dataHasChanged("Dot has been received");
+                this.observer.subscriberHasChanged("Dot has been received");
             }
         } catch(JSONException e){
             this.error = e.toString() ;
-            this.observer.dataHasChanged("error");
+            this.observer.subscriberHasChanged("error");
         }
     }
 

@@ -2,5 +2,5 @@ package WanderDots;
 
 public interface Observer {
 
-    void dataHasChanged(String message) ;
+    void subscriberHasChanged(String message) ;
 }

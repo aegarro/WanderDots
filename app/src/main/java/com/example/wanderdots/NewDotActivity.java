@@ -98,10 +98,9 @@ public class NewDotActivity extends AppCompatActivity
         }
     }
 
-    public void dataHasChanged(String message){
+    public void subscriberHasChanged(String message){
         if(this.dotCreator.getError() == null){
             this.dotID = this.dotCreator.getDotID() ;
-            Log.d("arodr: NewDotActivity", "Dot " + this.dotID + " created successfully") ;
             finish() ; //should return back to home screen
         }else {
             Log.d("POST Dot Error:", this.dotCreator.getError()) ;

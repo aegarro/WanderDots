@@ -7,6 +7,10 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import WanderDots.Experience;
 import WanderDots.Observer;
@@ -22,44 +26,39 @@ public class Get<T extends Experience> implements ErrorListener, Listener<String
     private String url ;
     private ArrayList<T> data ;
     private String error ;
-    private DataCreator<T> creator ;
+    private JSONObject response ;
     private String getDot = "http://10.0.2.2:5000/api/get/dots" ;
     private String getAdventures = "http://10.0.2.2:5000/api/get/adventures";
 
     private MyRequestQueue queue ;
 
-    public Get(Context context, Observer observer, boolean isDot, DataCreator<T> creator){
+    public Get(Context context, Observer observer, boolean isDot){
         this.queue = MyRequestQueue.getInstance(context);
         this.observer = observer ;
         this.url = isDot ? getDot : getAdventures ;
         this.data = null ;
         this.error = null ;
-        this.creator = creator ;
     }
 
-    public void load(){
+    public void loadData(){
         StringRequest stringRequest = new StringRequest(Request.Method.GET, this.url, this, this) ;
         queue.addToRequestQueue(stringRequest);
     }
 
-    public void update(ArrayList<T> newData){
-        this.data = newData ;
-        observer.dataHasChanged(this.url);
-    }
-
     public void onResponse(String response) {
-        ArrayList<T> dataFromServer = this.creator.createMany(response) ;
-        update(dataFromServer) ;
+        try {
+            this.response = new JSONObject(response);
+            observer.subscriberHasChanged("update");
+        }catch(JSONException e){
+            Log.d("arodr:Get","JSON Error" + e.toString()) ;
+            this.observer.subscriberHasChanged("error");
+        }
     }
 
     public void onErrorResponse(VolleyError error) {
+        Log.d("arodr:Get", "an error has occurred creating a request") ;
         this.error = error.toString() ;
-        this.observer.dataHasChanged(this.url);
-        Log.d("arodr", "an error has occurred creating a request") ;
-    }
-
-    public boolean hasData(){
-        return this.data != null ;
+        this.observer.subscriberHasChanged(this.url);
     }
 
     public boolean hasError(){
@@ -70,7 +69,7 @@ public class Get<T extends Experience> implements ErrorListener, Listener<String
         return this.error ;
     }
 
-    public ArrayList<T> getData(){
-        return this.data ;
+    public JSONObject getResponse(){
+        return this.response ;
     }
 }
