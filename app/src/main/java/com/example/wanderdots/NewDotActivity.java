@@ -38,7 +38,6 @@ public class NewDotActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_dot);
-
         this.createButton = findViewById(R.id.CreateButton) ;
         this.imageButton = findViewById(R.id.imageButton);
         this.imageView4 = findViewById(R.id.imageView4);
