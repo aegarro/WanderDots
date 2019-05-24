@@ -10,6 +10,7 @@ public class DotDetailActivity extends AppCompatActivity {
     private TextView titleTxt;
     private TextView distanceTxt;
     private TextView ratingTxt;
+    private TextView descrTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,11 +20,13 @@ public class DotDetailActivity extends AppCompatActivity {
         titleTxt = (TextView) findViewById(R.id.dotTitle);
         distanceTxt = (TextView) findViewById(R.id.dotDistance);
         ratingTxt = (TextView) findViewById(R.id.dotRating);
+        descrTxt = (TextView) findViewById(R.id.userDescription);
 
         Intent intent = getIntent();
         titleTxt.setText(intent.getStringExtra("title"));
         distanceTxt.setText("Distance: " + intent.getStringExtra("distance"));
         ratingTxt.setText("Rating: " + intent.getStringExtra("rating"));
+        descrTxt.setText("Description: ");
 
     }
 }

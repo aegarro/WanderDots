@@ -1,4 +1,4 @@
-package WanderDots;
+package wanderDots;
 
 import android.util.Log;
 
@@ -15,6 +15,7 @@ public class Adventure extends Experience {
 
     private ArrayList<String> dotsVisited ;
     private String[] requiredFields = {"dotsVisited"} ;
+    public String dotsVString = "dotsVisited";
 
     static {
         data = new ArrayList<>() ;
@@ -34,7 +35,7 @@ public class Adventure extends Experience {
     @Override
     public void instantiateFromJSON(JSONObject adventure) throws org.json.JSONException {
         super.instantiateFromJSON(adventure);
-        this.dotsVisited = createStringList(adventure.getJSONArray("dotsVisited")) ;
+        this.dotsVisited = createStringList(adventure.getJSONArray(dotsVString)) ;
     }
 
     public String toString(){
@@ -44,7 +45,7 @@ public class Adventure extends Experience {
     public JSONObject toJSON(){
         try {
             JSONObject data = super.toJSON() ;
-            data.put("dotsVisited", (Object) dotsVisited) ;
+            data.put(dotsVString, (Object) dotsVisited) ;
             return data ;
         } catch(JSONException e){
             Log.d("arodr:Adventure:toJSON", e.toString()) ;
@@ -54,7 +55,7 @@ public class Adventure extends Experience {
 
     public HashMap<String, String> toHashMap(){
         HashMap<String, String> adventure = super.toHashMap() ;
-        adventure.put("dotsVisited", jsonifyArray(dotsVisited)) ;
+        adventure.put(dotsVString, jsonifyArray(dotsVisited)) ;
         return adventure ;
     }
 

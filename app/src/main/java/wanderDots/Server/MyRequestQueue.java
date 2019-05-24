@@ -1,4 +1,4 @@
-package WanderDots.Server;
+package wanderDots.Server;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,7 +8,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
-import android.util.Log;
 import android.util.LruCache ;
 
 public class MyRequestQueue {

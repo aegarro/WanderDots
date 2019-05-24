@@ -2,10 +2,8 @@ package com.example.wanderdots.FindExperiencesActivity.State;
 
 import android.content.Context;
 import android.location.Location;
-import android.util.Log;
 
 import com.example.wanderdots.FindExperiencesActivity.ExperienceListAdapter;
-import com.example.wanderdots.FindExperiencesActivity.FindExperiencesActivity;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -13,8 +11,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
-import WanderDots.Experience;
-import WanderDots.Observer ;
+import wanderDots.Experience;
+import wanderDots.Observer ;
 /*
 Responsibilities:
     - Hold Data (dots or adventures)

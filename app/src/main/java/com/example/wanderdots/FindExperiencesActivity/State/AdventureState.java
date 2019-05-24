@@ -3,10 +3,7 @@ package com.example.wanderdots.FindExperiencesActivity.State;
 import android.content.Context;
 import android.util.Log;
 
-import java.util.ArrayList;
-
-import WanderDots.Adventure;
-import WanderDots.Dot;
+import wanderDots.Adventure;
 
 public class AdventureState extends State<Adventure> {
 

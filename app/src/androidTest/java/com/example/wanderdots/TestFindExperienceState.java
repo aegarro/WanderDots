@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Log;
 
 import com.example.wanderdots.FindExperiencesActivity.State.AdventureState;
 import com.example.wanderdots.FindExperiencesActivity.State.DotState;
@@ -16,9 +15,7 @@ import org.junit.runner.RunWith;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import WanderDots.Adventure;
-import WanderDots.Dot;
-import WanderDots.Observer;
+import wanderDots.Observer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

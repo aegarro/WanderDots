@@ -24,9 +24,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import WanderDots.Dot ;
-import WanderDots.Server.Post.PostDot;
-import WanderDots.Observer ;
+import wanderDots.Dot ;
+import wanderDots.Server.Post.PostDot;
+import wanderDots.Observer ;
 
 public class NewDotActivity extends AppCompatActivity
         implements View.OnClickListener, Observer {
@@ -101,7 +101,7 @@ public class NewDotActivity extends AppCompatActivity
     //Runs when form is being submitted
     public void onClick(View v){
 
-        Log.d("WanderDots", "About to create a Dot...") ;
+        Log.d("wanderDots", "About to create a Dot...") ;
         //create
         Dot dot = new Dot();
         final EditText name = findViewById(R.id.NameTextbox);
