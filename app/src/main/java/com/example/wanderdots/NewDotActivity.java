@@ -32,14 +32,11 @@ public class NewDotActivity extends AppCompatActivity
         implements View.OnClickListener, Observer {
 
     private Button createButton ;
-    private EditText nameTextbox ;
-    private EditText descriptionTextbox ;
-    private TextView categoriesView ;
     private ImageView imageView4;
     private ImageButton imageButton ;
-    private String dotID ;
     private PostDot dotCreator ;
-    private static int RESULT_LOAD_IMAGE = 1;
+    private String dotID;
+    private static int result = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +44,6 @@ public class NewDotActivity extends AppCompatActivity
         setContentView(R.layout.activity_new_dot);
 
         this.createButton = findViewById(R.id.CreateButton) ;
-        this.nameTextbox = findViewById(R.id.NameTextbox) ;
-        this.descriptionTextbox = findViewById(R.id.DescriptionTextbox) ;
-        this.categoriesView = findViewById(R.id.CategoriesView);
         this.imageButton = findViewById(R.id.imageButton);
         this.imageView4 = findViewById(R.id.imageView4);
 
@@ -70,14 +64,14 @@ public class NewDotActivity extends AppCompatActivity
 
     private void addImages(){
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(photoPickerIntent, RESULT_LOAD_IMAGE);
+        startActivityForResult(photoPickerIntent, result);
     }
 
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
 
-        if (reqCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
+        if (reqCode == result && resultCode == RESULT_OK && data != null) {
             try {
                 final Uri imageUri = data.getData();
                 if(imageUri != null) {
@@ -88,11 +82,7 @@ public class NewDotActivity extends AppCompatActivity
                         imageStream.close();
                     }
                 }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e){
-                e.printStackTrace();
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -107,8 +97,7 @@ public class NewDotActivity extends AppCompatActivity
         }
     }
 
-    //TODO: Test is this actually creates a dot
-    //TODO: Once above satisfied, verify reasonable output if server is down
+    //TODO: Verify reasonable output if server is down
     //Runs when form is being submitted
     public void onClick(View v){
 
@@ -125,7 +114,6 @@ public class NewDotActivity extends AppCompatActivity
         dot.addCategory("Filler");
         //todo: multiple images
         //what is the picture id? bitmap? file path?
-        //dot.addPictureId(selectedImage);
         dot.addPictureId("testPictureID");
         //how to make a map marker and get lat/long from that - for now stub using current loc
         try {
