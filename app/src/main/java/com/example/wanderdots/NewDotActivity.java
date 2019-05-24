@@ -76,7 +76,7 @@ public class NewDotActivity extends AppCompatActivity
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.e("NewDotActivity", e.toString());
             }
         }
     }
@@ -115,7 +115,7 @@ public class NewDotActivity extends AppCompatActivity
             dot.setLatitude(location.getLatitude());
         }
         catch(SecurityException e){
-            e.printStackTrace();
+            Log.e("NewDotActivity", e.toString());
         }
 
         this.dotCreator.postDot(dot) ;
