@@ -11,6 +11,15 @@ import java.util.HashMap;
 
 public abstract class Experience<T> {
 
+    private static final String CATEGORIES = "categories";
+    private static final String CREATOR = "creator";
+    private static final String PICTUREIDS = "pictureIds";
+    private static final String LOCATION = "location";
+    private static final String DESCRIPTION = "description";
+    private static final String LONGITUDE = "longitude";
+    private static final String LATITUDE = "latitude";
+
+
     private static String error ;
     protected static ArrayList<Observer> observers ;
 
@@ -27,7 +36,7 @@ public abstract class Experience<T> {
     public ArrayList<String> pictureIds ;
     public Double latitude ;
     public Double longitude ;
-    private String[] requiredFields = {"_id", "name", "description", "location", "categories", "creator", "pictureIds"} ;
+    private String[] requiredFields = {"_id", "name", DESCRIPTION, LOCATION, CATEGORIES, CREATOR, PICTUREIDS} ;
 
     public Experience(){
         this.categories = new ArrayList<String>() ;
@@ -41,19 +50,19 @@ public abstract class Experience<T> {
     }
 
     public void instantiateFromJSON(JSONObject experience) throws org.json.JSONException{
-        JSONArray categories = experience.getJSONArray("categories") ;
+        JSONArray categories = experience.getJSONArray(CATEGORIES) ;
         this.categories = createStringList(categories) ;
 
-        JSONArray pictureIds = experience.getJSONArray("pictureIds") ;
+        JSONArray pictureIds = experience.getJSONArray(PICTUREIDS) ;
         this.pictureIds = createStringList(pictureIds);
 
-        JSONObject location = experience.getJSONObject("location") ;
+        JSONObject location = experience.getJSONObject(LOCATION) ;
         initializeLocation(location) ;
 
         this.id = location.getString("_id") ;
-        this.description = experience.getString("description") ;
+        this.description = experience.getString(DESCRIPTION) ;
         this.name = experience.getString("name") ;
-        this.creator = experience.getString("creator") ;
+        this.creator = experience.getString(CREATOR) ;
     }
 
     public ArrayList<String> createStringList(JSONArray categories)  throws org.json.JSONException {
@@ -64,8 +73,8 @@ public abstract class Experience<T> {
     }
 
     public void initializeLocation(JSONObject location) throws org.json.JSONException {
-        this.longitude = Double.parseDouble(location.getString("longitude")) ;
-        this.latitude = Double.parseDouble(location.getString("latitude")) ;
+        this.longitude = Double.parseDouble(location.getString(LONGITUDE)) ;
+        this.latitude = Double.parseDouble(location.getString(LATITUDE)) ;
     }
 
     public boolean containsRequiredFields(JSONObject object, String[] requiredFields){
@@ -95,15 +104,15 @@ public abstract class Experience<T> {
         try {
             JSONObject data = new JSONObject();
             data.put("name", name) ;
-            data.put("description", description) ;
-            data.put("creator", creator) ;
-            data.put("categories", (Object) categories) ;
-            data.put("pictureIds", (Object) pictureIds) ;
+            data.put(DESCRIPTION, description) ;
+            data.put(CREATOR, creator) ;
+            data.put(CATEGORIES, (Object) categories) ;
+            data.put(PICTUREIDS, (Object) pictureIds) ;
 
             JSONObject location = new JSONObject() ;
-            location.put("latitude", latitude) ;
-            location.put("longitude", longitude) ;
-            data.put("location", (Object) location) ;
+            location.put(LATITUDE, latitude) ;
+            location.put(LONGITUDE, longitude) ;
+            data.put(LOCATION, (Object) location) ;
 
             return data ;
         }catch(JSONException e) {
@@ -182,8 +191,8 @@ public abstract class Experience<T> {
     public String getLocationJSON(){
         try {
             JSONObject location = new JSONObject() ;
-            location.put("latitude", this.latitude) ;
-            location.put("longitude", this.longitude) ;
+            location.put(LATITUDE, this.latitude) ;
+            location.put(LONGITUDE, this.longitude) ;
             return location.toString() ;
         }catch(JSONException e) {
             Log.d("Error getLocationJSON", e.toString()) ;
@@ -194,10 +203,10 @@ public abstract class Experience<T> {
     public HashMap<String, String> toHashMap(){
         HashMap<String, String> experience = new HashMap<String, String>() ;
         experience.put("name", this.name) ;
-        experience.put("creator", this.creator) ;
-        experience.put("description", this.description);
-        experience.put("pictureIds", jsonifyArray(this.pictureIds)) ;
-        experience.put("location", getLocationJSON() ) ;
+        experience.put(CREATOR, this.creator) ;
+        experience.put(DESCRIPTION, this.description);
+        experience.put(PICTUREIDS, jsonifyArray(this.pictureIds)) ;
+        experience.put(LOCATION, getLocationJSON() ) ;
         return experience ;
     }
 
