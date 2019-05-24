@@ -1,4 +1,4 @@
-package WanderDots.Server.Post;
+package wanderDots.Server.Post;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,9 +6,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
-import WanderDots.Observer ;
-import WanderDots.Dot ;
-import WanderDots.Server.MyRequestQueue;
+import wanderDots.Observer ;
+import wanderDots.Dot ;
+import wanderDots.Server.MyRequestQueue;
 
 public class PostDot implements Response.Listener<JSONObject>,
                                 Response.ErrorListener{

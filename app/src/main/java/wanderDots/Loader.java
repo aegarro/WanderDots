@@ -1,4 +1,4 @@
-package WanderDots;
+package wanderDots;
 
 import java.util.ArrayList;
 

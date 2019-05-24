@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,10 +14,10 @@ import org.junit.runner.RunWith;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import WanderDots.Adventure;
-import WanderDots.Dot;
-import WanderDots.Observer ;
-import WanderDots.Server.Get.Get;
+import wanderDots.Adventure;
+import wanderDots.Dot;
+import wanderDots.Observer ;
+import wanderDots.Server.Get.Get;
 
 import static org.junit.Assert.*;
 

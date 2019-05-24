@@ -12,7 +12,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 
 import java.util.ArrayList;
 
-import WanderDots.Experience;
+import wanderDots.Experience;
 
 public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Adapter<ListItem> {
 

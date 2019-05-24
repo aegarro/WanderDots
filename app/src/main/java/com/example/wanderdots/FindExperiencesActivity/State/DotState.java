@@ -1,9 +1,8 @@
 package com.example.wanderdots.FindExperiencesActivity.State;
 
 import android.content.Context ;
-import android.util.Log;
 
-import WanderDots.Dot ;
+import wanderDots.Dot ;
 
 public class DotState extends State<Dot> {
 

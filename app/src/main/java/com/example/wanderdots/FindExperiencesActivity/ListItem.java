@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.example.wanderdots.DotDetailActivity;
 import com.example.wanderdots.R;
-import WanderDots.Experience;
+import wanderDots.Experience;
 
 public class ListItem <T extends Experience> extends RecyclerView.ViewHolder implements View.OnClickListener {
 

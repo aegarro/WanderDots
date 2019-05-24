@@ -1,4 +1,4 @@
-package WanderDots;
+package wanderDots;
 
 import android.util.Log;
 
