@@ -7,26 +7,28 @@ import android.widget.TextView;
 
 public class DotDetailActivity extends AppCompatActivity {
 
-    private TextView titleTxt;
-    private TextView distanceTxt;
-    private TextView ratingTxt;
-    private TextView descrTxt;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        TextView titleTxt;
+        TextView distanceTxt;
+        TextView ratingTxt;
+        TextView describeTxt;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dot_detail);
 
         titleTxt = (TextView) findViewById(R.id.dotTitle);
         distanceTxt = (TextView) findViewById(R.id.dotDistance);
         ratingTxt = (TextView) findViewById(R.id.dotRating);
-        descrTxt = (TextView) findViewById(R.id.userDescription);
+        describeTxt = (TextView) findViewById(R.id.userDescription);
 
         Intent intent = getIntent();
         titleTxt.setText(intent.getStringExtra("title"));
         distanceTxt.setText("Distance: " + intent.getStringExtra("distance"));
         ratingTxt.setText("Rating: " + intent.getStringExtra("rating"));
-        descrTxt.setText("Description: ");
+        describeTxt.setText("Description: ");
 
     }
 }
