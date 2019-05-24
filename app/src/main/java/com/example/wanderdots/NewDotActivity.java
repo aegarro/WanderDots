@@ -27,19 +27,17 @@ import wanderDots.Observer ;
 public class NewDotActivity extends AppCompatActivity
         implements View.OnClickListener, Observer {
 
-    private Button createButton ;
     private ImageView imageView4;
-    private ImageButton imageButton ;
     private PostDot dotCreator ;
-    private String dotID;
     private static int result = 1;
+    private String dotID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_dot);
-        this.createButton = findViewById(R.id.CreateButton) ;
-        this.imageButton = findViewById(R.id.imageButton);
+        Button createButton = findViewById(R.id.CreateButton) ;
+        ImageButton imageButton = findViewById(R.id.imageButton);
         this.imageView4 = findViewById(R.id.imageView4);
 
         View.OnClickListener addImageListener = new View.OnClickListener() {
@@ -48,8 +46,8 @@ public class NewDotActivity extends AppCompatActivity
                 addImages();
             }
         };
-        this.imageButton.setOnClickListener(addImageListener);
-        this.createButton.setOnClickListener(this);
+        imageButton.setOnClickListener(addImageListener);
+        createButton.setOnClickListener(this);
         this.dotCreator = new PostDot(super.getApplicationContext(), this);
         this.dotID = null ;
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -101,16 +99,15 @@ public class NewDotActivity extends AppCompatActivity
         Dot dot = new Dot();
         final EditText name = findViewById(R.id.NameTextbox);
         dot.setName(name.getText().toString());
-        //Creator???
-        dot.setCreator("Root");
+        dot.setCreator("Username");
         final EditText description = findViewById(R.id.DescriptionTextbox);
         dot.setDescription(description.getText().toString());
         //how to get data from multi-select (shaheen)
         dot.addCategory("Filler");
-        //todo: multiple images
-        //what is the picture id? bitmap? file path?
+        //what is the picture id? bitmap? file path? (alberto)
+        //multiple image functionality (abby)
         dot.addPictureId("testPictureID");
-        //how to make a map marker and get lat/long from that - for now stub using current loc
+        //how to make a map marker and get lat/long from that - for now stub using current loc (abby)
         try {
             LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
