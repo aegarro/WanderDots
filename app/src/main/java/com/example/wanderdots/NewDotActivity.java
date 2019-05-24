@@ -15,13 +15,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.content.Intent;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 
 import wanderDots.Dot ;
