@@ -46,17 +46,17 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
 
-    private FloatingActionButton newDotButton;
     private RecyclerView listContainer;
     private GoogleMap mMap;
 
     private Boolean mLocationPermissionGranted = false ; // Whether user has permitted us to access the devices location
-    private FusedLocationProviderClient mFusedLocationProviderClient;
 
     private State state ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        FloatingActionButton newDotButton;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.find_view);
         validateLocationPermission();
@@ -66,8 +66,8 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         this.listContainer.setLayoutManager(new LinearLayoutManager(this));
 
         //SET CREATEBUTTON HANDLER
-        this.newDotButton = (FloatingActionButton) findViewById(R.id.new_dot_btn);
-        this.newDotButton.setOnClickListener(this) ;
+        newDotButton = (FloatingActionButton) findViewById(R.id.new_dot_btn);
+        newDotButton.setOnClickListener(this) ;
 
         ToggleButton toggle = (ToggleButton) findViewById(R.id.listToggleButton) ;
         toggle.setOnCheckedChangeListener(this)  ;
@@ -109,9 +109,8 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     @Override
     //Runs after CreateDotActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CREATE_DOT_ACTIVITY_ID)
-            if (resultCode == RESULT_OK)
-                Dot.reload() ; //Proprogates new data: Dot > DotState
+        if (requestCode == CREATE_DOT_ACTIVITY_ID && resultCode == RESULT_OK)
+            Dot.reload() ; //Proprogates new data: Dot > DotState
     }
 
     @Override
@@ -133,6 +132,8 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
                     startMapInitialization();
                 }
             }
+            default:
+                return;
         }
     }
 
@@ -192,8 +193,9 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     }
 
     private void getDeviceLocation(){
+        FusedLocationProviderClient mFusedLocationProviderClient;
         Log.d(TAG, "getDeviceLocation: getting devices location");
-        this.mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         try{
             if(mLocationPermissionGranted){
                 final Task location = mFusedLocationProviderClient.getLastLocation();

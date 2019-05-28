@@ -16,13 +16,13 @@ import wanderDots.Experience;
 
 public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Adapter<ListItem> {
 
-    private static final String TAG = "ExperienceListAdapter";
-    private static float METERS_TO_MILES = 0.000621371f;
+    //private static final String TAG = "ExperienceListAdapter";
+    private static float meters_to_miles = 0.000621371f;
 
     public ArrayList<T> dotList;
     private Context ctx;
     private Location currentPosition;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
+    //private FusedLocationProviderClient mFusedLocationProviderClient;
 
     public ExperienceListAdapter(ArrayList<T> dotList, Context ctx){
         this.dotList = dotList;
@@ -62,7 +62,7 @@ public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Ad
     private String calculateDistance(T object, Location loc){
         float result[] = new float[1];
         Location.distanceBetween(object.getLatitude(), object.getLongitude(), loc.getLatitude(), loc.getLongitude(), result);
-        result[0] = result[0] * METERS_TO_MILES; // Convert meters to miles
+        result[0] = result[0] * meters_to_miles; // Convert meters to miles
         String dis = String.format("%.1f", result[0]); // Format String to one decimal
         return dis + " mi";
     }

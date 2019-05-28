@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 public class DotDetailActivity extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         TextView titleTxt;
@@ -19,10 +17,11 @@ public class DotDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dot_detail);
 
-        titleTxt = (TextView) findViewById(R.id.dotTitle);
-        distanceTxt = (TextView) findViewById(R.id.dotDistance);
-        ratingTxt = (TextView) findViewById(R.id.dotRating);
-        describeTxt = (TextView) findViewById(R.id.userDescription);
+
+        titleTxt = findViewById(R.id.dotTitle);
+        distanceTxt = findViewById(R.id.dotDistance);
+        ratingTxt = findViewById(R.id.dotRating);
+        describeTxt = findViewById(R.id.userDescription);
 
         Intent intent = getIntent();
         titleTxt.setText(intent.getStringExtra("title"));
