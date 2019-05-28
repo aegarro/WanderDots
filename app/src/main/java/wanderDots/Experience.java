@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class Experience<T> {
+public abstract class Experience {
 
     private static final String CATEGORIES = "categories";
     private static final String CREATOR = "creator";
@@ -19,13 +19,10 @@ public abstract class Experience<T> {
     private static final String LONGITUDE = "longitude";
     private static final String LATITUDE = "latitude";
 
-
     private static String error ;
-    protected static ArrayList<Observer> observers ;
 
     static {
         error = null ;
-        observers = new ArrayList<>() ;
     }
 
     public String id ;
@@ -210,9 +207,6 @@ public abstract class Experience<T> {
         return experience ;
     }
 
-    /*
-            STATIC METHODS FOR LOADING DATA
-     */
     protected static void setError(String string){
         error = string ;
     }
@@ -225,8 +219,4 @@ public abstract class Experience<T> {
         return error != null ;
     }
 
-    public static void notifyObservers(){
-        for(Observer observer : observers)
-            observer.subscriberHasChanged("update");
-    }
 }

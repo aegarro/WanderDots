@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,8 +46,8 @@ public class TestExperiencesLoad implements Observer {
         try {
             Dot.addObserver(this);
             lock.await(timeout, TimeUnit.MILLISECONDS);
-            assertTrue("Number of Dots", Dot.getData().size() > 0) ;
             assertFalse("error occurred during loadData", Dot.hasError()) ;
+            assertTrue("Number of Dots", Dot.getData().size() > 0) ;
         }catch(InterruptedException e){
             e.printStackTrace();
         }
@@ -62,8 +63,9 @@ public class TestExperiencesLoad implements Observer {
         try {
             Adventure.addObserver(this);
             this.lock.await(timeout, TimeUnit.MILLISECONDS);
-            assertTrue("Number of Adventures", Adventure.getData().size() > 0);
+            Log.d("arodr", Adventure.getError()) ;
             assertFalse("error occurred on load", Adventure.hasError()) ;
+            assertTrue("Number of Adventures", Adventure.getData().size() > 0);
         }catch(InterruptedException e){
             e.printStackTrace();
         }

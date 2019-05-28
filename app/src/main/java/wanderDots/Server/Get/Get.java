@@ -24,7 +24,6 @@ public class Get<T extends Experience> implements ErrorListener, Listener<String
 
     private Observer observer ;
     private String url ;
-    private ArrayList<T> data ;
     private String error ;
     private JSONObject response ;
     private String getDot = "http://10.0.2.2:5000/api/get/dots" ;
@@ -36,7 +35,6 @@ public class Get<T extends Experience> implements ErrorListener, Listener<String
         this.queue = MyRequestQueue.getInstance(context);
         this.observer = observer ;
         this.url = isDot ? getDot : getAdventures ;
-        this.data = null ;
         this.error = null ;
     }
 
@@ -47,10 +45,18 @@ public class Get<T extends Experience> implements ErrorListener, Listener<String
 
     public void onResponse(String response) {
         try {
+            if(response == null){
+                Log.d("arodr", "Get.java received null response") ;
+                this.error = "Null response from StringRequest" ;
+                this.observer.subscriberHasChanged("error");
+            }
+
             this.response = new JSONObject(response);
             observer.subscriberHasChanged("update");
+
         }catch(JSONException e){
             Log.d("arodr:Get","JSON Error" + e.toString()) ;
+            this.error = e.toString() ;
             this.observer.subscriberHasChanged("error");
         }
     }

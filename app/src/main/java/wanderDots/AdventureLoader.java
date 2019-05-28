@@ -1,5 +1,7 @@
 package wanderDots;
 
+import android.util.Log;
+
 import com.example.wanderdots.MainActivity;
 
 import org.json.JSONArray;
@@ -25,20 +27,26 @@ public final class AdventureLoader implements Observer, Loader<Adventure> {
 
     public void subscriberHasChanged(String message){
         try {
-            JSONObject response ;
+            JSONObject response = adventureGetter.getResponse() ;
+            Log.d("arodr", "start") ;
             if(this.adventureGetter.hasError())
                 this.error = this.adventureGetter.getError() ;
-            else if ((response = adventureGetter.getResponse()).has("error"))
+            else if(response == null)
+                this.error = "Adventure loader received null response";
+            else if (response.has("error"))
                 this.error = response.getString("error") ;
             else{
                 JSONArray adventures = response.getJSONArray("adventures");
+                Log.d("arodr", "reached the for loop") ;
                 for (int i = 0; i < adventures.length(); i++) {
+                    Log.d("arodr" ,"iteration " + i) ;
                     JSONObject adventure = adventures.getJSONObject(i);
                     this.adventures.add(new Adventure(adventure)) ;
                 }
             }
         }catch(JSONException e){
-           this.error = e.toString() ;
+            Log.d("arodr", "Error: " + e.toString());
+            this.error = e.toString() ;
         }
         Adventure.dataFinishedLoading();
     }

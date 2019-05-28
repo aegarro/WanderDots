@@ -10,17 +10,13 @@ import java.util.HashMap;
 
 public class Adventure extends Experience {
 
-    private static ArrayList<Adventure> data ;
-    private static AdventureLoader loader ;
+    private static ArrayList<Observer> observers = new ArrayList<>() ;
+    private static ArrayList<Adventure> data = null ;
+    private static AdventureLoader loader = new AdventureLoader() ;
 
     private ArrayList<String> dotsVisited ;
     private String[] requiredFields = {"dotsVisited"} ;
     public String dotsVString = "dotsVisited";
-
-    static {
-        data = new ArrayList<>() ;
-        loader = new AdventureLoader() ;
-    }
 
     public Adventure(JSONObject adventure) throws org.json.JSONException{
         super(adventure) ;
@@ -29,9 +25,6 @@ public class Adventure extends Experience {
         instantiateFromJSON(adventure);
     }
 
-    /*
-        JSON and String Representations
-     */
     @Override
     public void instantiateFromJSON(JSONObject adventure) throws org.json.JSONException {
         super.instantiateFromJSON(adventure);
@@ -59,9 +52,6 @@ public class Adventure extends Experience {
         return adventure ;
     }
 
-    //DO NOT REMOVE: This method triggers the static initializer of this class
-    //Beginning the loading process, without this Experience parent class recieves a null
-    //Loader object
     public static void addObserver(Observer observer){
         observers.add(observer) ;
     }
@@ -76,6 +66,11 @@ public class Adventure extends Experience {
         else
             data = loader.getData() ;
         notifyObservers();
+    }
+
+    public static void notifyObservers(){
+        for(Observer observer : observers)
+            observer.subscriberHasChanged("update");
     }
 
     public static void reload(){

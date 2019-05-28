@@ -8,16 +8,12 @@ import java.util.HashMap;
 
 public class Dot extends Experience {
 
-    private static ArrayList<Dot> data ;
-    private static DotLoader loader ;
+    private static ArrayList<Observer> observers = new ArrayList<>();
+    private static ArrayList<Dot> data = null ;
+    private static DotLoader loader = new DotLoader() ;
 
     private ArrayList<String> adventureIds;
     private String[] requiredFields = {"adventures"} ;
-
-    static {
-        loader = new DotLoader() ;
-        data = new ArrayList<>() ;
-    }
 
     public Dot(){
         super() ;
@@ -77,6 +73,11 @@ public class Dot extends Experience {
         else
             data = loader.getData() ;
         notifyObservers();
+    }
+
+    public static void notifyObservers(){
+        for(Observer observer : observers)
+            observer.subscriberHasChanged("update");
     }
 
     public static void reload(){
