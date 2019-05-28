@@ -26,12 +26,16 @@ public final class DotLoader implements Observer, Loader<Dot> {
             JSONObject response ;
             if(this.dotGetter.hasError())
                 this.error = dotGetter.getError() ;
-            else if((response = dotGetter.getResponse()).has("error"))
+            else if((dotGetter.getResponse()).has("error"))
+            {
+                response = dotGetter.getResponse();
                 this.error = response.getString("error") ;
+            }
             else {
-                JSONArray dots = response.getJSONArray("dots");
-                for (int i = 0; i < dots.length(); i++) {
-                    JSONObject dot = dots.getJSONObject(i);
+                response = dotGetter.getResponse();
+                JSONArray jdots = response.getJSONArray("dots");
+                for (int i = 0; i < jdots.length(); i++) {
+                    JSONObject dot = jdots.getJSONObject(i);
                     this.dots.add(new Dot(dot)) ;
                 }
             }
