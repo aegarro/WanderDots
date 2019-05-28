@@ -22,14 +22,14 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Button signupLink;
+        //Button signupLink;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         emailText = (EditText) findViewById(R.id.input_email);
         passwordText = (EditText) findViewById(R.id.input_password);
         loginButton = (Button) findViewById(R.id.btn_login);
-        signupLink = (Button) findViewById(R.id.btn_login);
+        //signupLink = (Button) findViewById(R.id.btn_login);
         progressBar = (ProgressBar) findViewById(R.id.login_progressBar);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -61,15 +61,11 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton.setEnabled(false);
 
-        //String email = emailText.getText().toString(); String password = passwordText.getText().toString();
-
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onLoginSuccess or onLoginFailed
                         finish();
-                        // onLoginFailed();
-
                     }
                 }, 1000);
     }
@@ -81,7 +77,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginSuccess() {
-        //loginButton . setEnabled( true);
         finish();
     }
 
