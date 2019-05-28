@@ -18,11 +18,11 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailText;
     private EditText passwordText;
     private Button loginButton;
-    private Button signupLink;
     private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Button signupLink;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -44,13 +44,10 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SIGN_UP) {
-            if (resultCode == RESULT_OK) {
-
+        if (requestCode == REQUEST_SIGN_UP && resultCode == RESULT_OK) {
                 // TODO: Implement successful sign_up logic here
                 // By default we just finish the Activity and log them in automatically
                 this.finish();
-            }
         }
     }
 
@@ -64,16 +61,12 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton.setEnabled(false);
 
-        String email = emailText.getText().toString();
-        String password = passwordText.getText().toString();
-
-        // TODO: Implement your own authentication logic here.
+        //String email = emailText.getText().toString(); String password = passwordText.getText().toString();
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onLoginSuccess or onLoginFailed
-                        //onLoginSuccess();
                         finish();
                         // onLoginFailed();
 
@@ -88,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginSuccess() {
-        //_loginButton.setEnabled(true);
+        //loginButton . setEnabled( true);
         finish();
     }
 
