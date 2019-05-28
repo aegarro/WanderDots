@@ -34,11 +34,12 @@ public class PostDot implements Response.Listener<JSONObject>,
 
     @Override
     public void onResponse(JSONObject response) {
+        String error_string = "error";
         // response
         try {
-            if(response.has("error")){
-               this.error = response.getString("error") ;
-               this.observer.subscriberHasChanged("error");
+            if(response.has(error_string)){
+               this.error = response.getString(error_string) ;
+               this.observer.subscriberHasChanged(error_string);
             } else {
                 String dotID = response.getString("id") ;
                 this.dotID = dotID ;
@@ -46,7 +47,7 @@ public class PostDot implements Response.Listener<JSONObject>,
             }
         } catch(JSONException e){
             this.error = e.toString() ;
-            this.observer.subscriberHasChanged("error");
+            this.observer.subscriberHasChanged(error_string);
         }
     }
 
