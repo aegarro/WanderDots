@@ -63,7 +63,6 @@ public class TestExperiencesLoad implements Observer {
         try {
             Adventure.addObserver(this);
             this.lock.await(timeout, TimeUnit.MILLISECONDS);
-            Log.d("arodr", Adventure.getError()) ;
             assertFalse("error occurred on load", Adventure.hasError()) ;
             assertTrue("Number of Adventures", Adventure.getData().size() > 0);
         }catch(InterruptedException e){

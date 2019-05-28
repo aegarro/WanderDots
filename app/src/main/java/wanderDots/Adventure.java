@@ -2,6 +2,7 @@ package wanderDots;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,7 +17,7 @@ public class Adventure extends Experience {
 
     private ArrayList<String> dotsVisited ;
     private String[] requiredFields = {"dotsVisited"} ;
-    public String dotsVString = "dotsVisited";
+    private final String dotsVString = "dotsVisited";
 
     public Adventure(JSONObject adventure) throws org.json.JSONException{
         super(adventure) ;
@@ -28,6 +29,7 @@ public class Adventure extends Experience {
     @Override
     public void instantiateFromJSON(JSONObject adventure) throws org.json.JSONException {
         super.instantiateFromJSON(adventure);
+        JSONArray dotsVisitedArray = adventure.getJSONArray(dotsVString) ;
         this.dotsVisited = createStringList(adventure.getJSONArray(dotsVString)) ;
     }
 

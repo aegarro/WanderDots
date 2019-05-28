@@ -41,12 +41,14 @@ public abstract class Experience {
     }
 
     public Experience(JSONObject experience) throws org.json.JSONException{
-        if(!containsRequiredFields(experience, requiredFields))
-            throw new RuntimeException("Experience missing field: " + getMissingField(experience, requiredFields)) ;
+        Log.d("arodr", "creating experience ... ")  ;
         instantiateFromJSON(experience);
     }
 
     public void instantiateFromJSON(JSONObject experience) throws org.json.JSONException{
+        if(!containsRequiredFields(experience, requiredFields))
+            throw new RuntimeException("Experience missing field: " + getMissingField(experience, requiredFields)) ;
+
         JSONArray categories = experience.getJSONArray(CATEGORIES) ;
         this.categories = createStringList(categories) ;
 
@@ -57,8 +59,11 @@ public abstract class Experience {
         initializeLocation(location) ;
 
         this.id = location.getString("_id") ;
+
         this.description = experience.getString(DESCRIPTION) ;
+
         this.name = experience.getString("name") ;
+
         this.creator = experience.getString(CREATOR) ;
     }
 

@@ -28,7 +28,6 @@ public final class AdventureLoader implements Observer, Loader<Adventure> {
     public void subscriberHasChanged(String message){
         try {
             JSONObject response = adventureGetter.getResponse() ;
-            Log.d("arodr", "start") ;
             if(this.adventureGetter.hasError())
                 this.error = this.adventureGetter.getError() ;
             else if(response == null)
@@ -37,11 +36,11 @@ public final class AdventureLoader implements Observer, Loader<Adventure> {
                 this.error = response.getString("error") ;
             else{
                 JSONArray adventures = response.getJSONArray("adventures");
-                Log.d("arodr", "reached the for loop") ;
+                Log.d("arodr", "length: " + adventures.length()) ;
                 for (int i = 0; i < adventures.length(); i++) {
-                    Log.d("arodr" ,"iteration " + i) ;
                     JSONObject adventure = adventures.getJSONObject(i);
-                    this.adventures.add(new Adventure(adventure)) ;
+                    Adventure newAdventure = new Adventure(adventure) ;
+                    this.adventures.add(newAdventure) ;
                 }
             }
         }catch(JSONException e){

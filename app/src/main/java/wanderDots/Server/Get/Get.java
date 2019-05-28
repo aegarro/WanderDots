@@ -46,11 +46,9 @@ public class Get<T extends Experience> implements ErrorListener, Listener<String
     public void onResponse(String response) {
         try {
             if(response == null){
-                Log.d("arodr", "Get.java received null response") ;
                 this.error = "Null response from StringRequest" ;
                 this.observer.subscriberHasChanged("error");
             }
-
             this.response = new JSONObject(response);
             observer.subscriberHasChanged("update");
 
