@@ -117,24 +117,36 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         mLocationPermissionGranted = false;
 
-        switch (requestCode){
-            case LOCATION_PERMISSION_REQUEST_CODE: {
-                if (grantResults.length > 0) {
-                    for (int i = 0; i < grantResults.length; i++){
-                        if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
-                            mLocationPermissionGranted = false;
-                            Log.d(TAG, "onRequestPermissionResult: permissions failed");
-                            return;
-                        }
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE)
+        {
+            if (grantResults.length > 0) {
+                if (helperFunc(grantResults))
+                    return;
+                /*for (int i = 0; i < grantResults.length; i++){
+                    if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
+                        mLocationPermissionGranted = false;
+                        Log.d(TAG, "onRequestPermissionResult: permissions failed");
+                        return;
                     }
-                    mLocationPermissionGranted = true;
-                    Log.d(TAG, "onRequestPermissionResult: permissions granted");
-                    startMapInitialization();
-                }
+                }*/
+
+                mLocationPermissionGranted = true;
+                Log.d(TAG, "onRequestPermissionResult: permissions granted");
+                startMapInitialization();
             }
-            default:
-                return;
         }
+    }
+
+    public boolean helperFunc(@NonNull int[] grantResults)
+    {
+        for (int i = 0; i < grantResults.length; i++) {
+            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                mLocationPermissionGranted = false;
+                Log.d(TAG, "onRequestPermissionResult: permissions failed");
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
