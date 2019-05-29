@@ -1,4 +1,4 @@
-package wanderDots;
+package wanderdots;
 
 import android.util.Log;
 import org.json.JSONException;

@@ -1,11 +1,11 @@
-package wanderDots;
+package wanderdots;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
-import wanderDots.server.get.Get;
+import wanderdots.server.get.Get;
 
 public final class DotLoader implements Observer, Loader<Dot> {
 

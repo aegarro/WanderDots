@@ -3,7 +3,7 @@ package com.example.wanderdots.find.state;
 import android.content.Context;
 import android.util.Log;
 
-import wanderDots.Adventure;
+import wanderdots.Adventure;
 
 public class AdventureState extends State<Adventure> {
 

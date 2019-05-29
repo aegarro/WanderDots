@@ -20,9 +20,9 @@ import android.widget.ImageView;
 import android.content.Intent;
 import java.io.InputStream;
 
-import wanderDots.Dot;
-import wanderDots.server.post.PostDot;
-import wanderDots.Observer;
+import wanderdots.Dot;
+import wanderdots.server.post.PostDot;
+import wanderdots.Observer;
 
 public class NewDotActivity extends AppCompatActivity
         implements View.OnClickListener, Observer {
@@ -94,7 +94,7 @@ public class NewDotActivity extends AppCompatActivity
     //Runs when form is being submitted
     public void onClick(View v){
 
-        Log.d("wanderDots", "About to create a Dot...") ;
+        Log.d("wanderdots", "About to create a Dot...") ;
         //create
         Dot dot = new Dot();
         final EditText name = findViewById(R.id.NameTextbox);

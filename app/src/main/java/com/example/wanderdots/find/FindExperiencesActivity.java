@@ -33,7 +33,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-import wanderDots.Dot;
+import wanderdots.Dot;
 
 public class FindExperiencesActivity extends AppCompatActivity implements OnMapReadyCallback,
         View.OnClickListener, CompoundButton.OnCheckedChangeListener, OnCompleteListener {

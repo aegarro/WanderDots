@@ -1,4 +1,4 @@
-package wanderDots;
+package wanderdots;
 
 public interface Observer {
 

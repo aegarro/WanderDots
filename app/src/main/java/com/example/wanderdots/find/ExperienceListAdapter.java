@@ -11,7 +11,7 @@ import com.example.wanderdots.R;
 
 import java.util.ArrayList;
 
-import wanderDots.Experience;
+import wanderdots.Experience;
 
 public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Adapter<ListItem> {
 

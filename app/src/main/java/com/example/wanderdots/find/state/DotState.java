@@ -2,7 +2,7 @@ package com.example.wanderdots.find.state;
 
 import android.content.Context ;
 
-import wanderDots.Dot;
+import wanderdots.Dot;
 
 public class DotState extends State<Dot> {
 

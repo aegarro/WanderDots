@@ -1,4 +1,4 @@
-package wanderDots.server.post;
+package wanderdots.server.post;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -6,7 +6,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import java.util.Map;
 
-import wanderDots.Dot;
+import wanderdots.Dot;
 
 public class CreateDotRequest extends JsonObjectRequest {
 

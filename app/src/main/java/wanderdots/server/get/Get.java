@@ -1,4 +1,4 @@
-package wanderDots.server.get;
+package wanderdots.server.get;
 
 import android.util.Log;
 import com.android.volley.Request;
@@ -10,9 +10,8 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import wanderDots.Experience;
-import wanderDots.Observer;
-import wanderDots.server.RequestQueue;
+import wanderdots.Observer;
+import wanderdots.server.RequestQueue;
 
 /* Returns All the Dots contained in the database
  * This methods expects the user to implements "Listener" methods throw the Volley.Response.Listener

@@ -1,4 +1,4 @@
-package wanderDots.server;
+package wanderdots.server;
 
 import android.content.Context;
 import android.graphics.Bitmap;

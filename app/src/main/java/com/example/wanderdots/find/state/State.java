@@ -11,8 +11,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
-import wanderDots.Experience;
-import wanderDots.Observer;
+import wanderdots.Experience;
+import wanderdots.Observer;
 /*
 Responsibilities:
     - Hold Data (dots or adventures)

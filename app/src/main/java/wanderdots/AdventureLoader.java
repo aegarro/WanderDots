@@ -1,4 +1,4 @@
-package wanderDots;
+package wanderdots;
 
 import android.util.Log;
 
@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import wanderDots.server.get.Get;
+import wanderdots.server.get.Get;
 
 public final class AdventureLoader implements Observer, Loader<Adventure> {
 
