@@ -1,4 +1,4 @@
-package com.example.wanderdots.findExperienceActivity.state;
+package com.example.wanderdots.find.state;
 
 import android.content.Context;
 import android.util.Log;

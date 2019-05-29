@@ -1,4 +1,4 @@
-package com.example.wanderdots.findExperienceActivity;
+package com.example.wanderdots.find;
 
 import android.Manifest;
 import android.content.Context;
@@ -18,9 +18,9 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
-import com.example.wanderdots.findExperienceActivity.state.State;
-import com.example.wanderdots.findExperienceActivity.state.AdventureState;
-import com.example.wanderdots.findExperienceActivity.state.DotState;
+import com.example.wanderdots.find.state.State;
+import com.example.wanderdots.find.state.AdventureState;
+import com.example.wanderdots.find.state.DotState;
 import com.example.wanderdots.NewDotActivity;
 import com.example.wanderdots.R;
 import com.google.android.gms.location.FusedLocationProviderClient;

@@ -1,9 +1,9 @@
-package com.example.wanderdots.findExperienceActivity.state;
+package com.example.wanderdots.find.state;
 
 import android.content.Context;
 import android.location.Location;
 
-import com.example.wanderdots.findExperienceActivity.ExperienceListAdapter;
+import com.example.wanderdots.find.ExperienceListAdapter;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;

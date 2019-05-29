@@ -1,4 +1,4 @@
-package com.example.wanderdots.findExperienceActivity;
+package com.example.wanderdots.find;
 
 import android.content.Context;
 import android.content.Intent;
