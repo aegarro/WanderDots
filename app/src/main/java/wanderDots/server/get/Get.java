@@ -18,7 +18,7 @@ import wanderDots.server.RequestQueue;
  * This methods expects the user to implements "Listener" methods throw the Volley.Response.Listener
  * This class implements a version of Listener, one for strings, but users will need one for ArrayList<Dot> (using generics).
  */
-public class Get<T extends Experience> implements ErrorListener, Listener<String> {
+public class Get implements ErrorListener, Listener<String> {
 
     private Observer observer ;
     private String url ;
