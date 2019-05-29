@@ -19,7 +19,7 @@ public class PostDot implements Response.Listener<JSONObject>,
     private String error ;
 
     public PostDot(Context context, Observer observer) {
-        this.queue = MyRequestQueue.getInstance(context) ;
+        this.queue = MyRequestQueue.getInstance() ;
         this.observer = observer ;
         this.dotID = null ;
     }
@@ -34,20 +34,18 @@ public class PostDot implements Response.Listener<JSONObject>,
 
     @Override
     public void onResponse(JSONObject response) {
-        String error_string = "error";
-        // response
+        String errorMessage = "error";
         try {
-            if(response.has(error_string)){
-               this.error = response.getString(error_string) ;
-               this.observer.subscriberHasChanged(error_string);
+            if(response.has(errorMessage)){
+               this.error = response.getString(errorMessage) ;
+               this.observer.subscriberHasChanged(errorMessage);
             } else {
-                String dotID = response.getString("id") ;
-                this.dotID = dotID ;
+                this.dotID = response.getString("id") ;
                 this.observer.subscriberHasChanged("Dot has been received");
             }
         } catch(JSONException e){
             this.error = e.toString() ;
-            this.observer.subscriberHasChanged(error_string);
+            this.observer.subscriberHasChanged(errorMessage);
         }
     }
 

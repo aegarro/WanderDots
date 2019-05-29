@@ -16,7 +16,7 @@ public final class DotLoader implements Observer, Loader<Dot> {
     public DotLoader(){
         this.dots = new ArrayList<>() ;
         this.error = null ;
-        this.dotGetter = new Get(MainActivity.DEFAULT_CONTEXT,this, true) ;
+        this.dotGetter = new Get(this, true) ;
         this.dotGetter.loadData();
     }
 

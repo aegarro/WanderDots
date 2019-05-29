@@ -21,7 +21,7 @@ public final class AdventureLoader implements Observer, Loader<Adventure> {
     public AdventureLoader(){
         this.adventures = new ArrayList<>() ;
         this.error = null ;
-        this.adventureGetter = new Get(MainActivity.DEFAULT_CONTEXT,this, false) ;
+        this.adventureGetter = new Get(this, false) ;
         this.adventureGetter.loadData();
     }
 

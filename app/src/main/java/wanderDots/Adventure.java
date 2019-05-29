@@ -11,13 +11,14 @@ import java.util.HashMap;
 
 public class Adventure extends Experience {
 
+    private final static String[] requiredFields = {"dotsVisited"} ;
+    private final static String dotsVString = "dotsVisited";
+
     private static ArrayList<Observer> observers = new ArrayList<>() ;
     private static ArrayList<Adventure> data = null ;
     private static AdventureLoader loader = new AdventureLoader() ;
 
     private ArrayList<String> dotsVisited ;
-    private String[] requiredFields = {"dotsVisited"} ;
-    private final String dotsVString = "dotsVisited";
 
     public Adventure(JSONObject adventure) throws org.json.JSONException{
         super(adventure) ;
@@ -29,7 +30,6 @@ public class Adventure extends Experience {
     @Override
     public void instantiateFromJSON(JSONObject adventure) throws org.json.JSONException {
         super.instantiateFromJSON(adventure);
-        JSONArray dotsVisitedArray = adventure.getJSONArray(dotsVString) ;
         this.dotsVisited = createStringList(adventure.getJSONArray(dotsVString)) ;
     }
 
@@ -73,9 +73,5 @@ public class Adventure extends Experience {
     public static void notifyObservers(){
         for(Observer observer : observers)
             observer.subscriberHasChanged("update");
-    }
-
-    public static void reload(){
-        loader.reload();
     }
 }

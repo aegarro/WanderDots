@@ -31,8 +31,8 @@ public class Get<T extends Experience> implements ErrorListener, Listener<String
 
     private MyRequestQueue queue ;
 
-    public Get(Context context, Observer observer, boolean isDot){
-        this.queue = MyRequestQueue.getInstance(context);
+    public Get(Observer observer, boolean isDot){
+        this.queue = MyRequestQueue.getInstance();
         this.observer = observer ;
         this.url = isDot ? getDot : getAdventures ;
         this.error = null ;

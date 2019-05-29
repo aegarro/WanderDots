@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.example.wanderdots.MainActivity;
 
 import android.util.LruCache ;
 
@@ -15,16 +16,15 @@ public class MyRequestQueue {
     private static MyRequestQueue instance;
     private RequestQueue requestQueue;
     private ImageLoader imageLoader;
-    private static Context ctx;
+    private static Context ctx = MainActivity.DEFAULT_CONTEXT ;
 
-    private MyRequestQueue(Context context) {
-        ctx = context;
+    private MyRequestQueue() {
         requestQueue = getRequestQueue();
 
         imageLoader = new ImageLoader(requestQueue,
                 new ImageLoader.ImageCache() {
                     private final LruCache<String, Bitmap>
-                            cache = new LruCache<String, Bitmap>(20);
+                            cache = new LruCache<>(20);
 
                     @Override
                     public Bitmap getBitmap(String url) {
@@ -38,18 +38,16 @@ public class MyRequestQueue {
                 });
     }
 
-    public static synchronized MyRequestQueue getInstance(Context context) {
+    public static synchronized MyRequestQueue getInstance() {
         if (instance == null) {
-            instance = new MyRequestQueue(context);
+            instance = new MyRequestQueue();
         }
         return instance;
     }
 
     public RequestQueue getRequestQueue() {
-        if (requestQueue == null) {
-            System.out.println(ctx) ;
+        if (requestQueue == null)
             requestQueue = Volley.newRequestQueue(ctx.getApplicationContext());
-        }
         return requestQueue;
     }
 

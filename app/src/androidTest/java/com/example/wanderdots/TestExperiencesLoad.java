@@ -78,7 +78,7 @@ public class TestExperiencesLoad implements Observer {
         Context appContext = InstrumentationRegistry.getTargetContext();
         MainActivity.setDefaultContext(appContext) ;
         try {
-            Get getLoader = new Get(appContext, this, true) ;
+            Get getLoader = new Get(this, true) ;
             getLoader.loadData();
             this.lock.await(timeout, TimeUnit.MILLISECONDS);
 
@@ -107,7 +107,7 @@ public class TestExperiencesLoad implements Observer {
         Context appContext = InstrumentationRegistry.getTargetContext();
         MainActivity.setDefaultContext(appContext) ;
         try {
-            Get getLoader = new Get(appContext, this, false) ;
+            Get getLoader = new Get( this, false) ;
             getLoader.loadData();
             this.lock.await(timeout, TimeUnit.MILLISECONDS);
 
