@@ -14,7 +14,7 @@ public final class AdventureLoader implements Observer, Loader<Adventure> {
 
     private ArrayList<Adventure> Adventures;
     private String error ;
-    private Get<Adventure> adventureGetter;
+    private Get adventureGetter;
 
     public AdventureLoader(){
         this.Adventures = new ArrayList<>() ;

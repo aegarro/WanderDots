@@ -11,7 +11,7 @@ public final class DotLoader implements Observer, Loader<Dot> {
 
     private ArrayList<Dot> dots ;
     private String error ;
-    private Get<Dot> dotGetter ;
+    private Get dotGetter ;
 
     public DotLoader(){
         this.dots = new ArrayList<>() ;
