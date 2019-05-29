@@ -10,7 +10,7 @@ import com.example.wanderdots.DotDetailActivity;
 import com.example.wanderdots.R;
 import wanderDots.Experience;
 
-public class ListItem <T extends Experience> extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class ListItem extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     public TextView title;
     public TextView distance;

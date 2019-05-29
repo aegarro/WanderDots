@@ -87,8 +87,8 @@ public abstract class State <T extends Experience> implements Observer {
 
     protected void setData(ArrayList<T> newData){
         this.data.clear();
-        for(T data : newData)
-            this.data.add(data) ;
+        for(T elem : newData)
+            this.data.add(elem) ;
         this.adapter.notifyDataSetChanged();
         if(this.map != null)
             this.addPositionsToMap(this.map);

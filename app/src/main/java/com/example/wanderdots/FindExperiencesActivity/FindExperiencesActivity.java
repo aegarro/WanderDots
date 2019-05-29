@@ -117,23 +117,14 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         mLocationPermissionGranted = false;
 
-        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE)
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE && grantResults.length > 0)
         {
-            if (grantResults.length > 0) {
                 if (helperFunc(grantResults))
                     return;
-                /*for (int i = 0; i < grantResults.length; i++){
-                    if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
-                        mLocationPermissionGranted = false;
-                        Log.d(TAG, "onRequestPermissionResult: permissions failed");
-                        return;
-                    }
-                }*/
 
                 mLocationPermissionGranted = true;
                 Log.d(TAG, "onRequestPermissionResult: permissions granted");
                 startMapInitialization();
-            }
         }
     }
 

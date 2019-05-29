@@ -16,13 +16,11 @@ import wanderDots.Experience;
 
 public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Adapter<ListItem> {
 
-    //private static final String TAG = "ExperienceListAdapter";
     private static float meters_to_miles = 0.000621371f;
 
     public ArrayList<T> dotList;
     private Context ctx;
     private Location currentPosition;
-    //private FusedLocationProviderClient mFusedLocationProviderClient;
 
     public ExperienceListAdapter(ArrayList<T> dotList, Context ctx){
         this.dotList = dotList;
