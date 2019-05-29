@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.wanderdots.FindExperiencesActivity.FindExperiencesActivity;
+import com.example.wanderdots.FindExperiencesActivity.findExperiencesActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class mainActivity extends AppCompatActivity {
 
     public static Context DEFAULT_CONTEXT ;
 
@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.DEFAULT_CONTEXT = getApplicationContext() ;
-        Intent intent = new Intent(this, FindExperiencesActivity.class);
+        Intent intent = new Intent(this, findExperiencesActivity.class);
         startActivity(intent);
     }
 

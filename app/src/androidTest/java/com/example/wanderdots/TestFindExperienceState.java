@@ -5,8 +5,8 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.example.wanderdots.FindExperiencesActivity.State.AdventureState;
-import com.example.wanderdots.FindExperiencesActivity.State.DotState;
+import com.example.wanderdots.FindExperiencesActivity.State.adventureState;
+import com.example.wanderdots.FindExperiencesActivity.State.dotState;
 import com.google.android.gms.maps.model.Marker;
 
 import org.junit.Test;
@@ -35,10 +35,10 @@ public class TestFindExperienceState implements observer {
     @Test
     public void testMarkersDisableOnExit(){
         Context appContext = InstrumentationRegistry.getTargetContext();
-        MainActivity.setDefaultContext(appContext) ;
+        mainActivity.setDefaultContext(appContext) ;
 
-        DotState dotState = new DotState(appContext) ;
-        AdventureState adventureState = new AdventureState(appContext) ;
+        dotState dotState = new dotState(appContext) ;
+        adventureState adventureState = new adventureState(appContext) ;
 
         for(Marker marker : dotState.getMarkers())
             assertFalse(marker.isVisible());
@@ -66,11 +66,11 @@ public class TestFindExperienceState implements observer {
         int timeout = 4000 ; //in millis
         this.lock = new CountDownLatch(1) ;
         Context appContext = InstrumentationRegistry.getTargetContext();
-        MainActivity.setDefaultContext(appContext) ;
+        mainActivity.setDefaultContext(appContext) ;
 
         //Initialize States
         try {
-            DotState dotState = new DotState(appContext) ;
+            dotState dotState = new dotState(appContext) ;
             dotState.addObserver(this);
 
             lock.await(timeout, TimeUnit.MILLISECONDS);
@@ -86,11 +86,11 @@ public class TestFindExperienceState implements observer {
         int timeout = 4000 ; //in millis
         this.lock = new CountDownLatch(1) ;
         Context appContext = InstrumentationRegistry.getTargetContext();
-        MainActivity.setDefaultContext(appContext) ;
+        mainActivity.setDefaultContext(appContext) ;
 
         //Initialize States
         try {
-            AdventureState adventureState = new AdventureState(appContext) ;
+            adventureState adventureState = new adventureState(appContext) ;
             adventureState.addObserver(this);
 
             lock.await(timeout, TimeUnit.MILLISECONDS);

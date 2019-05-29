@@ -3,7 +3,7 @@ package com.example.wanderdots.FindExperiencesActivity.State;
 import android.content.Context;
 import android.location.Location;
 
-import com.example.wanderdots.FindExperiencesActivity.ExperienceListAdapter;
+import com.example.wanderdots.FindExperiencesActivity.experienceListAdapter;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -20,21 +20,21 @@ Responsibilities:
     - loadData data
  */
 
-public abstract class State <T extends experience> implements observer {
+public abstract class state<T extends experience> implements observer {
 
     private ArrayList<observer> observers ;
 
-    protected ExperienceListAdapter<T> adapter ;
+    protected experienceListAdapter<T> adapter ;
     protected ArrayList<T> data ;
-    protected State nextState ;
+    protected state nextState ;
     protected ArrayList<Marker> markers ;
     protected GoogleMap map ;
     protected boolean active ; //whether both map and experiences are loaded
 
-    public State(Context context){
+    public state(Context context){
         this.data = new ArrayList<>() ;
         this.observers = new ArrayList<observer>() ;
-        this.adapter = new ExperienceListAdapter<>(this.data, context) ;
+        this.adapter = new experienceListAdapter<>(this.data, context) ;
         this.nextState = null ;
         this.map = null ;
         this.markers = new ArrayList<>() ;
@@ -59,7 +59,7 @@ public abstract class State <T extends experience> implements observer {
         updateMarkersVisibility();
     }
 
-    public void setNextState(State nextState){
+    public void setNextState(state nextState){
         this.nextState = nextState ;
     }
 
@@ -68,11 +68,11 @@ public abstract class State <T extends experience> implements observer {
         this.adapter.notifyDataSetChanged();
     }
 
-    public ExperienceListAdapter<T> getAdapter(){
+    public experienceListAdapter<T> getAdapter(){
         return this.adapter ;
     }
 
-    public State getNextState(){
+    public state getNextState(){
         return this.nextState ;
     }
 

@@ -7,7 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.example.wanderdots.MainActivity;
+import com.example.wanderdots.mainActivity;
 
 import android.util.LruCache ;
 
@@ -16,7 +16,7 @@ public class requestQueue {
     private static wanderDots.Server.requestQueue instance;
     private RequestQueue requestQueue;
     private ImageLoader imageLoader;
-    private static Context ctx = MainActivity.DEFAULT_CONTEXT ;
+    private static Context ctx = mainActivity.DEFAULT_CONTEXT ;
 
     private requestQueue() {
         requestQueue = getRequestQueue();

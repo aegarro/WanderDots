@@ -5,9 +5,9 @@ import android.util.Log;
 
 import wanderDots.adventure;
 
-public class AdventureState extends State<adventure> {
+public class adventureState extends state<adventure> {
 
-    public AdventureState(Context context){
+    public adventureState(Context context){
         super(context) ;
         adventure.addObserver(this);
     }

@@ -41,7 +41,7 @@ public class TestExperiencesLoad implements observer {
 
         this.lock = new CountDownLatch(1) ;
         Context appContext = InstrumentationRegistry.getTargetContext();
-        MainActivity.setDefaultContext(appContext) ;
+        mainActivity.setDefaultContext(appContext) ;
         try {
             dot.addObserver(this);
             lock.await(timeout, TimeUnit.MILLISECONDS);
@@ -58,7 +58,7 @@ public class TestExperiencesLoad implements observer {
 
         this.lock = new CountDownLatch(1) ;
         Context appContext = InstrumentationRegistry.getTargetContext();
-        MainActivity.setDefaultContext(appContext) ;
+        mainActivity.setDefaultContext(appContext) ;
         try {
             adventure.addObserver(this);
             this.lock.await(timeout, TimeUnit.MILLISECONDS);
@@ -75,7 +75,7 @@ public class TestExperiencesLoad implements observer {
 
         this.lock = new CountDownLatch(1) ;
         Context appContext = InstrumentationRegistry.getTargetContext();
-        MainActivity.setDefaultContext(appContext) ;
+        mainActivity.setDefaultContext(appContext) ;
         try {
             get getLoader = new get(this, true) ;
             getLoader.loadData();
@@ -104,7 +104,7 @@ public class TestExperiencesLoad implements observer {
 
         this.lock = new CountDownLatch(1) ;
         Context appContext = InstrumentationRegistry.getTargetContext();
-        MainActivity.setDefaultContext(appContext) ;
+        mainActivity.setDefaultContext(appContext) ;
         try {
             get getLoader = new get( this, false) ;
             getLoader.loadData();

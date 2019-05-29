@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import wanderDots.experience;
 
-public class ExperienceListAdapter<T extends experience> extends RecyclerView.Adapter<ListItem> {
+public class experienceListAdapter<T extends experience> extends RecyclerView.Adapter<listItem> {
 
     private static float meters_to_miles = 0.000621371f;
 
@@ -21,20 +21,20 @@ public class ExperienceListAdapter<T extends experience> extends RecyclerView.Ad
     private Context ctx;
     private Location currentPosition;
 
-    public ExperienceListAdapter(ArrayList<T> dotList, Context ctx){
+    public experienceListAdapter(ArrayList<T> dotList, Context ctx){
         this.dotList = dotList;
         this.ctx = ctx;
     }
 
     @NonNull
     @Override
-    public ListItem onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public listItem onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dot_list_item, viewGroup, false);
-        return new ListItem(view, ctx);
+        return new listItem(view, ctx);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListItem viewHolder, int i) {
+    public void onBindViewHolder(@NonNull listItem viewHolder, int i) {
         //Displays the i'th element in the List
         viewHolder.title.setText(dotList.get(i).getName());
         if(currentPosition == null)

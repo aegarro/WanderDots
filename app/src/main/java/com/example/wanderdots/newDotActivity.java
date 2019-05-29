@@ -24,7 +24,7 @@ import wanderDots.dot;
 import wanderDots.Server.Post.postDot;
 import wanderDots.observer;
 
-public class NewDotActivity extends AppCompatActivity
+public class newDotActivity extends AppCompatActivity
         implements View.OnClickListener, observer {
 
     private ImageView imageView4;
@@ -76,7 +76,7 @@ public class NewDotActivity extends AppCompatActivity
                     }
                 }
             } catch (Exception e) {
-                Log.e("NewDotActivity", e.toString());
+                Log.e("newDotActivity", e.toString());
             }
         }
     }
@@ -115,7 +115,7 @@ public class NewDotActivity extends AppCompatActivity
             dot.setLatitude(location.getLatitude());
         }
         catch(SecurityException e){
-            Log.e("NewDotActivity", e.toString());
+            Log.e("newDotActivity", e.toString());
         }
 
         this.dotCreator.postDot(dot) ;
