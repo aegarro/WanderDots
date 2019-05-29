@@ -1,4 +1,4 @@
-package com.example.wanderdots.FindExperiencesActivity;
+package com.example.wanderdots.findExperienceActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,10 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-import com.example.wanderdots.dotDetailActivity;
+import com.example.wanderdots.DotDetailActivity;
 import com.example.wanderdots.R;
 
-public class listItem extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class ListItem extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     public TextView title;
     public TextView distance;
@@ -18,7 +18,7 @@ public class listItem extends RecyclerView.ViewHolder implements View.OnClickLis
     private View mView;
     private Context ctx;
 
-    public listItem(@NonNull View itemView, Context ctx){
+    public ListItem(@NonNull View itemView, Context ctx){
         super(itemView);
         this.mView = itemView;
         this.ctx = ctx;
@@ -31,7 +31,7 @@ public class listItem extends RecyclerView.ViewHolder implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(this.ctx, dotDetailActivity.class);
+        Intent intent = new Intent(this.ctx, DotDetailActivity.class);
         intent.putExtra("title", title.getText());
         intent.putExtra("distance", distance.getText());
         intent.putExtra("rating", rating.getText());

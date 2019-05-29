@@ -6,25 +6,25 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class dot extends experience {
+public class Dot extends Experience {
 
-    private static ArrayList<observer> observers = new ArrayList<>();
-    private static ArrayList<dot> data = null ;
-    private static dotLoader loader = new dotLoader() ;
+    private static ArrayList<Observer> Observers = new ArrayList<>();
+    private static ArrayList<Dot> data = null ;
+    private static DotLoader loader = new DotLoader() ;
     private static String adventure_string = "adventures";
 
     private ArrayList<String> adventureIds;
     private String[] requiredFields = {adventure_string} ;
 
-    public dot(){
+    public Dot(){
         super() ;
         this.adventureIds = new ArrayList<>() ;
     }
 
-    public dot(JSONObject dot) throws org.json.JSONException{
+    public Dot(JSONObject dot) throws org.json.JSONException{
         super(dot) ;
         if(!containsRequiredFields(dot, requiredFields))
-            throw new RuntimeException("dot Validation Error: Given dot missing " + getMissingField(dot, requiredFields)) ;
+            throw new RuntimeException("Dot Validation Error: Given Dot missing " + getMissingField(dot, requiredFields)) ;
         instantiateFromJSON(dot) ;
     }
 
@@ -50,7 +50,7 @@ public class dot extends experience {
                                                                     }
 
     @Override
-    //Used for sending data to server to create adventure
+    //Used for sending data to server to create Adventure
     public HashMap<String, String> toHashMap(){
         HashMap<String, String> dot = super.toHashMap() ;
         dot.put(adventure_string, jsonifyArray(this.adventureIds)) ;
@@ -58,13 +58,13 @@ public class dot extends experience {
     }
 
     //DO NOT REMOVE: This method triggers the static initializer of this class
-    //Beginning the loading process, without this experience parent class recieves a null
-    //loader object
-    public static void addObserver(observer observer){
-        observers.add(observer) ;
+    //Beginning the loading process, without this Experience parent class recieves a null
+    //Loader object
+    public static void addObserver(Observer observer){
+        Observers.add(observer) ;
     }
 
-    public static ArrayList<dot> getData(){
+    public static ArrayList<Dot> getData(){
         return data ;
     }
 
@@ -77,7 +77,7 @@ public class dot extends experience {
     }
 
     public static void notifyObservers(){
-        for(wanderDots.observer observer : observers)
+        for(Observer observer : Observers)
             observer.subscriberHasChanged("update");
     }
 

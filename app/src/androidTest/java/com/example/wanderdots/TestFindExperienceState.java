@@ -5,8 +5,8 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.example.wanderdots.FindExperiencesActivity.State.adventureState;
-import com.example.wanderdots.FindExperiencesActivity.State.dotState;
+import com.example.wanderdots.findExperienceActivity.state.DotState;
+import com.example.wanderdots.findExperienceActivity.state.AdventureState;
 import com.google.android.gms.maps.model.Marker;
 
 import org.junit.Test;
@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import wanderDots.observer;
+import wanderDots.Observer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -28,17 +28,17 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public class TestFindExperienceState implements observer {
+public class TestFindExperienceState implements Observer {
 
     private CountDownLatch lock ;
 
     @Test
     public void testMarkersDisableOnExit(){
         Context appContext = InstrumentationRegistry.getTargetContext();
-        mainActivity.setDefaultContext(appContext) ;
+        MainActivity.setDefaultContext(appContext) ;
 
-        dotState dotState = new dotState(appContext) ;
-        adventureState adventureState = new adventureState(appContext) ;
+        DotState dotState = new DotState(appContext) ;
+        AdventureState adventureState = new AdventureState(appContext) ;
 
         for(Marker marker : dotState.getMarkers())
             assertFalse(marker.isVisible());
@@ -66,16 +66,16 @@ public class TestFindExperienceState implements observer {
         int timeout = 4000 ; //in millis
         this.lock = new CountDownLatch(1) ;
         Context appContext = InstrumentationRegistry.getTargetContext();
-        mainActivity.setDefaultContext(appContext) ;
+        MainActivity.setDefaultContext(appContext) ;
 
         //Initialize States
         try {
-            dotState dotState = new dotState(appContext) ;
+            DotState dotState = new DotState(appContext) ;
             dotState.addObserver(this);
 
             lock.await(timeout, TimeUnit.MILLISECONDS);
 
-            assertTrue("state loaded dots", dotState.getAdapter().getItemCount() > 0) ;
+            assertTrue("State loaded dots", dotState.getAdapter().getItemCount() > 0) ;
         }catch(InterruptedException e){
             e.printStackTrace();
         }
@@ -86,16 +86,16 @@ public class TestFindExperienceState implements observer {
         int timeout = 4000 ; //in millis
         this.lock = new CountDownLatch(1) ;
         Context appContext = InstrumentationRegistry.getTargetContext();
-        mainActivity.setDefaultContext(appContext) ;
+        MainActivity.setDefaultContext(appContext) ;
 
         //Initialize States
         try {
-            adventureState adventureState = new adventureState(appContext) ;
+            AdventureState adventureState = new AdventureState(appContext) ;
             adventureState.addObserver(this);
 
             lock.await(timeout, TimeUnit.MILLISECONDS);
 
-            assertTrue("state loaded adventures", adventureState.getAdapter().getItemCount() > 0) ;
+            assertTrue("State loaded adventures", adventureState.getAdapter().getItemCount() > 0) ;
         }catch(InterruptedException e){
             e.printStackTrace();
         }

@@ -1,24 +1,23 @@
-package wanderDots.Server;
+package wanderDots.server;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.example.wanderdots.mainActivity;
+import com.example.wanderdots.MainActivity;
 
 import android.util.LruCache ;
 
-public class requestQueue {
+public class RequestQueue {
 
-    private static wanderDots.Server.requestQueue instance;
-    private RequestQueue requestQueue;
+    private static RequestQueue instance;
+    private com.android.volley.RequestQueue requestQueue;
     private ImageLoader imageLoader;
-    private static Context ctx = mainActivity.DEFAULT_CONTEXT ;
+    private static Context ctx = MainActivity.DEFAULT_CONTEXT ;
 
-    private requestQueue() {
+    private RequestQueue() {
         requestQueue = getRequestQueue();
 
         imageLoader = new ImageLoader(requestQueue,
@@ -38,14 +37,14 @@ public class requestQueue {
                 });
     }
 
-    public static synchronized wanderDots.Server.requestQueue getInstance() {
+    public static synchronized RequestQueue getInstance() {
         if (instance == null) {
-            instance = new requestQueue();
+            instance = new RequestQueue();
         }
         return instance;
     }
 
-    public RequestQueue getRequestQueue() {
+    public com.android.volley.RequestQueue getRequestQueue() {
         if (requestQueue == null)
             requestQueue = Volley.newRequestQueue(ctx.getApplicationContext());
         return requestQueue;

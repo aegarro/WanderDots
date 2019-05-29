@@ -1,6 +1,6 @@
 package wanderDots;
 
-public interface observer {
+public interface Observer {
 
     void subscriberHasChanged(String message) ;
 }

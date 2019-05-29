@@ -1,4 +1,4 @@
-package wanderDots.Server.Get;
+package wanderDots.server.get;
 
 import android.util.Log;
 import com.android.volley.Request;
@@ -10,26 +10,27 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import wanderDots.experience;
-import wanderDots.Server.requestQueue;
+import wanderDots.Experience;
+import wanderDots.Observer;
+import wanderDots.server.RequestQueue;
 
 /* Returns All the Dots contained in the database
  * This methods expects the user to implements "Listener" methods throw the Volley.Response.Listener
- * This class implements a version of Listener, one for strings, but users will need one for ArrayList<dot> (using generics).
+ * This class implements a version of Listener, one for strings, but users will need one for ArrayList<Dot> (using generics).
  */
-public class get<T extends experience> implements ErrorListener, Listener<String> {
+public class Get<T extends Experience> implements ErrorListener, Listener<String> {
 
-    private wanderDots.observer observer ;
+    private Observer observer ;
     private String url ;
     private String error ;
     private JSONObject response ;
-    private String getDot = "http://10.0.2.2:5000/api/get/dots" ;
-    private String getAdventures = "http://10.0.2.2:5000/api/get/adventures";
+    private String getDot = "http://10.0.2.2:5000/api/Get/dots" ;
+    private String getAdventures = "http://10.0.2.2:5000/api/Get/adventures";
 
-    private requestQueue queue ;
+    private RequestQueue queue ;
 
-    public get(wanderDots.observer observer, boolean isDot){
-        this.queue = requestQueue.getInstance();
+    public Get(Observer observer, boolean isDot){
+        this.queue = RequestQueue.getInstance();
         this.observer = observer ;
         this.url = isDot ? getDot : getAdventures ;
         this.error = null ;
@@ -50,14 +51,14 @@ public class get<T extends experience> implements ErrorListener, Listener<String
             observer.subscriberHasChanged("update");
 
         }catch(JSONException e){
-            Log.d("arodr:get","JSON Error" + e.toString()) ;
+            Log.d("arodr:Get","JSON Error" + e.toString()) ;
             this.error = e.toString() ;
             this.observer.subscriberHasChanged("error");
         }
     }
 
     public void onErrorResponse(VolleyError error) {
-        Log.d("arodr:get", "an error has occurred creating a request") ;
+        Log.d("arodr:Get", "an error has occurred creating a request") ;
         this.error = error.toString() ;
         this.observer.subscriberHasChanged(this.url);
     }

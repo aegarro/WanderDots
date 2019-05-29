@@ -1,4 +1,4 @@
-package com.example.wanderdots.FindExperiencesActivity;
+package com.example.wanderdots.findExperienceActivity;
 
 import android.content.Context;
 import android.location.Location;
@@ -11,9 +11,9 @@ import com.example.wanderdots.R;
 
 import java.util.ArrayList;
 
-import wanderDots.experience;
+import wanderDots.Experience;
 
-public class experienceListAdapter<T extends experience> extends RecyclerView.Adapter<listItem> {
+public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Adapter<ListItem> {
 
     private static float meters_to_miles = 0.000621371f;
 
@@ -21,20 +21,20 @@ public class experienceListAdapter<T extends experience> extends RecyclerView.Ad
     private Context ctx;
     private Location currentPosition;
 
-    public experienceListAdapter(ArrayList<T> dotList, Context ctx){
+    public ExperienceListAdapter(ArrayList<T> dotList, Context ctx){
         this.dotList = dotList;
         this.ctx = ctx;
     }
 
     @NonNull
     @Override
-    public listItem onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ListItem onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dot_list_item, viewGroup, false);
-        return new listItem(view, ctx);
+        return new ListItem(view, ctx);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull listItem viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ListItem viewHolder, int i) {
         //Displays the i'th element in the List
         viewHolder.title.setText(dotList.get(i).getName());
         if(currentPosition == null)
@@ -54,7 +54,7 @@ public class experienceListAdapter<T extends experience> extends RecyclerView.Ad
         currentPosition = loc;
     }
 
-    //Calculates distance between experience like object and location
+    //Calculates distance between Experience like object and location
     //Returns the String representing the distance followed by the units
     private String calculateDistance(T object, Location loc){
         float result[] = new float[1];

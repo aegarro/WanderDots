@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".FindExperiencesActivity.findExperiencesActivity"
+    tools:context=".findExperienceActivity.FindExperiencesActivity"
     tools:showIn="@layout/activity_find_view">
 
 </android.support.constraint.ConstraintLayout>

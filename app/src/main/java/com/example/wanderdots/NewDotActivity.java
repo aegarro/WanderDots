@@ -20,15 +20,15 @@ import android.widget.ImageView;
 import android.content.Intent;
 import java.io.InputStream;
 
-import wanderDots.dot;
-import wanderDots.Server.Post.postDot;
-import wanderDots.observer;
+import wanderDots.Dot;
+import wanderDots.server.post.PostDot;
+import wanderDots.Observer;
 
-public class newDotActivity extends AppCompatActivity
-        implements View.OnClickListener, observer {
+public class NewDotActivity extends AppCompatActivity
+        implements View.OnClickListener, Observer {
 
     private ImageView imageView4;
-    private postDot dotCreator ;
+    private PostDot dotCreator ;
     private static int result = 1;
     private String dotID;
 
@@ -48,7 +48,7 @@ public class newDotActivity extends AppCompatActivity
         };
         imageButton.setOnClickListener(addImageListener);
         createButton.setOnClickListener(this);
-        this.dotCreator = new postDot(super.getApplicationContext(), this);
+        this.dotCreator = new PostDot(super.getApplicationContext(), this);
         this.dotID = null ;
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
@@ -76,7 +76,7 @@ public class newDotActivity extends AppCompatActivity
                     }
                 }
             } catch (Exception e) {
-                Log.e("newDotActivity", e.toString());
+                Log.e("NewDotActivity", e.toString());
             }
         }
     }
@@ -86,7 +86,7 @@ public class newDotActivity extends AppCompatActivity
             this.dotID = this.dotCreator.getDotID() ;
             finish() ; //should return back to home screen
         }else {
-            Log.d("POST dot Error:", this.dotCreator.getError()) ;
+            Log.d("POST Dot Error:", this.dotCreator.getError()) ;
         }
     }
 
@@ -94,20 +94,20 @@ public class newDotActivity extends AppCompatActivity
     //Runs when form is being submitted
     public void onClick(View v){
 
-        Log.d("wanderDots", "About to create a dot...") ;
+        Log.d("wanderDots", "About to create a Dot...") ;
         //create
-        dot dot = new dot();
+        Dot dot = new Dot();
         final EditText name = findViewById(R.id.NameTextbox);
         dot.setName(name.getText().toString());
         dot.setCreator("Username");
         final EditText description = findViewById(R.id.DescriptionTextbox);
         dot.setDescription(description.getText().toString());
-        //how to get data from multi-select (shaheen)
+        //how to Get data from multi-select (shaheen)
         dot.addCategory("Filler");
         //what is the picture id? bitmap? file path? (alberto)
         //multiple image functionality (abby)
         dot.addPictureId("testPictureID");
-        //how to make a map marker and get lat/long from that - for now stub using current loc (abby)
+        //how to make a map marker and Get lat/long from that - for now stub using current loc (abby)
         try {
             LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -115,7 +115,7 @@ public class newDotActivity extends AppCompatActivity
             dot.setLatitude(location.getLatitude());
         }
         catch(SecurityException e){
-            Log.e("newDotActivity", e.toString());
+            Log.e("NewDotActivity", e.toString());
         }
 
         this.dotCreator.postDot(dot) ;

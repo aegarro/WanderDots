@@ -10,9 +10,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-public class loginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
-    private static final String TAG = "loginActivity";
+    private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGN_UP = 0;
 
     private EditText emailText;
@@ -70,7 +70,7 @@ public class loginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // Disable going back to the mainActivity
+        // Disable going back to the MainActivity
         moveTaskToBack(true);
     }
 

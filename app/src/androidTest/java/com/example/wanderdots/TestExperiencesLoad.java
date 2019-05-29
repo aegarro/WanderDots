@@ -14,24 +14,24 @@ import org.junit.runner.RunWith;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import wanderDots.Server.Get.get;
-import wanderDots.adventure;
-import wanderDots.dot;
-import wanderDots.observer;
+import wanderDots.Adventure;
+import wanderDots.Dot;
+import wanderDots.server.get.Get;
+import wanderDots.Observer;
 
 import static org.junit.Assert.*;
 
 /*
  * Verifies that
- * 1. dot class loads once an observer has been added to it
- * 2. adventure class loads once an observer has been added to it
- * 3. get class loads Dots
- * 4. get class loads Adventures
+ * 1. Dot class loads once an Observer has been added to it
+ * 2. Adventure class loads once an Observer has been added to it
+ * 3. Get class loads Dots
+ * 4. Get class loads Adventures
  */
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public class TestExperiencesLoad implements observer {
+public class TestExperiencesLoad implements Observer {
 
     private CountDownLatch lock ;
 
@@ -41,12 +41,12 @@ public class TestExperiencesLoad implements observer {
 
         this.lock = new CountDownLatch(1) ;
         Context appContext = InstrumentationRegistry.getTargetContext();
-        mainActivity.setDefaultContext(appContext) ;
+        MainActivity.setDefaultContext(appContext) ;
         try {
-            dot.addObserver(this);
+            Dot.addObserver(this);
             lock.await(timeout, TimeUnit.MILLISECONDS);
-            assertFalse("error occurred during loadData", dot.hasError()) ;
-            assertTrue("Number of Dots", dot.getData().size() > 0) ;
+            assertFalse("error occurred during loadData", Dot.hasError()) ;
+            assertTrue("Number of Dots", Dot.getData().size() > 0) ;
         }catch(InterruptedException e){
             e.printStackTrace();
         }
@@ -58,12 +58,12 @@ public class TestExperiencesLoad implements observer {
 
         this.lock = new CountDownLatch(1) ;
         Context appContext = InstrumentationRegistry.getTargetContext();
-        mainActivity.setDefaultContext(appContext) ;
+        MainActivity.setDefaultContext(appContext) ;
         try {
-            adventure.addObserver(this);
+            Adventure.addObserver(this);
             this.lock.await(timeout, TimeUnit.MILLISECONDS);
-            assertFalse("error occurred on load", adventure.hasError()) ;
-            assertTrue("Number of Adventures", adventure.getData().size() > 0);
+            assertFalse("error occurred on load", Adventure.hasError()) ;
+            assertTrue("Number of Adventures", Adventure.getData().size() > 0);
         }catch(InterruptedException e){
             e.printStackTrace();
         }
@@ -75,9 +75,9 @@ public class TestExperiencesLoad implements observer {
 
         this.lock = new CountDownLatch(1) ;
         Context appContext = InstrumentationRegistry.getTargetContext();
-        mainActivity.setDefaultContext(appContext) ;
+        MainActivity.setDefaultContext(appContext) ;
         try {
-            get getLoader = new get(this, true) ;
+            Get getLoader = new Get(this, true) ;
             getLoader.loadData();
             this.lock.await(timeout, TimeUnit.MILLISECONDS);
 
@@ -88,7 +88,7 @@ public class TestExperiencesLoad implements observer {
             JSONObject response = getLoader.getResponse() ;
             assertTrue("Response contains Dots", response.has("dots"));
 
-            //Verify Data contains at least 1 dot
+            //Verify Data contains at least 1 Dot
             JSONArray dots = response.getJSONArray("dots");
             assertTrue("Contains nonzero dots", dots.length() > 0) ;
         }catch(InterruptedException e){
@@ -104,9 +104,9 @@ public class TestExperiencesLoad implements observer {
 
         this.lock = new CountDownLatch(1) ;
         Context appContext = InstrumentationRegistry.getTargetContext();
-        mainActivity.setDefaultContext(appContext) ;
+        MainActivity.setDefaultContext(appContext) ;
         try {
-            get getLoader = new get( this, false) ;
+            Get getLoader = new Get( this, false) ;
             getLoader.loadData();
             this.lock.await(timeout, TimeUnit.MILLISECONDS);
 
@@ -117,7 +117,7 @@ public class TestExperiencesLoad implements observer {
             JSONObject response = getLoader.getResponse() ;
             assertTrue("Response contains ads:", response.has("adventures"));
 
-            //Verify data contains at least one adventure
+            //Verify data contains at least one Adventure
             JSONArray adventures = response.getJSONArray("adventures");
             assertTrue("Contains nonzero adventures", adventures.length() > 0) ;
         }catch(InterruptedException e){

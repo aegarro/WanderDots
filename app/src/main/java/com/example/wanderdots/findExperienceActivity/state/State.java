@@ -1,9 +1,9 @@
-package com.example.wanderdots.FindExperiencesActivity.State;
+package com.example.wanderdots.findExperienceActivity.state;
 
 import android.content.Context;
 import android.location.Location;
 
-import com.example.wanderdots.FindExperiencesActivity.experienceListAdapter;
+import com.example.wanderdots.findExperienceActivity.ExperienceListAdapter;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -11,30 +11,30 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
-import wanderDots.experience;
-import wanderDots.observer;
+import wanderDots.Experience;
+import wanderDots.Observer;
 /*
 Responsibilities:
     - Hold Data (dots or adventures)
-    - disable markers when state is inactive, activate when state is active
+    - disable markers when State is inactive, activate when State is active
     - loadData data
  */
 
-public abstract class state<T extends experience> implements observer {
+public abstract class State<T extends Experience> implements Observer {
 
-    private ArrayList<observer> observers ;
+    private ArrayList<Observer> Observers;
 
-    protected experienceListAdapter<T> adapter ;
+    protected ExperienceListAdapter<T> adapter ;
     protected ArrayList<T> data ;
-    protected state nextState ;
+    protected State nextState ;
     protected ArrayList<Marker> markers ;
     protected GoogleMap map ;
     protected boolean active ; //whether both map and experiences are loaded
 
-    public state(Context context){
+    public State(Context context){
         this.data = new ArrayList<>() ;
-        this.observers = new ArrayList<observer>() ;
-        this.adapter = new experienceListAdapter<>(this.data, context) ;
+        this.Observers = new ArrayList<Observer>() ;
+        this.adapter = new ExperienceListAdapter<>(this.data, context) ;
         this.nextState = null ;
         this.map = null ;
         this.markers = new ArrayList<>() ;
@@ -59,7 +59,7 @@ public abstract class state<T extends experience> implements observer {
         updateMarkersVisibility();
     }
 
-    public void setNextState(state nextState){
+    public void setNextState(State nextState){
         this.nextState = nextState ;
     }
 
@@ -68,20 +68,20 @@ public abstract class state<T extends experience> implements observer {
         this.adapter.notifyDataSetChanged();
     }
 
-    public experienceListAdapter<T> getAdapter(){
+    public ExperienceListAdapter<T> getAdapter(){
         return this.adapter ;
     }
 
-    public state getNextState(){
+    public State getNextState(){
         return this.nextState ;
     }
 
-    public void addObserver(observer ob){
-        observers.add(ob) ;
+    public void addObserver(Observer ob){
+        Observers.add(ob) ;
     }
 
     public void notifyObservers(){
-        for(observer ob: this.observers)
+        for(Observer ob: this.Observers)
             ob.subscriberHasChanged("update");
     }
 

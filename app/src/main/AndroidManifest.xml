@@ -18,15 +18,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".FindExperiencesActivity.findExperiencesActivity"
+            android:name=".findExperienceActivity.FindExperiencesActivity"
             android:label="@string/title_activity_find_view"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".newDotActivity" />
-        <activity android:name=".dotDetailActivity" />
+        <activity android:name=".NewDotActivity" />
+        <activity android:name=".DotDetailActivity" />
         <activity
-            android:name=".loginActivity"
+            android:name=".LoginActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".mainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

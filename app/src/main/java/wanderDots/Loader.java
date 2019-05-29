@@ -2,7 +2,7 @@ package wanderDots;
 
 import java.util.ArrayList;
 
-public interface loader<T> {
+public interface Loader<T> {
 
     ArrayList<T> getData() ;
     boolean hasError() ;

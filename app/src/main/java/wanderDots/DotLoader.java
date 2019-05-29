@@ -4,18 +4,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
-import wanderDots.Server.Get.get;
 
-public final class dotLoader implements observer, loader<dot> {
+import wanderDots.server.get.Get;
 
-    private ArrayList<dot> dots ;
+public final class DotLoader implements Observer, Loader<Dot> {
+
+    private ArrayList<Dot> dots ;
     private String error ;
-    private get<dot> dotGetter ;
+    private Get<Dot> dotGetter ;
 
-    public dotLoader(){
+    public DotLoader(){
         this.dots = new ArrayList<>() ;
         this.error = null ;
-        this.dotGetter = new get(this, true) ;
+        this.dotGetter = new Get(this, true) ;
         this.dotGetter.loadData();
     }
 
@@ -35,21 +36,21 @@ public final class dotLoader implements observer, loader<dot> {
                 JSONArray jdots = response.getJSONArray("dots");
                 for (int i = 0; i < jdots.length(); i++) {
                     JSONObject dot = jdots.getJSONObject(i);
-                    this.dots.add(new dot(dot)) ;
+                    this.dots.add(new Dot(dot)) ;
                 }
             }
         }catch(JSONException e){
             this.error = e.toString() ;
         }
 
-        dot.dataFinishedLoading();
+        Dot.dataFinishedLoading();
     }
 
     public void reload(){
         this.dotGetter.loadData() ;
     }
 
-    public ArrayList<dot> getData(){
+    public ArrayList<Dot> getData(){
         return this.dots ;
     }
 
