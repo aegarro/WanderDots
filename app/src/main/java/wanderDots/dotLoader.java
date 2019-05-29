@@ -1,22 +1,21 @@
 package wanderDots;
 
-import com.example.wanderdots.MainActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
-import wanderDots.Server.Get.Get;
+import wanderDots.Server.Get.get;
 
-public final class DotLoader implements Observer, Loader<Dot> {
+public final class dotLoader implements observer, loader<dot> {
 
-    private ArrayList<Dot> dots ;
+    private ArrayList<dot> dots ;
     private String error ;
-    private Get<Dot> dotGetter ;
+    private get<dot> dotGetter ;
 
-    public DotLoader(){
+    public dotLoader(){
         this.dots = new ArrayList<>() ;
         this.error = null ;
-        this.dotGetter = new Get(this, true) ;
+        this.dotGetter = new get(this, true) ;
         this.dotGetter.loadData();
     }
 
@@ -36,21 +35,21 @@ public final class DotLoader implements Observer, Loader<Dot> {
                 JSONArray jdots = response.getJSONArray("dots");
                 for (int i = 0; i < jdots.length(); i++) {
                     JSONObject dot = jdots.getJSONObject(i);
-                    this.dots.add(new Dot(dot)) ;
+                    this.dots.add(new dot(dot)) ;
                 }
             }
         }catch(JSONException e){
             this.error = e.toString() ;
         }
 
-        Dot.dataFinishedLoading();
+        dot.dataFinishedLoading();
     }
 
     public void reload(){
         this.dotGetter.loadData() ;
     }
 
-    public ArrayList<Dot> getData(){
+    public ArrayList<dot> getData(){
         return this.dots ;
     }
 

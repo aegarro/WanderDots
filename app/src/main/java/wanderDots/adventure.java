@@ -2,28 +2,27 @@ package wanderDots;
 
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Adventure extends Experience {
+public class adventure extends experience {
 
     private final static String[] requiredFields = {"dotsVisited"} ;
     private final static String dotsVString = "dotsVisited";
 
-    private static ArrayList<Observer> observers = new ArrayList<>() ;
-    private static ArrayList<Adventure> data = null ;
-    private static AdventureLoader loader = new AdventureLoader() ;
+    private static ArrayList<observer> observers = new ArrayList<>() ;
+    private static ArrayList<adventure> data = null ;
+    private static adventureLoader loader = new adventureLoader() ;
 
     private ArrayList<String> dotsVisited ;
 
-    public Adventure(JSONObject adventure) throws org.json.JSONException{
+    public adventure(JSONObject adventure) throws org.json.JSONException{
         super(adventure) ;
         if(!containsRequiredFields(adventure, requiredFields))
-            throw new RuntimeException("Adventure Validation Error: Missing Field: " + getMissingField(adventure, requiredFields)) ;
+            throw new RuntimeException("adventure Validation Error: Missing Field: " + getMissingField(adventure, requiredFields)) ;
         instantiateFromJSON(adventure);
     }
 
@@ -43,7 +42,7 @@ public class Adventure extends Experience {
             data.put(dotsVString, (Object) dotsVisited) ;
             return data ;
         } catch(JSONException e){
-            Log.d("arodr:Adventure:toJSON", e.toString()) ;
+            Log.d("arodr:adventure:toJSON", e.toString()) ;
             return null ;
         }
     }
@@ -54,11 +53,11 @@ public class Adventure extends Experience {
         return adventure ;
     }
 
-    public static void addObserver(Observer observer){
+    public static void addObserver(observer observer){
         observers.add(observer) ;
     }
 
-    public static ArrayList<Adventure> getData(){
+    public static ArrayList<adventure> getData(){
         return data ;
     }
 
@@ -71,7 +70,7 @@ public class Adventure extends Experience {
     }
 
     public static void notifyObservers(){
-        for(Observer observer : observers)
+        for(wanderDots.observer observer : observers)
             observer.subscriberHasChanged("update");
     }
 }

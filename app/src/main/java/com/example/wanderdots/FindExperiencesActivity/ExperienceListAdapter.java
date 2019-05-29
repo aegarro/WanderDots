@@ -8,13 +8,12 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.View;
 import com.example.wanderdots.R;
-import com.google.android.gms.location.FusedLocationProviderClient;
 
 import java.util.ArrayList;
 
-import wanderDots.Experience;
+import wanderDots.experience;
 
-public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Adapter<ListItem> {
+public class ExperienceListAdapter<T extends experience> extends RecyclerView.Adapter<ListItem> {
 
     private static float meters_to_miles = 0.000621371f;
 
@@ -55,7 +54,7 @@ public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Ad
         currentPosition = loc;
     }
 
-    //Calculates distance between Experience like object and location
+    //Calculates distance between experience like object and location
     //Returns the String representing the distance followed by the units
     private String calculateDistance(T object, Location loc){
         float result[] = new float[1];

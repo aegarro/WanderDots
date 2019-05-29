@@ -33,7 +33,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-import wanderDots.Dot;
+import wanderDots.dot;
 
 public class FindExperiencesActivity extends AppCompatActivity implements OnMapReadyCallback,
         View.OnClickListener, CompoundButton.OnCheckedChangeListener, OnCompleteListener {
@@ -110,7 +110,7 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     //Runs after CreateDotActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CREATE_DOT_ACTIVITY_ID && resultCode == RESULT_OK)
-            Dot.reload() ; //Proprogates new data: Dot > DotState
+            dot.reload() ; //Proprogates new data: dot > DotState
     }
 
     @Override

@@ -2,16 +2,16 @@ package com.example.wanderdots.FindExperiencesActivity.State;
 
 import android.content.Context ;
 
-import wanderDots.Dot ;
+import wanderDots.dot;
 
-public class DotState extends State<Dot> {
+public class DotState extends State<dot> {
 
     public DotState(Context context){
         super(context) ;
-        Dot.addObserver(this);
+        dot.addObserver(this);
     }
 
     public void subscriberHasChanged(String message){
-        setData(Dot.getData()) ; //auto updates DotState
+        setData(dot.getData()) ; //auto updates DotState
     }
 }

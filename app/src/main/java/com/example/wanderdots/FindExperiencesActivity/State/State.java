@@ -11,8 +11,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
-import wanderDots.Experience;
-import wanderDots.Observer ;
+import wanderDots.experience;
+import wanderDots.observer;
 /*
 Responsibilities:
     - Hold Data (dots or adventures)
@@ -20,9 +20,9 @@ Responsibilities:
     - loadData data
  */
 
-public abstract class State <T extends Experience> implements Observer {
+public abstract class State <T extends experience> implements observer {
 
-    private ArrayList<Observer> observers ;
+    private ArrayList<observer> observers ;
 
     protected ExperienceListAdapter<T> adapter ;
     protected ArrayList<T> data ;
@@ -33,7 +33,7 @@ public abstract class State <T extends Experience> implements Observer {
 
     public State(Context context){
         this.data = new ArrayList<>() ;
-        this.observers = new ArrayList<Observer>() ;
+        this.observers = new ArrayList<observer>() ;
         this.adapter = new ExperienceListAdapter<>(this.data, context) ;
         this.nextState = null ;
         this.map = null ;
@@ -76,12 +76,12 @@ public abstract class State <T extends Experience> implements Observer {
         return this.nextState ;
     }
 
-    public void addObserver(Observer ob){
+    public void addObserver(observer ob){
         observers.add(ob) ;
     }
 
     public void notifyObservers(){
-        for(Observer ob: this.observers)
+        for(observer ob: this.observers)
             ob.subscriberHasChanged("update");
     }
 

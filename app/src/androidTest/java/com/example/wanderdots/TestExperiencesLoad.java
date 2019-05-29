@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,24 +14,24 @@ import org.junit.runner.RunWith;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import wanderDots.Adventure;
-import wanderDots.Dot;
-import wanderDots.Observer ;
-import wanderDots.Server.Get.Get;
+import wanderDots.Server.Get.get;
+import wanderDots.adventure;
+import wanderDots.dot;
+import wanderDots.observer;
 
 import static org.junit.Assert.*;
 
 /*
  * Verifies that
- * 1. Dot class loads once an observer has been added to it
- * 2. Adventure class loads once an observer has been added to it
- * 3. Get class loads Dots
- * 4. Get class loads Adventures
+ * 1. dot class loads once an observer has been added to it
+ * 2. adventure class loads once an observer has been added to it
+ * 3. get class loads Dots
+ * 4. get class loads Adventures
  */
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public class TestExperiencesLoad implements Observer {
+public class TestExperiencesLoad implements observer {
 
     private CountDownLatch lock ;
 
@@ -44,10 +43,10 @@ public class TestExperiencesLoad implements Observer {
         Context appContext = InstrumentationRegistry.getTargetContext();
         MainActivity.setDefaultContext(appContext) ;
         try {
-            Dot.addObserver(this);
+            dot.addObserver(this);
             lock.await(timeout, TimeUnit.MILLISECONDS);
-            assertFalse("error occurred during loadData", Dot.hasError()) ;
-            assertTrue("Number of Dots", Dot.getData().size() > 0) ;
+            assertFalse("error occurred during loadData", dot.hasError()) ;
+            assertTrue("Number of Dots", dot.getData().size() > 0) ;
         }catch(InterruptedException e){
             e.printStackTrace();
         }
@@ -61,10 +60,10 @@ public class TestExperiencesLoad implements Observer {
         Context appContext = InstrumentationRegistry.getTargetContext();
         MainActivity.setDefaultContext(appContext) ;
         try {
-            Adventure.addObserver(this);
+            adventure.addObserver(this);
             this.lock.await(timeout, TimeUnit.MILLISECONDS);
-            assertFalse("error occurred on load", Adventure.hasError()) ;
-            assertTrue("Number of Adventures", Adventure.getData().size() > 0);
+            assertFalse("error occurred on load", adventure.hasError()) ;
+            assertTrue("Number of Adventures", adventure.getData().size() > 0);
         }catch(InterruptedException e){
             e.printStackTrace();
         }
@@ -78,7 +77,7 @@ public class TestExperiencesLoad implements Observer {
         Context appContext = InstrumentationRegistry.getTargetContext();
         MainActivity.setDefaultContext(appContext) ;
         try {
-            Get getLoader = new Get(this, true) ;
+            get getLoader = new get(this, true) ;
             getLoader.loadData();
             this.lock.await(timeout, TimeUnit.MILLISECONDS);
 
@@ -89,7 +88,7 @@ public class TestExperiencesLoad implements Observer {
             JSONObject response = getLoader.getResponse() ;
             assertTrue("Response contains Dots", response.has("dots"));
 
-            //Verify Data contains at least 1 Dot
+            //Verify Data contains at least 1 dot
             JSONArray dots = response.getJSONArray("dots");
             assertTrue("Contains nonzero dots", dots.length() > 0) ;
         }catch(InterruptedException e){
@@ -107,7 +106,7 @@ public class TestExperiencesLoad implements Observer {
         Context appContext = InstrumentationRegistry.getTargetContext();
         MainActivity.setDefaultContext(appContext) ;
         try {
-            Get getLoader = new Get( this, false) ;
+            get getLoader = new get( this, false) ;
             getLoader.loadData();
             this.lock.await(timeout, TimeUnit.MILLISECONDS);
 

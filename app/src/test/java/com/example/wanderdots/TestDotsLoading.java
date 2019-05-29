@@ -4,7 +4,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * 1. Tests if Dot class loads Dots in server and notifies observers
+ * 1. Tests if dot class loads Dots in server and notifies observers
  */
 public class TestDotsLoading {
 

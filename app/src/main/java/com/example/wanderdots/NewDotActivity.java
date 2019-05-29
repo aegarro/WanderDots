@@ -20,15 +20,15 @@ import android.widget.ImageView;
 import android.content.Intent;
 import java.io.InputStream;
 
-import wanderDots.Dot ;
-import wanderDots.Server.Post.PostDot;
-import wanderDots.Observer ;
+import wanderDots.dot;
+import wanderDots.Server.Post.postDot;
+import wanderDots.observer;
 
 public class NewDotActivity extends AppCompatActivity
-        implements View.OnClickListener, Observer {
+        implements View.OnClickListener, observer {
 
     private ImageView imageView4;
-    private PostDot dotCreator ;
+    private postDot dotCreator ;
     private static int result = 1;
     private String dotID;
 
@@ -48,7 +48,7 @@ public class NewDotActivity extends AppCompatActivity
         };
         imageButton.setOnClickListener(addImageListener);
         createButton.setOnClickListener(this);
-        this.dotCreator = new PostDot(super.getApplicationContext(), this);
+        this.dotCreator = new postDot(super.getApplicationContext(), this);
         this.dotID = null ;
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
@@ -86,7 +86,7 @@ public class NewDotActivity extends AppCompatActivity
             this.dotID = this.dotCreator.getDotID() ;
             finish() ; //should return back to home screen
         }else {
-            Log.d("POST Dot Error:", this.dotCreator.getError()) ;
+            Log.d("POST dot Error:", this.dotCreator.getError()) ;
         }
     }
 
@@ -94,9 +94,9 @@ public class NewDotActivity extends AppCompatActivity
     //Runs when form is being submitted
     public void onClick(View v){
 
-        Log.d("wanderDots", "About to create a Dot...") ;
+        Log.d("wanderDots", "About to create a dot...") ;
         //create
-        Dot dot = new Dot();
+        dot dot = new dot();
         final EditText name = findViewById(R.id.NameTextbox);
         dot.setName(name.getText().toString());
         dot.setCreator("Username");

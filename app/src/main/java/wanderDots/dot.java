@@ -6,25 +6,25 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Dot extends Experience {
+public class dot extends experience {
 
-    private static ArrayList<Observer> observers = new ArrayList<>();
-    private static ArrayList<Dot> data = null ;
-    private static DotLoader loader = new DotLoader() ;
+    private static ArrayList<observer> observers = new ArrayList<>();
+    private static ArrayList<dot> data = null ;
+    private static dotLoader loader = new dotLoader() ;
     private static String adventure_string = "adventures";
 
     private ArrayList<String> adventureIds;
     private String[] requiredFields = {adventure_string} ;
 
-    public Dot(){
+    public dot(){
         super() ;
         this.adventureIds = new ArrayList<>() ;
     }
 
-    public Dot(JSONObject dot) throws org.json.JSONException{
+    public dot(JSONObject dot) throws org.json.JSONException{
         super(dot) ;
         if(!containsRequiredFields(dot, requiredFields))
-            throw new RuntimeException("Dot Validation Error: Given dot missing " + getMissingField(dot, requiredFields)) ;
+            throw new RuntimeException("dot Validation Error: Given dot missing " + getMissingField(dot, requiredFields)) ;
         instantiateFromJSON(dot) ;
     }
 
@@ -58,13 +58,13 @@ public class Dot extends Experience {
     }
 
     //DO NOT REMOVE: This method triggers the static initializer of this class
-    //Beginning the loading process, without this Experience parent class recieves a null
-    //Loader object
-    public static void addObserver(Observer observer){
+    //Beginning the loading process, without this experience parent class recieves a null
+    //loader object
+    public static void addObserver(observer observer){
         observers.add(observer) ;
     }
 
-    public static ArrayList<Dot> getData(){
+    public static ArrayList<dot> getData(){
         return data ;
     }
 
@@ -77,7 +77,7 @@ public class Dot extends Experience {
     }
 
     public static void notifyObservers(){
-        for(Observer observer : observers)
+        for(wanderDots.observer observer : observers)
             observer.subscriberHasChanged("update");
     }
 

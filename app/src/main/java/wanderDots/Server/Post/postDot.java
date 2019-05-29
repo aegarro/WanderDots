@@ -6,20 +6,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
-import wanderDots.Observer ;
-import wanderDots.Dot ;
-import wanderDots.Server.MyRequestQueue;
 
-public class PostDot implements Response.Listener<JSONObject>,
+import wanderDots.dot;
+import wanderDots.Server.requestQueue;
+
+public class postDot implements Response.Listener<JSONObject>,
                                 Response.ErrorListener{
 
-    private Observer observer ;
-    private MyRequestQueue queue ;
+    private wanderDots.observer observer ;
+    private requestQueue queue ;
     private String dotID ;
     private String error ;
 
-    public PostDot(Context context, Observer observer) {
-        this.queue = MyRequestQueue.getInstance() ;
+    public postDot(Context context, wanderDots.observer observer) {
+        this.queue = requestQueue.getInstance() ;
         this.observer = observer ;
         this.dotID = null ;
     }
@@ -41,7 +41,7 @@ public class PostDot implements Response.Listener<JSONObject>,
                this.observer.subscriberHasChanged(errorMessage);
             } else {
                 this.dotID = response.getString("id") ;
-                this.observer.subscriberHasChanged("Dot has been received");
+                this.observer.subscriberHasChanged("dot has been received");
             }
         } catch(JSONException e){
             this.error = e.toString() ;
@@ -54,8 +54,8 @@ public class PostDot implements Response.Listener<JSONObject>,
         Log.d("arodr error:", error.toString());
     }
 
-    public void postDot(Dot dot){
-        this.queue.addToRequestQueue(new CreateDotRequest(dot,
+    public void postDot(dot dot){
+        this.queue.addToRequestQueue(new createDotRequest(dot,
                 this, this)) ;
     }
 }

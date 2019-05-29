@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class Experience {
+public abstract class experience {
 
     private static final String CATEGORIES = "categories";
     private static final String CREATOR = "creator";
@@ -35,19 +35,19 @@ public abstract class Experience {
     public Double longitude ;
     private String[] requiredFields = {"_id", "name", DESCRIPTION, LOCATION, CATEGORIES, CREATOR, PICTUREIDS} ;
 
-    public Experience(){
+    public experience(){
         this.categories = new ArrayList<String>() ;
         this.pictureIds = new ArrayList<String>() ;
     }
 
-    public Experience(JSONObject experience) throws org.json.JSONException{
+    public experience(JSONObject experience) throws org.json.JSONException{
         Log.d("arodr", "creating experience ... ")  ;
         instantiateFromJSON(experience);
     }
 
     public void instantiateFromJSON(JSONObject experience) throws org.json.JSONException{
         if(!containsRequiredFields(experience, requiredFields))
-            throw new RuntimeException("Experience missing field: " + getMissingField(experience, requiredFields)) ;
+            throw new RuntimeException("experience missing field: " + getMissingField(experience, requiredFields)) ;
 
         JSONArray categories = experience.getJSONArray(CATEGORIES) ;
         this.categories = createStringList(categories) ;

@@ -2,26 +2,24 @@ package wanderDots;
 
 import android.util.Log;
 
-import com.example.wanderdots.MainActivity;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import wanderDots.Server.Get.Get;
+import wanderDots.Server.Get.get;
 
-public final class AdventureLoader implements Observer, Loader<Adventure> {
+public final class adventureLoader implements observer, loader<adventure> {
 
-    private ArrayList<Adventure> adventures;
+    private ArrayList<adventure> adventures;
     private String error ;
-    private Get<Adventure> adventureGetter;
+    private get<adventure> adventureGetter;
 
-    public AdventureLoader(){
+    public adventureLoader(){
         this.adventures = new ArrayList<>() ;
         this.error = null ;
-        this.adventureGetter = new Get(this, false) ;
+        this.adventureGetter = new get(this, false) ;
         this.adventureGetter.loadData();
     }
 
@@ -31,7 +29,7 @@ public final class AdventureLoader implements Observer, Loader<Adventure> {
             if(this.adventureGetter.hasError())
                 this.error = this.adventureGetter.getError() ;
             else if(response == null)
-                this.error = "Adventure loader received null response";
+                this.error = "adventure loader received null response";
             else if (response.has("error"))
                 this.error = response.getString("error") ;
             else{
@@ -39,7 +37,7 @@ public final class AdventureLoader implements Observer, Loader<Adventure> {
                 Log.d("arodr", "length: " + adventures.length()) ;
                 for (int i = 0; i < adventures.length(); i++) {
                     JSONObject adventure = adventures.getJSONObject(i);
-                    Adventure newAdventure = new Adventure(adventure) ;
+                    wanderDots.adventure newAdventure = new adventure(adventure) ;
                     this.adventures.add(newAdventure) ;
                 }
             }
@@ -47,14 +45,14 @@ public final class AdventureLoader implements Observer, Loader<Adventure> {
             Log.d("arodr", "Error: " + e.toString());
             this.error = e.toString() ;
         }
-        Adventure.dataFinishedLoading();
+        adventure.dataFinishedLoading();
     }
 
     public void reload(){
         this.adventureGetter.loadData() ;
     }
 
-    public ArrayList<Adventure> getData(){
+    public ArrayList<adventure> getData(){
         return this.adventures;
     }
 
