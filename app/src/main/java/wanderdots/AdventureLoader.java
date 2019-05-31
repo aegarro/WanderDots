@@ -12,12 +12,12 @@ import wanderdots.server.get.Get;
 
 public final class AdventureLoader implements Observer, Loader<Adventure> {
 
-    private ArrayList<Adventure> Adventures;
+    private ArrayList<Adventure> adventures;
     private String error ;
     private Get adventureGetter;
 
     public AdventureLoader(){
-        this.Adventures = new ArrayList<>() ;
+        this.adventures = new ArrayList<>() ;
         this.error = null ;
         this.adventureGetter = new Get(this, false) ;
         this.adventureGetter.loadData();
@@ -33,12 +33,12 @@ public final class AdventureLoader implements Observer, Loader<Adventure> {
             else if (response.has("error"))
                 this.error = response.getString("error") ;
             else{
-                JSONArray adventures = response.getJSONArray("Adventures");
+                JSONArray adventures = response.getJSONArray("adventures");
                 Log.d("arodr", "length: " + adventures.length()) ;
                 for (int i = 0; i < adventures.length(); i++) {
                     JSONObject adventure = adventures.getJSONObject(i);
                     Adventure newAdventure = new Adventure(adventure) ;
-                    this.Adventures.add(newAdventure) ;
+                    this.adventures.add(newAdventure) ;
                 }
             }
         }catch(JSONException e){
@@ -53,7 +53,7 @@ public final class AdventureLoader implements Observer, Loader<Adventure> {
     }
 
     public ArrayList<Adventure> getData(){
-        return this.Adventures;
+        return this.adventures;
     }
 
     public String getError(){
