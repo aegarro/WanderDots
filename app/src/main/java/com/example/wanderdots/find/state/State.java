@@ -22,7 +22,7 @@ Responsibilities:
 
 public abstract class State<T extends Experience> implements Observer {
 
-    private ArrayList<Observer> Observers;
+    private ArrayList<Observer> observers;
 
     protected ExperienceListAdapter<T> adapter ;
     protected ArrayList<T> data ;
@@ -33,7 +33,7 @@ public abstract class State<T extends Experience> implements Observer {
 
     public State(Context context){
         this.data = new ArrayList<>() ;
-        this.Observers = new ArrayList<Observer>() ;
+        this.observers = new ArrayList<>() ;
         this.adapter = new ExperienceListAdapter<>(this.data, context) ;
         this.nextState = null ;
         this.map = null ;
@@ -77,11 +77,11 @@ public abstract class State<T extends Experience> implements Observer {
     }
 
     public void addObserver(Observer ob){
-        Observers.add(ob) ;
+        observers.add(ob) ;
     }
 
     public void notifyObservers(){
-        for(Observer ob: this.Observers)
+        for(Observer ob: this.observers)
             ob.subscriberHasChanged("update");
     }
 
@@ -119,5 +119,5 @@ public abstract class State<T extends Experience> implements Observer {
         return this.markers ;
     }
 
-    abstract public void subscriberHasChanged(String message) ;
+    public abstract void subscriberHasChanged(String message) ;
 }

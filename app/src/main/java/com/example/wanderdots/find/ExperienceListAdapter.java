@@ -10,14 +10,15 @@ import android.view.View;
 import com.example.wanderdots.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import wanderdots.Experience;
 
 public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Adapter<ListItem> {
 
-    private static float meters_to_miles = 0.000621371f;
+    private static float metersToMiles = 0.000621371f;
 
-    public ArrayList<T> dotList;
+    private List<T> dotList;
     private Context ctx;
     private Location currentPosition;
 
@@ -57,9 +58,9 @@ public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Ad
     //Calculates distance between Experience like object and location
     //Returns the String representing the distance followed by the units
     private String calculateDistance(T object, Location loc){
-        float result[] = new float[1];
+        float []result = new float[1];
         Location.distanceBetween(object.getLatitude(), object.getLongitude(), loc.getLatitude(), loc.getLongitude(), result);
-        result[0] = result[0] * meters_to_miles; // Convert meters to miles
+        result[0] = result[0] * metersToMiles; // Convert meters to miles
         String dis = String.format("%.1f", result[0]); // Format String to one decimal
         return dis + " mi";
     }

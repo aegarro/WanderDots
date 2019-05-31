@@ -15,7 +15,7 @@ public class RequestQueue {
     private static RequestQueue instance;
     private com.android.volley.RequestQueue requestQueue;
     private ImageLoader imageLoader;
-    private static Context ctx = MainActivity.DEFAULT_CONTEXT ;
+    private static Context ctx = MainActivity.defaultContext;
 
     private RequestQueue() {
         requestQueue = getRequestQueue();

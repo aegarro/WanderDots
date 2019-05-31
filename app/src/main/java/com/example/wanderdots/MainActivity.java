@@ -9,12 +9,12 @@ import com.example.wanderdots.find.FindExperiencesActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static Context DEFAULT_CONTEXT ;
+    public static Context defaultContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.DEFAULT_CONTEXT = getApplicationContext() ;
+        this.defaultContext = getApplicationContext() ;
         Intent intent = new Intent(this, FindExperiencesActivity.class);
         startActivity(intent);
     }
@@ -23,6 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     //SHOULD BE USED FOR TESTING ONLY
     public static void setDefaultContext(Context context){
-        DEFAULT_CONTEXT = context ;
+        defaultContext = context ;
     }
 }
