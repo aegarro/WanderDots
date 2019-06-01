@@ -1,6 +1,7 @@
 package com.example.wanderdots.find.state;
 
 import android.content.Context ;
+import android.util.Log;
 
 import wanderdots.Dot;
 
@@ -12,6 +13,9 @@ public class DotState extends State<Dot> {
     }
 
     public void subscriberHasChanged(String message){
-        setData(Dot.getData()) ; //auto updates DotState
+        if(Dot.hasError())
+            Log.d("arodr", "error occurred loading dots" + Dot.getError()) ;
+        else
+            setData(Dot.getData()) ; //auto updates DotState
     }
 }
