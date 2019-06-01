@@ -6,11 +6,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Dot extends Experience {
+public class Dot extends Experience  {
 
     private static ArrayList<Observer> Observers = new ArrayList<>();
     private static ArrayList<Dot> data = null ;
-    private static DotLoader loader = new DotLoader() ;
+    private static DotCreator loader = new DotCreator() ;
     private static String adventure_string = "adventures";
 
     private ArrayList<String> adventureIds;

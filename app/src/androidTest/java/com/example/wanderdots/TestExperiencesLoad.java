@@ -78,7 +78,6 @@ public class TestExperiencesLoad implements Observer {
         MainActivity.setDefaultContext(appContext) ;
         try {
             Get getLoader = new Get(this, true) ;
-            getLoader.loadData();
             this.lock.await(timeout, TimeUnit.MILLISECONDS);
 
             //Verify No Error while loading data
@@ -107,7 +106,6 @@ public class TestExperiencesLoad implements Observer {
         MainActivity.setDefaultContext(appContext) ;
         try {
             Get getLoader = new Get( this, false) ;
-            getLoader.loadData();
             this.lock.await(timeout, TimeUnit.MILLISECONDS);
 
             //Verify no error while loading data

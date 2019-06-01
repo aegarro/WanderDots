@@ -13,9 +13,11 @@ import org.json.JSONObject;
 import wanderdots.Observer;
 import wanderdots.server.RequestQueue;
 
-/* Returns All the Dots contained in the database
- * This methods expects the user to implements "Listener" methods throw the Volley.Response.Listener
- * This class implements a version of Listener, one for strings, but users will need one for ArrayList<Dot> (using generics).
+/* Communicates with the server to get either Dots or Adventures. Notifies observer when finished.
+ *
+ * The observer is attached during object construction and loading begins immediately after.
+ * Observer will be called once response has been received, regardless of error or successful
+ * response.
  */
 public class Get implements ErrorListener, Listener<String> {
 
@@ -33,6 +35,7 @@ public class Get implements ErrorListener, Listener<String> {
         this.observer = observer ;
         this.url = isDot ? getDot : getAdventures ;
         this.error = null ;
+        loadData() ;
     }
 
     public void loadData(){

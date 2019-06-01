@@ -1,6 +1,5 @@
 package wanderdots.server.post;
 
-import android.content.Context;
 import android.util.Log;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -11,7 +10,11 @@ import wanderdots.Dot;
 import wanderdots.Observer;
 import wanderdots.server.RequestQueue;
 
-public class PostDot implements Response.Listener<JSONObject>,
+/* Provides the method "postDot" that create a given dot on the server.
+ * The subscriber is called as soon as a response from the server is received,
+ * whether error or success.
+ */
+public class DotPoster implements Response.Listener<JSONObject>,
                                 Response.ErrorListener{
 
     private Observer observer ;
@@ -19,9 +22,9 @@ public class PostDot implements Response.Listener<JSONObject>,
     private String dotID ;
     private String error ;
 
-    public PostDot(Context context, Observer observer) {
-        this.queue = RequestQueue.getInstance() ;
+    public DotPoster(Observer observer) {
         this.observer = observer ;
+        this.queue = RequestQueue.getInstance() ;
         this.dotID = null ;
     }
 

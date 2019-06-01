@@ -5,6 +5,9 @@ import android.util.Log;
 
 import wanderdots.Dot;
 
+/* Attaches itself as an "Observer" of Dot and retrieves data
+ * whenever Dot has loaded.
+ */
 public class DotState extends State<Dot> {
 
     public DotState(Context context){

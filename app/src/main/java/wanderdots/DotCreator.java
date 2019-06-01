@@ -7,20 +7,26 @@ import java.util.ArrayList;
 
 import wanderdots.server.get.Get;
 
-public final class DotLoader implements Observer, Loader<Dot> {
+/* Converts the pure server response (given by Get object)
+ * into instances of Dot.
+ *
+ */
+public final class DotCreator implements Observer, Loader<Dot> {
 
     private ArrayList<Dot> dots ;
     private String error ;
     private Get dotGetter ;
 
-    public DotLoader(){
+    public DotCreator(){
         this.dots = new ArrayList<>() ;
         this.error = null ;
         this.dotGetter = new Get(this, true) ;
-        this.dotGetter.loadData();
     }
 
-    //Initializes Dots from dotGetter's data retrieval
+    /* Gets called whenever Get (dotGetter) has finished loading response from server
+     * Creates list of Dots from response.
+     * @param {String} message - The type of update that occurred in Get.
+     */
     public void subscriberHasChanged(String message){
         try {
             JSONObject response ;

@@ -10,19 +10,24 @@ import java.util.ArrayList;
 
 import wanderdots.server.get.Get;
 
-public final class AdventureLoader implements Observer, Loader<Adventure> {
+// Creates Adventures from the server response given by Get object.
+
+public final class AdventureCreator implements Observer, Loader<Adventure> {
 
     private ArrayList<Adventure> adventures;
     private String error ;
     private Get adventureGetter;
 
-    public AdventureLoader(){
+    public AdventureCreator(){
         this.adventures = new ArrayList<>() ;
         this.error = null ;
         this.adventureGetter = new Get(this, false) ;
-        this.adventureGetter.loadData();
     }
 
+    /* Is called whenever Get has finished loading adventures
+     * creates list of adventures from response
+     * @param {String} message - The type of update that occurred in Get
+     */
     public void subscriberHasChanged(String message){
         try {
             JSONObject response = adventureGetter.getResponse() ;

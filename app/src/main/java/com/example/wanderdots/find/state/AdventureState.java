@@ -5,6 +5,12 @@ import android.util.Log;
 
 import wanderdots.Adventure;
 
+/*
+ * Attaches itself as an "observer" of Adventure.
+ * When something has changed in Adventure, specifically that it has loaded
+ * the adventures, then this class goes in there and retrieves them.
+ */
+
 public class AdventureState extends State<Adventure> {
 
     public AdventureState(Context context){

@@ -8,6 +8,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/* Plays two different roles (unfortunately):
+ * 1. Is the data structure of an Adventure
+ * 2. Statically loads Adventures on the server whenever
+ * an observer attaches itself to it.
+ */
 public class Adventure extends Experience {
 
     private final static String DOTS_V_STRING = "dotsVisited";
@@ -15,7 +20,7 @@ public class Adventure extends Experience {
 
     private static ArrayList<Observer> observers = new ArrayList<>() ;
     private static ArrayList<Adventure> data = null ;
-    private static AdventureLoader loader = new AdventureLoader() ;
+    private static AdventureCreator loader = new AdventureCreator() ;
 
     private ArrayList<String> dotsVisited ;
 

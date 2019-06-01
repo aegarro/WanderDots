@@ -21,16 +21,15 @@ import android.content.Intent;
 import java.io.InputStream;
 
 import wanderdots.Dot;
-import wanderdots.server.post.PostDot;
+import wanderdots.server.post.DotPoster;
 import wanderdots.Observer;
 
 public class NewDotActivity extends AppCompatActivity
         implements View.OnClickListener, Observer {
 
     private ImageView imageView4;
-    private PostDot dotCreator ;
+    private DotPoster dotPoster;
     private static int result = 1;
-    private String dotID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +47,7 @@ public class NewDotActivity extends AppCompatActivity
         };
         imageButton.setOnClickListener(addImageListener);
         createButton.setOnClickListener(this);
-        this.dotCreator = new PostDot(super.getApplicationContext(), this);
-        this.dotID = null ;
+        this.dotPoster = new DotPoster(this);
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
         }
@@ -82,15 +80,13 @@ public class NewDotActivity extends AppCompatActivity
     }
 
     public void subscriberHasChanged(String message){
-        if(this.dotCreator.getError() == null){
-            this.dotID = this.dotCreator.getDotID() ;
+        if(this.dotPoster.getError() == null){
             finish() ; //should return back to home screen
         }else {
-            Log.d("POST Dot Error:", this.dotCreator.getError()) ;
+            Log.d("POST Dot Error:", this.dotPoster.getError()) ;
         }
     }
 
-    //TODO: Verify reasonable output if server is down
     //Runs when form is being submitted
     public void onClick(View v){
 
@@ -118,6 +114,6 @@ public class NewDotActivity extends AppCompatActivity
             Log.e("NewDotActivity", e.toString());
         }
 
-        this.dotCreator.postDot(dot) ;
+        this.dotPoster.postDot(dot) ;
     }
 }
