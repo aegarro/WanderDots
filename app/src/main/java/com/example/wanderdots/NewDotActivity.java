@@ -18,6 +18,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.content.Intent;
+
+import com.google.android.gms.maps.SupportMapFragment;
+
 import java.io.InputStream;
 
 import wanderdots.Dot;
@@ -38,6 +41,9 @@ public class NewDotActivity extends AppCompatActivity
         Button createButton = findViewById(R.id.CreateButton) ;
         ImageButton imageButton = findViewById(R.id.imageButton);
         this.imageView4 = findViewById(R.id.imageView4);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+
 
         View.OnClickListener addImageListener = new View.OnClickListener() {
             @Override
