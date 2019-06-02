@@ -11,7 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import wanderdots.Observer;
-import wanderdots.server.RequestQueue;
+import wanderdots.server.ClientRequestQueue;
 
 /* Communicates with the server to get either Dots or Adventures. Notifies observer when finished.
  *
@@ -28,10 +28,10 @@ public class Get implements ErrorListener, Listener<String> {
     private String getDot = "http://10.0.2.2:5000/api/Get/dots" ;
     private String getAdventures = "http://10.0.2.2:5000/api/Get/adventures";
 
-    private RequestQueue queue ;
+    private ClientRequestQueue queue ;
 
     public Get(Observer observer, boolean isDot){
-        this.queue = RequestQueue.getInstance();
+        this.queue = ClientRequestQueue.getInstance();
         this.observer = observer ;
         this.url = isDot ? getDot : getAdventures ;
         this.error = null ;
