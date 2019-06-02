@@ -9,19 +9,15 @@ public class DotDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        TextView titleTxt;
-        TextView distanceTxt;
-        TextView ratingTxt;
-        TextView describeTxt;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dot_detail);
 
 
-        titleTxt = findViewById(R.id.dotTitle);
-        distanceTxt = findViewById(R.id.dotDistance);
-        ratingTxt = findViewById(R.id.dotRating);
-        describeTxt = findViewById(R.id.userDescription);
+        TextView titleTxt = findViewById(R.id.dotTitle);
+        TextView distanceTxt = findViewById(R.id.dotDistance);
+        TextView ratingTxt = findViewById(R.id.dotRating);
+        TextView describeTxt = findViewById(R.id.userDescription);
 
         Intent intent = getIntent();
         titleTxt.setText(intent.getStringExtra("title"));
