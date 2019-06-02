@@ -75,7 +75,7 @@ public class ImagePoster implements Response.Listener<NetworkResponse>, Response
         this.observer.subscriberHasChanged("error");
     }
 
-    private boolean hasError(){
+    public boolean hasError(){
         return this.error != null ;
     }
 
@@ -120,5 +120,13 @@ public class ImagePoster implements Response.Listener<NetworkResponse>, Response
             this.error = e.toString() ;
         }
         return null ;
+    }
+
+    public String getError(){
+        return this.error ;
+    }
+
+    public JSONObject getResponse(){
+        return this.response ;
     }
 }

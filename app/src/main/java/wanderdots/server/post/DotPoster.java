@@ -36,20 +36,24 @@ public class DotPoster implements Response.Listener<JSONObject>,
         return this.error ;
     }
 
+    public boolean hasError(){
+        return this.error != null ;
+    }
+
     @Override
     public void onResponse(JSONObject response) {
         String errorMessage = "error";
         try {
             if(response.has(errorMessage)){
                this.error = response.getString(errorMessage) ;
-               this.observer.subscriberHasChanged(errorMessage);
+               this.observer.subscriberHasChanged("DotPoster");
             } else {
                 this.dotID = response.getString("id") ;
-                this.observer.subscriberHasChanged("Dot has been received");
+                this.observer.subscriberHasChanged("DotPoster");
             }
         } catch(JSONException e){
             this.error = e.toString() ;
-            this.observer.subscriberHasChanged(errorMessage);
+            this.observer.subscriberHasChanged("DotPoster");
         }
     }
 

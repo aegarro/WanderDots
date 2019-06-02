@@ -27,7 +27,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import wanderdots.Dot;
 import wanderdots.server.post.DotPoster;
@@ -37,21 +43,29 @@ import wanderdots.server.post.ImagePoster;
 public class NewDotActivity extends AppCompatActivity
         implements View.OnClickListener, Observer, OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
 
+    private final String TAG = "NewDotActivity" ;
     private ImageView imageView4;
     private DotPoster dotPoster;
     private ImagePoster imagePoster ;
-    private static int result = 1;
+    private static int selectImageActivityCode = 1;
     private double latitude;
     private double longitude;
     private GoogleMap map;
+    private ArrayList<String> pictureIds ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_dot);
+
+        this.pictureIds = new ArrayList<>() ;
+        this.imageView4 = findViewById(R.id.imageView4);
+        this.dotPoster = new DotPoster(this);
+        this.imagePoster = new ImagePoster(this);
+
         Button createButton = findViewById(R.id.CreateButton) ;
         ImageButton imageButton = findViewById(R.id.imageButton);
-        this.imageView4 = findViewById(R.id.imageView4);
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         if(mapFragment != null){
@@ -66,7 +80,7 @@ public class NewDotActivity extends AppCompatActivity
         };
         imageButton.setOnClickListener(addImageListener);
         createButton.setOnClickListener(this);
-        this.dotPoster = new DotPoster(this);
+
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
         }
@@ -126,37 +140,98 @@ public class NewDotActivity extends AppCompatActivity
 
     private void addImages(){
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(photoPickerIntent, result);
+        startActivityForResult(photoPickerIntent, selectImageActivityCode);
     }
 
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
+        if (reqCode == selectImageActivityCode && resultCode == RESULT_OK && data != null)
+            processSelectedImage(data);
+    }
 
-        if (reqCode == result && resultCode == RESULT_OK && data != null) {
-            try {
-                final Uri imageUri = data.getData();
-                if(imageUri != null) {
-                    final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                    final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                    imageView4.setImageBitmap(selectedImage);
-                    this.imagePoster.postImage(selectedImage) ;
-                    if (imageStream != null) {
-                        imageStream.close();
-                    }
-                }
-            } catch (Exception e) {
-                Log.e("NewDotActivity", e.toString());
+    /* Uploads given image data selected from the selectImageActivity to server */
+    private void processSelectedImage(Intent data){
+
+        final Uri imageUri = data.getData();
+
+        if(imageUri == null){
+            Log.d(TAG, "image from selectImageActivity is null") ;
+            return ;
+        }
+
+        Bitmap selectedImage = convertImageUriToBitmap(imageUri) ;
+        this.imageView4.setImageBitmap(selectedImage);
+        this.imagePoster.postImage(selectedImage) ;
+    }
+
+    private Bitmap convertImageUriToBitmap(Uri imageUri){
+        InputStream imageStream = null ;
+        Bitmap selectedImage ;
+
+        try {
+            imageStream = getContentResolver().openInputStream(imageUri);
+            selectedImage = BitmapFactory.decodeStream(imageStream);
+            if(imageStream != null)
+                imageStream.close() ;
+        }catch(FileNotFoundException e){
+            Log.d(TAG, "Could not find selected file") ;
+            Log.d(TAG, e.toString()) ;
+            selectedImage = null ;
+        }catch(IOException e){
+            Log.d(TAG, "Could not close image stream") ;
+            Log.d(TAG, e.toString()) ;
+            selectedImage = null ;
+        }
+
+        return selectedImage ;
+    }
+    public void subscriberHasChanged(String message){
+        if(message.equals("ImagePoster"))
+            processPostImageResponse();
+        else
+            processPostDotResponse();
+    }
+
+    /* Processes response from posting a selected image, stores image ID if successful.
+     * Otherwise, prints the error.
+     */
+    private void processPostImageResponse(){
+        if(this.imagePoster.hasError()){
+            Log.d("arodr", "error posting image to server") ;
+            return ;
+        }
+
+        try {
+            JSONObject response = this.imagePoster.getResponse() ;
+            if(response.has("error")){
+                Log.d("arodr", "server send back an error while posting image") ;
+                Log.d("arodr", response.getString("error")) ;
+                return ;
             }
+
+            if(!response.has("id")){
+                Log.d("arodr", "received unknown server response while posting image") ;
+                Log.d("arodr", response.toString()) ;
+                return ;
+            }
+
+            String id = response.getString("id") ;
+            this.pictureIds.add(id) ;
+        }catch(JSONException e){
+            Log.d("arodr", "error occurred processing server json response") ;
+            Log.d("arodr", e.toString()) ;
         }
     }
 
-    public void subscriberHasChanged(String message){
-        if(this.dotPoster.getError() == null){
-            finish() ; //should return back to home screen
-        }else {
-            Log.d("POST Dot Error:", this.dotPoster.getError()) ;
+    private void processPostDotResponse(){
+        if(this.dotPoster.hasError()){
+            Log.d("arodr", "error occurred while posting a dot") ;
+            Log.d("arodr", this.dotPoster.getError()) ;
+            return;
         }
+
+        finish() ;
     }
 
     //Runs when form is being submitted
@@ -172,9 +247,11 @@ public class NewDotActivity extends AppCompatActivity
         dot.setDescription(description.getText().toString());
         //how to Get data from multi-select (shaheen)
         dot.addCategory("Filler");
-        //what is the picture id? bitmap? file path? (alberto)
+
         //multiple image functionality (abby)
-        dot.addPictureId("testPictureID");
+        for(String pictureID : this.pictureIds)
+            dot.addPictureId(pictureID);
+
         //how to make a map marker and Get lat/long from that - for now stub using current loc (abby)
         dot.setLongitude(latitude);
         dot.setLatitude(longitude);

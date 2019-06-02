@@ -32,13 +32,13 @@ public class ImageGetter implements Response.Listener<Bitmap>, Response.ErrorLis
     @Override
     public void onResponse(Bitmap bitmap) {
         this.image = bitmap ;
-        this.observer.subscriberHasChanged("update");
+        this.observer.subscriberHasChanged("ImageGetter");
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
         this.error = error.toString() ;
-        this.observer.subscriberHasChanged("error");
+        this.observer.subscriberHasChanged("ImageGetter");
     }
 
     public boolean hasError(){
