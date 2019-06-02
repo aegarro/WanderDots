@@ -10,14 +10,14 @@ import com.example.wanderdots.MainActivity;
 
 import android.util.LruCache ;
 
-public class RequestQueue {
+public class ClientRequestQueue {
 
-    private static RequestQueue instance;
+    private static ClientRequestQueue instance;
     private com.android.volley.RequestQueue requestQueue;
     private ImageLoader imageLoader;
     private static Context ctx = MainActivity.defaultContext;
 
-    private RequestQueue() {
+    private ClientRequestQueue() {
         requestQueue = getRequestQueue();
 
         imageLoader = new ImageLoader(requestQueue,
@@ -37,9 +37,9 @@ public class RequestQueue {
                 });
     }
 
-    public static synchronized RequestQueue getInstance() {
+    public static synchronized ClientRequestQueue getInstance() {
         if (instance == null) {
-            instance = new RequestQueue();
+            instance = new ClientRequestQueue();
         }
         return instance;
     }

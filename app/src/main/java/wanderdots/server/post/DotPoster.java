@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import wanderdots.Dot;
 import wanderdots.Observer;
-import wanderdots.server.RequestQueue;
+import wanderdots.server.ClientRequestQueue;
 
 /* Provides the method "postDot" that create a given dot on the server.
  * The subscriber is called as soon as a response from the server is received,
@@ -18,13 +18,13 @@ public class DotPoster implements Response.Listener<JSONObject>,
                                 Response.ErrorListener{
 
     private Observer observer ;
-    private RequestQueue queue ;
+    private ClientRequestQueue queue ;
     private String dotID ;
     private String error ;
 
     public DotPoster(Observer observer) {
         this.observer = observer ;
-        this.queue = RequestQueue.getInstance() ;
+        this.queue = ClientRequestQueue.getInstance() ;
         this.dotID = null ;
     }
 
