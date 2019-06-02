@@ -19,7 +19,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.content.Intent;
 
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.InputStream;
 
@@ -28,11 +35,14 @@ import wanderdots.server.post.DotPoster;
 import wanderdots.Observer;
 
 public class NewDotActivity extends AppCompatActivity
-        implements View.OnClickListener, Observer {
+        implements View.OnClickListener, Observer, OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
 
     private ImageView imageView4;
     private DotPoster dotPoster;
     private static int result = 1;
+    private double latitude;
+    private double longitude;
+    private GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +53,9 @@ public class NewDotActivity extends AppCompatActivity
         this.imageView4 = findViewById(R.id.imageView4);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-
+        if(mapFragment != null){
+            mapFragment.getMapAsync(this);
+        }
 
         View.OnClickListener addImageListener = new View.OnClickListener() {
             @Override
@@ -57,6 +69,56 @@ public class NewDotActivity extends AppCompatActivity
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.map = googleMap;
+        this.map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+        try {
+            LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+            LatLng pos = new LatLng(latitude, longitude);
+            Marker marker = googleMap.addMarker(new MarkerOptions().position(pos).title("Hold and drag to the Dot's location."));
+            float zoom = 11f;
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, zoom));
+            marker.setDraggable(true);
+        }
+        catch(SecurityException e){
+            Log.e("NewDotActivity", e.toString());
+        }
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        //Getting the coordinates
+        latitude = marker.getPosition().latitude;
+        longitude = marker.getPosition().longitude;
+
+        //Moving the map
+        LatLng latLng = new LatLng(latitude, longitude);
+
+        //Adding marker to map
+        map.addMarker(new MarkerOptions()
+                .position(latLng) //setting position
+                .draggable(true) //Making the marker draggable
+                .title("Hold and drag to the Dot's location.")); //Adding a title
+
+        //Moving the camera
+        map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        //Animating the camera
+        map.animateCamera(CameraUpdateFactory.zoomTo(11));
     }
 
     private void addImages(){
@@ -110,15 +172,8 @@ public class NewDotActivity extends AppCompatActivity
         //multiple image functionality (abby)
         dot.addPictureId("testPictureID");
         //how to make a map marker and Get lat/long from that - for now stub using current loc (abby)
-        try {
-            LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            dot.setLongitude(location.getLongitude());
-            dot.setLatitude(location.getLatitude());
-        }
-        catch(SecurityException e){
-            Log.e("NewDotActivity", e.toString());
-        }
+        dot.setLongitude(latitude);
+        dot.setLatitude(longitude);
 
         this.dotPoster.postDot(dot) ;
     }
