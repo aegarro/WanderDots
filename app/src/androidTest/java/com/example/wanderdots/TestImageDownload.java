@@ -6,6 +6,7 @@ import android.graphics.Picture;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +35,7 @@ public class TestImageDownload implements Observer {
     @Test
     public void testDownloadImage() {
         int timeout = 2000 ; //in millis
-        String imageID = "5cf43f58b046e62dc7d7d407" ;
+        String imageID = "5cf453b7a023e331632cec12" ;
 
         this.lock = new CountDownLatch(1) ;
         Context appContext = InstrumentationRegistry.getTargetContext();
@@ -43,6 +44,7 @@ public class TestImageDownload implements Observer {
             ImageGetter imageGetter = new ImageGetter(this);
             imageGetter.loadImage(imageID) ;
             lock.await(timeout, TimeUnit.MILLISECONDS);
+            Log.d("arodr", imageGetter.getImage().toString()) ;
             assert(imageGetter.getImage() != null) ;
         }catch(InterruptedException e){
             e.printStackTrace();

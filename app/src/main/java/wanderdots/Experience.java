@@ -70,8 +70,12 @@ public abstract class Experience {
 
     public ArrayList<String> createStringList(JSONArray categories)  throws org.json.JSONException {
         ArrayList<String> categoriesList = new ArrayList<String>() ;
-        for(int i=0; i<categories.length(); i++)
-            categoriesList.add(categories.getString(i)) ;
+        for(int i=0; i<categories.length(); i++){
+            String stringCategoryArray = categories.getString(i) ;
+            JSONArray categoryArray = new JSONArray(stringCategoryArray) ;
+            String category = categoryArray.getString(0) ;
+            categoriesList.add(category) ;
+        }
         return categoriesList ;
     }
 
@@ -174,6 +178,10 @@ public abstract class Experience {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public ArrayList<String> getPictureIds(){
+        return this.pictureIds ;
     }
 
     public static String jsonifyArray(ArrayList<String> arr){

@@ -31,7 +31,7 @@ public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Ad
     @Override
     public ListItem onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dot_list_item, viewGroup, false);
-        return new ListItem(view, ctx);
+        return new ListItem(view, ctx, dotList.get(i));
     }
 
     @Override

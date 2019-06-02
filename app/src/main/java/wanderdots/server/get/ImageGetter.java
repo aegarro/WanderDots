@@ -2,6 +2,7 @@ package wanderdots.server.get;
 
 import android.graphics.Bitmap;
 import android.media.Image;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.android.volley.Response;
@@ -24,6 +25,7 @@ public class ImageGetter implements Response.Listener<Bitmap>, Response.ErrorLis
     }
 
     public void loadImage(String id){
+        Log.d("arodr:ImageGetter", "loading image: " + id) ;
         String url = baseURL + "/" + id ;
         ImageRequest request = new ImageRequest(url, this, 0, 0, null, this) ;
         ClientRequestQueue.getInstance().addToRequestQueue(request);
@@ -37,6 +39,8 @@ public class ImageGetter implements Response.Listener<Bitmap>, Response.ErrorLis
 
     @Override
     public void onErrorResponse(VolleyError error) {
+        Log.d("arodr:ImageGetter", "VolleyError") ;
+        Log.d("arodr", error.toString());
         this.error = error.toString() ;
         this.observer.subscriberHasChanged("ImageGetter");
     }

@@ -21,7 +21,7 @@
             android:name=".find.FindExperiencesActivity"
             android:label="@string/title_activity_find_view"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".NewDotActivity" />
+        <activity android:name=".newdot.NewDotActivity" />
         <activity android:name=".DotDetailActivity" />
         <activity
             android:name=".LoginActivity"

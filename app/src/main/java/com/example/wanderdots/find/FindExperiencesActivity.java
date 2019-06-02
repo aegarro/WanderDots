@@ -21,7 +21,7 @@ import android.widget.ToggleButton;
 import com.example.wanderdots.find.state.State;
 import com.example.wanderdots.find.state.AdventureState;
 import com.example.wanderdots.find.state.DotState;
-import com.example.wanderdots.NewDotActivity;
+import com.example.wanderdots.newdot.NewDotActivity;
 import com.example.wanderdots.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
