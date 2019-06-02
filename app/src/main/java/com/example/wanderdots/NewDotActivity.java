@@ -94,10 +94,12 @@ public class NewDotActivity extends AppCompatActivity
 
     @Override
     public void onMarkerDragStart(Marker marker) {
+        //do nothing because it must override and do nothing, comment to satisfy sonarcloud!
     }
 
     @Override
     public void onMarkerDrag(Marker marker) {
+        //do nothing because it must override and do nothing, comment to satisfy sonarcloud!
     }
 
     @Override
