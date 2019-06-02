@@ -19,7 +19,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.content.Intent;
 
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
