@@ -59,7 +59,7 @@ public class DotPoster implements Response.Listener<JSONObject>,
     }
 
     public void postDot(Dot dot){
-        this.queue.addToRequestQueue(new CreateDotRequest(dot,
+        this.queue.addToRequestQueue(new DotPosterRequest(dot,
                 this, this)) ;
     }
 }

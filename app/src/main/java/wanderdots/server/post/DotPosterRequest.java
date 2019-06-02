@@ -8,15 +8,15 @@ import java.util.Map;
 
 import wanderdots.Dot;
 
-public class CreateDotRequest extends JsonObjectRequest {
+public class DotPosterRequest extends JsonObjectRequest {
 
     private static final String url = "http://10.0.2.2:5000/api/post/Dot" ;
 
     private Dot dot ;
 
-    public CreateDotRequest(Dot dot, Response.Listener responseListener,
+    public DotPosterRequest(Dot dot, Response.Listener responseListener,
                             Response.ErrorListener errorListener){
-        super(Request.Method.POST, CreateDotRequest.url, dot.toJSON(), responseListener, errorListener) ;
+        super(Request.Method.POST, DotPosterRequest.url, dot.toJSON(), responseListener, errorListener) ;
         this.dot = dot ;
     }
 

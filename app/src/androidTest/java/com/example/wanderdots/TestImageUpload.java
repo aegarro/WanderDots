@@ -3,24 +3,18 @@ package com.example.wanderdots;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Picture;
-import android.media.Image;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import wanderdots.Adventure;
-import wanderdots.Dot;
 import wanderdots.Observer;
-import wanderdots.server.get.Get;
+import wanderdots.server.post.ImagePoster;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -52,6 +46,8 @@ public class TestImageUpload implements Observer {
             Bitmap.Config config = Bitmap.Config.ALPHA_8 ;
             Picture emptyPicture = new Picture() ;
             Bitmap emptyImage = Bitmap.createBitmap(emptyPicture, width, height, config) ;
+            ImagePoster fileUpload = new ImagePoster(this) ;
+            fileUpload.postImage(emptyImage);
             lock.await(timeout, TimeUnit.MILLISECONDS);
         }catch(InterruptedException e){
             e.printStackTrace();

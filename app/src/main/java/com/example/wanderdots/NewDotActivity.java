@@ -33,12 +33,14 @@ import java.io.InputStream;
 import wanderdots.Dot;
 import wanderdots.server.post.DotPoster;
 import wanderdots.Observer;
+import wanderdots.server.post.ImagePoster;
 
 public class NewDotActivity extends AppCompatActivity
         implements View.OnClickListener, Observer, OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
 
     private ImageView imageView4;
     private DotPoster dotPoster;
+    private ImagePoster imagePoster ;
     private static int result = 1;
     private double latitude;
     private double longitude;
@@ -137,6 +139,7 @@ public class NewDotActivity extends AppCompatActivity
                     final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                     final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                     imageView4.setImageBitmap(selectedImage);
+                    this.imagePoster.postImage(selectedImage) ;
                     if (imageStream != null) {
                         imageStream.close();
                     }
