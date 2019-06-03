@@ -14,8 +14,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.defaultContext = getApplicationContext() ;
+        super.onCreate(savedInstanceState) ;
+        setDefaultContext(getApplicationContext()) ;
         Intent loginIntent = new Intent(this, LoginActivity.class) ;
         startActivityForResult(loginIntent, LOGINID);
     }
