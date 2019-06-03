@@ -65,9 +65,9 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         setContentView(R.layout.find_view);
         validateLocationPermission();
 
-        toggle = findViewById(R.id.listToggleButton);
+        this.toggle = findViewById(R.id.listToggleButton);
 
-        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        this.toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(!isChecked){
@@ -86,9 +86,6 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         //SET CREATEBUTTON HANDLER
         newDotButton = (FloatingActionButton) findViewById(R.id.new_dot_btn);
         newDotButton.setOnClickListener(this) ;
-
-        ToggleButton toggle = (ToggleButton) findViewById(R.id.listToggleButton) ;
-        toggle.setOnCheckedChangeListener(this)  ;
 
         //STATE
         Context context = getApplicationContext() ;
@@ -128,10 +125,11 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     //Runs after CreateDotActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("arodr", "Activity result received") ;
-        if (requestCode == CREATE_DOT_ACTIVITY_ID && resultCode == RESULT_OK)
-            Log.d("arodr", "onActivityResult: reloading data...") ;
-            Dot.reload() ; //checks for to include new Dot or Adventures
-            Adventure.reload() ;
+        if (requestCode == CREATE_DOT_ACTIVITY_ID && resultCode == RESULT_OK) {
+            Log.d("arodr", "onActivityResult: reloading data...");
+            Dot.reload(); //checks for to include new Dot or Adventures
+            Adventure.reload();
+        }
     }
 
     @Override
