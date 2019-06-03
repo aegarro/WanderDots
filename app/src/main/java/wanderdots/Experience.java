@@ -72,7 +72,7 @@ public abstract class Experience {
     }
 
     public List<String> createStringList(JSONArray categories)  throws org.json.JSONException {
-        ArrayList<String> categoriesList = new ArrayList<String>() ;
+        ArrayList<String> categoriesList = new ArrayList<>() ;
         for(int i=0; i<categories.length(); i++){
             String category = categories.getString(i) ;
             categoriesList.add(category) ;
