@@ -21,6 +21,7 @@ public class DotPoster implements Response.Listener<JSONObject>,
     private ClientRequestQueue queue ;
     private String dotID ;
     private String error ;
+    private static final String dotPoster = "DotPoster";
 
     public DotPoster(Observer observer) {
         this.observer = observer ;
@@ -46,14 +47,14 @@ public class DotPoster implements Response.Listener<JSONObject>,
         try {
             if(response.has(errorMessage)){
                this.error = response.getString(errorMessage) ;
-               this.observer.subscriberHasChanged("DotPoster");
+               this.observer.subscriberHasChanged(dotPoster);
             } else {
                 this.dotID = response.getString("id") ;
-                this.observer.subscriberHasChanged("DotPoster");
+                this.observer.subscriberHasChanged(dotPoster);
             }
         } catch(JSONException e){
             this.error = e.toString() ;
-            this.observer.subscriberHasChanged("DotPoster");
+            this.observer.subscriberHasChanged(dotPoster);
         }
     }
 

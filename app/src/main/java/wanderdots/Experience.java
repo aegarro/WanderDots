@@ -12,8 +12,8 @@ import java.util.List;
 
 public abstract class Experience {
 
-    private static final String CATEGORIES = "categories";
-    private static final String CREATOR = "creator";
+    private static final String CATEGORIES_FIELD = "categories";
+    private static final String CREATOR_FIELD = "creator";
     private static final String PICTUREIDS_FIELD = "pictureIds";
     private static final String LOCATION_FIELD = "location";
     private static final String DESCRIPTION_FIELD = "description";
@@ -34,7 +34,7 @@ public abstract class Experience {
     private ArrayList<String> pictureIds ;
     private Double latitude ;
     private Double longitude ;
-    private String[] requiredFields = {"_id", "name", DESCRIPTION_FIELD, LOCATION_FIELD, CATEGORIES, CREATOR, PICTUREIDS_FIELD} ;
+    private String[] requiredFields = {"_id", "name", DESCRIPTION_FIELD, LOCATION_FIELD, CATEGORIES_FIELD, CREATOR_FIELD, PICTUREIDS_FIELD} ;
 
     public Experience(){
         this.categories = new ArrayList<>() ;
@@ -49,11 +49,11 @@ public abstract class Experience {
         if(!containsRequiredFields(experience, requiredFields))
             throw new RuntimeException("Experience missing field: " + getMissingField(experience, requiredFields)) ;
 
-        JSONArray j_categories = experience.getJSONArray(CATEGORIES) ;
-        this.categories = createStringList(j_categories) ;
+        JSONArray jCategories = experience.getJSONArray(CATEGORIES_FIELD) ;
+        this.categories = createStringList(jCategories) ;
 
-        JSONArray j_pictureIds = experience.getJSONArray(PICTUREIDS_FIELD) ;
-        this.pictureIds = createStringList(j_pictureIds);
+        JSONArray jPictureIds = experience.getJSONArray(PICTUREIDS_FIELD) ;
+        this.pictureIds = createStringList(jPictureIds);
 
         JSONObject location = experience.getJSONObject(LOCATION_FIELD) ;
         initializeLocation(location) ;
@@ -61,7 +61,7 @@ public abstract class Experience {
         this.id = location.getString("_id") ;
         this.description = experience.getString(DESCRIPTION_FIELD) ;
         this.name = experience.getString("name") ;
-        this.creator = experience.getString(CREATOR) ;
+        this.creator = experience.getString(CREATOR_FIELD) ;
     }
 
     public ArrayList<String> createStringList(JSONArray categories)  throws org.json.JSONException {
@@ -107,8 +107,8 @@ public abstract class Experience {
             JSONObject data = new JSONObject();
             data.put("name", name) ;
             data.put(DESCRIPTION_FIELD, description) ;
-            data.put(CREATOR, creator) ;
-            data.put(CATEGORIES, (Object) new JSONArray(categories)) ;
+            data.put(CREATOR_FIELD, creator) ;
+            data.put(CATEGORIES_FIELD, (Object) new JSONArray(categories)) ;
             data.put(PICTUREIDS_FIELD, (Object) new JSONArray(pictureIds)) ;
 
             JSONObject location = new JSONObject() ;
@@ -186,8 +186,7 @@ public abstract class Experience {
 
     protected static JSONArray jsonifyArray(String[] arr){
         try{
-            JSONArray stringArray = new JSONArray(arr) ;
-            return stringArray ;
+            return new JSONArray(arr) ;
         }catch(JSONException e){
             Log.d("ERROR", e.toString()) ;
             return null ;
@@ -209,7 +208,7 @@ public abstract class Experience {
     public HashMap<String, String> toHashMap(){
         HashMap<String, String> experience = new HashMap<String, String>() ;
         experience.put("name", this.name) ;
-        experience.put(CREATOR, this.creator) ;
+        experience.put(CREATOR_FIELD, this.creator) ;
         experience.put(DESCRIPTION_FIELD, this.description);
         experience.put(PICTUREIDS_FIELD, jsonifyArray(this.pictureIds)) ;
         experience.put(LOCATION_FIELD, getLocationJSON() ) ;

@@ -22,11 +22,12 @@ import wanderdots.Observer ;
 
 public class ImagePoster implements Response.Listener<NetworkResponse>, Response.ErrorListener {
 
-    private final String url = "http://10.0.2.2:5000/api/upload" ;
-    private final String twoHyphens = "--";
-    private final String lineEnd = "\r\n";
-    private final String boundary = "apiclient-" + System.currentTimeMillis();
-    private final String mimeType = "multipart/form-data;boundary=" + boundary;
+    private static final String url = "http://10.0.2.2:5000/api/upload" ;
+    private static final String twoHyphens = "--";
+    private static final String imagePoster = "ImagePoster";
+    private static final String lineEnd = "\r\n";
+    private static final String boundary = "apiclient-" + System.currentTimeMillis();
+    private static final String mimeType = "multipart/form-data;boundary=" + boundary;
     private byte[] multipartBody;
     private Observer observer ;
     private JSONObject response ;
@@ -45,7 +46,7 @@ public class ImagePoster implements Response.Listener<NetworkResponse>, Response
             dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
             multipartBody = bos.toByteArray();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("arodr: ", "(error):" + e.toString()) ;
         }
 
         ImagePostRequest imagePostRequest = new ImagePostRequest(url, null, mimeType, multipartBody, this, this) ;
@@ -57,22 +58,22 @@ public class ImagePoster implements Response.Listener<NetworkResponse>, Response
         try {
             String responseInText = parseNetworkResponse(networkResponse);
             if(responseInText == null){
-                this.observer.subscriberHasChanged("ImagePoster");
+                this.observer.subscriberHasChanged(imagePoster);
                 return ;
             }
-            JSONObject response = new JSONObject(responseInText) ;
-            this.response = response ;
+            JSONObject jResponse = new JSONObject(responseInText) ;
+            this.response = jResponse ;
         }catch(JSONException e){
            Log.d("arodr", e.toString()) ;
            this.error = e.toString() ;
         }
-        this.observer.subscriberHasChanged("ImagePoster");
+        this.observer.subscriberHasChanged(imagePoster);
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
         this.error = error.toString() ;
-        this.observer.subscriberHasChanged("ImagePoster");
+        this.observer.subscriberHasChanged(imagePoster);
     }
 
     public boolean hasError(){
