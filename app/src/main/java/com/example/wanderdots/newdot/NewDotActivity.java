@@ -44,7 +44,8 @@ import wanderdots.server.post.ImagePoster;
 public class NewDotActivity extends AppCompatActivity
         implements View.OnClickListener, Observer, OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
 
-    private final String TAG = "NewDotActivity" ;
+    private final static String TAG = "newDotActivity";
+    private final static String LOGTAG = "arodr";
     private ImageView imageView4;
     private DotPoster dotPoster;
     private ImagePoster imagePoster ;
@@ -103,7 +104,7 @@ public class NewDotActivity extends AppCompatActivity
             marker.setDraggable(true);
         }
         catch(SecurityException e){
-            Log.e("NewDotActivity", e.toString());
+            Log.e(TAG, e.toString());
         }
     }
 
@@ -200,36 +201,36 @@ public class NewDotActivity extends AppCompatActivity
      */
     private void processPostImageResponse(){
         if(this.imagePoster.hasError()){
-            Log.d("arodr", "error posting image to server") ;
+            Log.d(LOGTAG, "error posting image to server") ;
             return ;
         }
 
         try {
             JSONObject response = this.imagePoster.getResponse() ;
             if(response.has("error")){
-                Log.d("arodr", "server send back an error while posting image") ;
-                Log.d("arodr", response.getString("error")) ;
+                Log.d(LOGTAG, "server send back an error while posting image") ;
+                Log.d(LOGTAG, response.getString("error")) ;
                 return ;
             }
 
             if(!response.has("id")){
-                Log.d("arodr", "received unknown server response while posting image") ;
-                Log.d("arodr", response.toString()) ;
+                Log.d(LOGTAG, "received unknown server response while posting image") ;
+                Log.d(LOGTAG, response.toString()) ;
                 return ;
             }
 
             String id = response.getString("id") ;
             this.pictureIds.add(id) ;
         }catch(JSONException e){
-            Log.d("arodr", "error occurred processing server json response") ;
-            Log.d("arodr", e.toString()) ;
+            Log.d(LOGTAG, "error occurred processing server json response") ;
+            Log.d(LOGTAG, e.toString()) ;
         }
     }
 
     private void processPostDotResponse(){
         if(this.dotPoster.hasError()){
-            Log.d("arodr", "error occurred while posting a dot") ;
-            Log.d("arodr", this.dotPoster.getError()) ;
+            Log.d(LOGTAG, "error occurred while posting a dot") ;
+            Log.d(LOGTAG, this.dotPoster.getError()) ;
             return;
         }
 
