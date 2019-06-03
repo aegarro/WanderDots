@@ -36,7 +36,7 @@ public abstract class Experience {
     private String creator ;
     private String description ;
     private List<String> categories;
-    private ArrayList<String> pictureIds ;
+    private List<String> pictureIds ;
     private Double latitude ;
     private Double longitude ;
     private String[] requiredFields = {"_id", "name", DESCRIPTION_FIELD, LOCATION_FIELD, CATEGORIES_FIELD, CREATOR_FIELD, PICTUREIDS_FIELD} ;
@@ -71,7 +71,7 @@ public abstract class Experience {
         this.creator = experience.getString(CREATOR_FIELD) ;
     }
 
-    public ArrayList<String> createStringList(JSONArray categories)  throws org.json.JSONException {
+    public List<String> createStringList(JSONArray categories)  throws org.json.JSONException {
         ArrayList<String> categoriesList = new ArrayList<String>() ;
         for(int i=0; i<categories.length(); i++){
             String category = categories.getString(i) ;
@@ -182,11 +182,11 @@ public abstract class Experience {
         this.longitude = longitude;
     }
 
-    public ArrayList<String> getPictureIds(){
+    public List<String> getPictureIds(){
         return this.pictureIds ;
     }
 
-    protected static String jsonifyArray(ArrayList<String> arr){
+    protected static String jsonifyArray(List<String> arr){
         JSONArray stringArray = new JSONArray(arr) ;
         return stringArray.toString() ;
     }
