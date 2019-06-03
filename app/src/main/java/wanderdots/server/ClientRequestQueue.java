@@ -19,7 +19,6 @@ public class ClientRequestQueue {
 
     private ClientRequestQueue() {
         requestQueue = getRequestQueue();
-
         imageLoader = new ImageLoader(requestQueue,
                 new ImageLoader.ImageCache() {
                     private final LruCache<String, Bitmap>

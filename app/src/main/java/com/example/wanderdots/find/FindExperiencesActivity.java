@@ -127,9 +127,10 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         Log.d("arodr", "Activity result received") ;
         if (requestCode == CREATE_DOT_ACTIVITY_ID && resultCode == RESULT_OK) {
             Log.d("arodr", "onActivityResult: reloading data...");
-            Dot.reload(); //checks for to include new Dot or Adventures
-            Adventure.reload();
+            return ;
         }
+        Dot.reload(); //checks for to include new Dot or Adventures
+        Adventure.reload();
     }
 
     @Override
