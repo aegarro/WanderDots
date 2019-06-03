@@ -57,7 +57,7 @@ public class ImagePoster implements Response.Listener<NetworkResponse>, Response
         try {
             String responseInText = parseNetworkResponse(networkResponse);
             if(responseInText == null){
-                this.observer.subscriberHasChanged("error");
+                this.observer.subscriberHasChanged("ImagePoster");
                 return ;
             }
             JSONObject response = new JSONObject(responseInText) ;
@@ -66,13 +66,13 @@ public class ImagePoster implements Response.Listener<NetworkResponse>, Response
            Log.d("arodr", e.toString()) ;
            this.error = e.toString() ;
         }
-        this.observer.subscriberHasChanged("onResponse");
+        this.observer.subscriberHasChanged("ImagePoster");
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
         this.error = error.toString() ;
-        this.observer.subscriberHasChanged("error");
+        this.observer.subscriberHasChanged("ImagePoster");
     }
 
     public boolean hasError(){

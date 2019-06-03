@@ -39,7 +39,6 @@ public final class AdventureCreator implements Observer, Loader<Adventure> {
                 this.error = response.getString("error") ;
             else{
                 JSONArray adventures = response.getJSONArray("adventures");
-                Log.d("arodr", "length: " + adventures.length()) ;
                 for (int i = 0; i < adventures.length(); i++) {
                     JSONObject adventure = adventures.getJSONObject(i);
                     Adventure newAdventure = new Adventure(adventure) ;
@@ -54,6 +53,9 @@ public final class AdventureCreator implements Observer, Loader<Adventure> {
     }
 
     public void reload(){
+
+        this.error = null ;
+        this.adventures.clear() ;
         this.adventureGetter.loadData() ;
     }
 

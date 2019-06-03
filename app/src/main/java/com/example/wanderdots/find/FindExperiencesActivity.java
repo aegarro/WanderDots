@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import wanderdots.Adventure;
 import wanderdots.Dot;
 
 public class FindExperiencesActivity extends AppCompatActivity implements OnMapReadyCallback,
@@ -120,14 +121,15 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this.getApplicationContext(), NewDotActivity.class);
-        startActivityForResult(intent, CREATE_DOT_ACTIVITY_ID); //69 is id of activity I decided it would be
+        startActivityForResult(intent, CREATE_DOT_ACTIVITY_ID);
     }
 
     @Override
     //Runs after CreateDotActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CREATE_DOT_ACTIVITY_ID && resultCode == RESULT_OK)
-            Dot.reload() ; //Proprogates new data: Dot > DotState
+            Dot.reload() ; //checks for to include new Dot or Adventures
+            Adventure.reload() ;
     }
 
     @Override

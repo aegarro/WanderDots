@@ -24,7 +24,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -45,8 +44,7 @@ import wanderdots.server.post.ImagePoster;
 public class NewDotActivity extends AppCompatActivity
         implements View.OnClickListener, Observer, OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
 
-    private static final String TAG = "newDotActivity" ;
-    private static final String LOGTAG = "arodr" ;
+    private final String TAG = "NewDotActivity" ;
     private ImageView imageView4;
     private DotPoster dotPoster;
     private ImagePoster imagePoster ;
@@ -100,15 +98,12 @@ public class NewDotActivity extends AppCompatActivity
             longitude = location.getLongitude();
             LatLng pos = new LatLng(latitude, longitude);
             Marker marker = googleMap.addMarker(new MarkerOptions().position(pos).title("Hold and drag to the Dot's location."));
-            float zoom = 13f;
+            float zoom = 11f;
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, zoom));
             marker.setDraggable(true);
-            this.map.setMyLocationEnabled(true);
-            UiSettings mapUiSettings = this.map.getUiSettings();
-            mapUiSettings.setZoomControlsEnabled(true);
         }
         catch(SecurityException e){
-            Log.e(TAG, e.toString());
+            Log.e("NewDotActivity", e.toString());
         }
     }
 
@@ -195,7 +190,8 @@ public class NewDotActivity extends AppCompatActivity
     public void subscriberHasChanged(String message){
         if(message.equals("ImagePoster"))
             processPostImageResponse();
-        else
+
+        if(message.equals("DotPoster"))
             processPostDotResponse();
     }
 
@@ -204,36 +200,36 @@ public class NewDotActivity extends AppCompatActivity
      */
     private void processPostImageResponse(){
         if(this.imagePoster.hasError()){
-            Log.d(LOGTAG, "error posting image to server") ;
+            Log.d("arodr", "error posting image to server") ;
             return ;
         }
 
         try {
             JSONObject response = this.imagePoster.getResponse() ;
             if(response.has("error")){
-                Log.d(LOGTAG, "server send back an error while posting image") ;
-                Log.d(LOGTAG, response.getString("error")) ;
+                Log.d("arodr", "server send back an error while posting image") ;
+                Log.d("arodr", response.getString("error")) ;
                 return ;
             }
 
             if(!response.has("id")){
-                Log.d(LOGTAG, "received unknown server response while posting image") ;
-                Log.d(LOGTAG, response.toString()) ;
+                Log.d("arodr", "received unknown server response while posting image") ;
+                Log.d("arodr", response.toString()) ;
                 return ;
             }
 
             String id = response.getString("id") ;
             this.pictureIds.add(id) ;
         }catch(JSONException e){
-            Log.d(LOGTAG, "error occurred processing server json response") ;
-            Log.d(LOGTAG, e.toString()) ;
+            Log.d("arodr", "error occurred processing server json response") ;
+            Log.d("arodr", e.toString()) ;
         }
     }
 
     private void processPostDotResponse(){
         if(this.dotPoster.hasError()){
-            Log.d(LOGTAG, "error occurred while posting a dot") ;
-            Log.d(LOGTAG, this.dotPoster.getError()) ;
+            Log.d("arodr", "error occurred while posting a dot") ;
+            Log.d("arodr", this.dotPoster.getError()) ;
             return;
         }
 

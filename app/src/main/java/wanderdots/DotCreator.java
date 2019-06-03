@@ -32,8 +32,7 @@ public final class DotCreator implements Observer, Loader<Dot> {
             JSONObject response ;
             if(this.dotGetter.hasError())
                 this.error = dotGetter.getError() ;
-            else if((dotGetter.getResponse()).has("error"))
-            {
+            else if((dotGetter.getResponse()).has("error")) {
                 response = dotGetter.getResponse();
                 this.error = response.getString("error") ;
             }
@@ -53,6 +52,8 @@ public final class DotCreator implements Observer, Loader<Dot> {
     }
 
     public void reload(){
+        this.error = null ;
+        this.dots.clear() ;
         this.dotGetter.loadData() ;
     }
 

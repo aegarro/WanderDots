@@ -42,7 +42,6 @@ public abstract class Experience {
     }
 
     public Experience(JSONObject experience) throws org.json.JSONException{
-        Log.d("arodr", "creating Experience ... ")  ;
         instantiateFromJSON(experience);
     }
 
@@ -60,20 +59,15 @@ public abstract class Experience {
         initializeLocation(location) ;
 
         this.id = location.getString("_id") ;
-
         this.description = experience.getString(DESCRIPTION_FIELD) ;
-
         this.name = experience.getString("name") ;
-
         this.creator = experience.getString(CREATOR) ;
     }
 
     public ArrayList<String> createStringList(JSONArray categories)  throws org.json.JSONException {
         ArrayList<String> categoriesList = new ArrayList<String>() ;
         for(int i=0; i<categories.length(); i++){
-            String stringCategoryArray = categories.getString(i) ;
-            JSONArray categoryArray = new JSONArray(stringCategoryArray) ;
-            String category = categoryArray.getString(0) ;
+            String category = categories.getString(i) ;
             categoriesList.add(category) ;
         }
         return categoriesList ;
@@ -103,6 +97,7 @@ public abstract class Experience {
     }
 
     public void addPictureId(String pictureId){
+        Log.d("arodr", "adding picture id" + pictureId) ;
         this.pictureIds.add(pictureId) ;
     }
 
@@ -113,8 +108,8 @@ public abstract class Experience {
             data.put("name", name) ;
             data.put(DESCRIPTION_FIELD, description) ;
             data.put(CREATOR, creator) ;
-            data.put(CATEGORIES, (Object) categories) ;
-            data.put(PICTUREIDS_FIELD, (Object) pictureIds) ;
+            data.put(CATEGORIES, (Object) new JSONArray(categories)) ;
+            data.put(PICTUREIDS_FIELD, (Object) new JSONArray(pictureIds)) ;
 
             JSONObject location = new JSONObject() ;
             location.put(LATITUDE_FIELD, latitude) ;
@@ -184,15 +179,15 @@ public abstract class Experience {
         return this.pictureIds ;
     }
 
-    public static String jsonifyArray(ArrayList<String> arr){
+    protected static String jsonifyArray(ArrayList<String> arr){
         JSONArray stringArray = new JSONArray(arr) ;
         return stringArray.toString() ;
     }
 
-    public static String jsonifyArray(String[] arr){
+    protected static JSONArray jsonifyArray(String[] arr){
         try{
             JSONArray stringArray = new JSONArray(arr) ;
-            return stringArray.toString() ;
+            return stringArray ;
         }catch(JSONException e){
             Log.d("ERROR", e.toString()) ;
             return null ;

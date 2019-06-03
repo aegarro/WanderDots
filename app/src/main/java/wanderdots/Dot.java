@@ -57,9 +57,6 @@ public class Dot extends Experience  {
         return dot ;
     }
 
-    //DO NOT REMOVE: This method triggers the static initializer of this class
-    //Beginning the loading process, without this Experience parent class recieves a null
-    //Loader object
     public static void addObserver(Observer observer){
         Observers.add(observer) ;
     }
@@ -83,5 +80,6 @@ public class Dot extends Experience  {
 
     public static void reload(){
         loader.reload();
+        setError(null) ;
     }
 }

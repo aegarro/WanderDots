@@ -2,6 +2,7 @@ package wanderdots;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,7 +45,7 @@ public class Adventure extends Experience {
     public JSONObject toJSON(){
         try {
             JSONObject jdata = super.toJSON() ;
-            jdata.put(DOTS_V_STRING, (Object) dotsVisited) ;
+            jdata.put(DOTS_V_STRING, (Object) new JSONArray(dotsVisited)) ;
             return jdata ;
         } catch(JSONException e){
             Log.d("arodr:Adventure:toJSON", e.toString()) ;
@@ -77,5 +78,9 @@ public class Adventure extends Experience {
     public static void notifyObservers(){
         for(Observer observer : observers)
             observer.subscriberHasChanged("update");
+    }
+
+    public static void reload(){
+        loader.reload();
     }
 }

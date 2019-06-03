@@ -20,6 +20,7 @@ public class AdventureState extends State<Adventure> {
 
     public void subscriberHasChanged(String message){
 
+        Log.d("arodr", "adventure data has changed" + message) ;
         if(Adventure.hasError()){
             Log.d("arodr", "error occurred while loading adventures") ;
             Log.d("arodr", "error: " + Adventure.getError()) ;
