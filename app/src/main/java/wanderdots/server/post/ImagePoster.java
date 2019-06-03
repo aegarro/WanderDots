@@ -22,12 +22,12 @@ import wanderdots.Observer ;
 
 public class ImagePoster implements Response.Listener<NetworkResponse>, Response.ErrorListener {
 
-    private static final String url = "http://10.0.2.2:5000/api/upload" ;
-    private static final String twoHyphens = "--";
-    private static final String imagePoster = "ImagePoster";
-    private static final String lineEnd = "\r\n";
-    private static final String boundary = "apiclient-" + System.currentTimeMillis();
-    private static final String mimeType = "multipart/form-data;boundary=" + boundary;
+    private static final String URL = "http://10.0.2.2:5000/api/upload" ;
+    private static final String HYPHENS = "--";
+    private static final String POSTER = "ImagePoster";
+    private static final String END = "\r\n";
+    private static final String BOUNDARY = "apiclient-" + System.currentTimeMillis();
+    private static final String MIMETYPE = "multipart/form-data;boundary=" + BOUNDARY;
     private byte[] multipartBody;
     private Observer observer ;
     private JSONObject response ;
@@ -43,13 +43,13 @@ public class ImagePoster implements Response.Listener<NetworkResponse>, Response
         DataOutputStream dos = new DataOutputStream(bos);
         try {
             buildPart(dos, fileData1, "testImageUpload.png");
-            dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+            dos.writeBytes(HYPHENS + BOUNDARY + HYPHENS + END);
             multipartBody = bos.toByteArray();
         } catch (IOException e) {
             Log.d("arodr: ", "(error):" + e.toString()) ;
         }
 
-        ImagePostRequest imagePostRequest = new ImagePostRequest(url, null, mimeType, multipartBody, this, this) ;
+        ImagePostRequest imagePostRequest = new ImagePostRequest(URL, null, MIMETYPE, multipartBody, this, this) ;
         ClientRequestQueue.getInstance().addToRequestQueue(imagePostRequest);
     }
 
@@ -58,7 +58,7 @@ public class ImagePoster implements Response.Listener<NetworkResponse>, Response
         try {
             String responseInText = parseNetworkResponse(networkResponse);
             if(responseInText == null){
-                this.observer.subscriberHasChanged(imagePoster);
+                this.observer.subscriberHasChanged(POSTER);
                 return ;
             }
             JSONObject jResponse = new JSONObject(responseInText) ;
@@ -67,13 +67,13 @@ public class ImagePoster implements Response.Listener<NetworkResponse>, Response
            Log.d("arodr", e.toString()) ;
            this.error = e.toString() ;
         }
-        this.observer.subscriberHasChanged(imagePoster);
+        this.observer.subscriberHasChanged(POSTER);
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
         this.error = error.toString() ;
-        this.observer.subscriberHasChanged(imagePoster);
+        this.observer.subscriberHasChanged(POSTER);
     }
 
     public boolean hasError(){
@@ -81,10 +81,10 @@ public class ImagePoster implements Response.Listener<NetworkResponse>, Response
     }
 
     private void buildPart(DataOutputStream dataOutputStream, byte[] fileData, String fileName) throws IOException {
-        dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
+        dataOutputStream.writeBytes(HYPHENS + BOUNDARY + END);
         dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"document\"; filename=\""
-                + fileName + "\"" + lineEnd);
-        dataOutputStream.writeBytes(lineEnd);
+                + fileName + "\"" + END);
+        dataOutputStream.writeBytes(END);
 
         ByteArrayInputStream fileInputStream = new ByteArrayInputStream(fileData);
         int bytesAvailable = fileInputStream.available();
@@ -103,7 +103,7 @@ public class ImagePoster implements Response.Listener<NetworkResponse>, Response
             bytesRead = fileInputStream.read(buffer, 0, bufferSize);
         }
 
-        dataOutputStream.writeBytes(lineEnd);
+        dataOutputStream.writeBytes(END);
     }
 
     private byte[] convertBitmapToByteArray(Bitmap bitmap) {
