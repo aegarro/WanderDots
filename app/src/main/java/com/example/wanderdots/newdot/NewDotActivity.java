@@ -1,4 +1,4 @@
-package com.example.Tests.newdot;
+package com.example.wanderdots.newdot;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -19,7 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.content.Intent;
 
-import com.example.Tests.R;
+import com.example.wanderdots.R;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

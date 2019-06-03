@@ -1,4 +1,4 @@
-package com.example.Tests.find;
+package com.example.wanderdots.find;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,8 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-import com.example.Tests.DotDetailActivity;
-import com.example.Tests.R;
+import com.example.wanderdots.DotDetailActivity;
+import com.example.wanderdots.R;
 
 import wanderdots.Experience;
 

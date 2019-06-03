@@ -1,4 +1,4 @@
-package com.example.Tests.find;
+package com.example.wanderdots.find;
 
 import android.Manifest;
 import android.content.Context;
@@ -19,11 +19,11 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.example.Tests.find.state.State;
-import com.example.Tests.find.state.AdventureState;
-import com.example.Tests.find.state.DotState;
-import com.example.Tests.newdot.NewDotActivity;
-import com.example.Tests.R;
+import com.example.wanderdots.find.state.State;
+import com.example.wanderdots.find.state.AdventureState;
+import com.example.wanderdots.find.state.DotState;
+import com.example.wanderdots.newdot.NewDotActivity;
+import com.example.wanderdots.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;

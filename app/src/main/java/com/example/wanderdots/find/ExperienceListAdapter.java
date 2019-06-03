@@ -1,4 +1,4 @@
-package com.example.Tests.find;
+package com.example.wanderdots.find;
 
 import android.content.Context;
 import android.location.Location;
@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.View;
-import com.example.Tests.R;
+import com.example.wanderdots.R;
 
 import java.util.ArrayList;
 import java.util.List;

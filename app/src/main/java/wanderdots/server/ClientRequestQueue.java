@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 import com.android.volley.Request;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.example.Tests.MainActivity;
+import com.example.wanderdots.MainActivity;
 
 import android.util.LruCache ;
 

@@ -1,4 +1,4 @@
-package com.example.Tests;
+package com.example.wanderdots;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

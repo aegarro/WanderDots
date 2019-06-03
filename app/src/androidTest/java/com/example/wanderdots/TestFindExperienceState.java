@@ -1,12 +1,12 @@
-package com.example.Tests;
+package com.example.wanderdots;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.example.Tests.find.state.DotState;
-import com.example.Tests.find.state.AdventureState;
+import com.example.wanderdots.find.state.DotState;
+import com.example.wanderdots.find.state.AdventureState;
 import com.google.android.gms.maps.model.Marker;
 
 import org.junit.Test;

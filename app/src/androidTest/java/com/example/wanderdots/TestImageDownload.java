@@ -1,4 +1,4 @@
-package com.example.Tests;
+package com.example.wanderdots;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -10,13 +10,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
-import wanderdots.Dot;
 import wanderdots.Observer;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import wanderdots.server.get.ImageGetter ;
 
 /*
  * Verifies that
@@ -28,21 +25,27 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public class TestExperienceJSON implements Observer {
+public class TestImageDownload implements Observer {
 
     private CountDownLatch lock ;
 
     @Test
-    public void testDotJSON() {
+    public void testDownloadImage() {
+        int timeout = 2000 ; //in millis
+        String imageID = "5cf453b7a023e331632cec12" ;
+
         this.lock = new CountDownLatch(1) ;
         Context appContext = InstrumentationRegistry.getTargetContext();
         MainActivity.setDefaultContext(appContext) ;
-        Dot dot = new Dot() ;
-        dot.addPictureId("69696969696");
-        dot.addPictureId("420420420") ;
-        dot.addCategory("Hiking");
-        dot.addCategory("Balls");
-        Log.d("arodr", "Dot: " + dot.toJSON().toString()) ;
+        try {
+            ImageGetter imageGetter = new ImageGetter(this);
+            imageGetter.loadImage(imageID) ;
+            lock.await(timeout, TimeUnit.MILLISECONDS);
+            Log.d("arodr", imageGetter.getImage().toString()) ;
+            assert(imageGetter.getImage() != null) ;
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }
     }
 
     //Runs asynchronously with any change in object subscribed to

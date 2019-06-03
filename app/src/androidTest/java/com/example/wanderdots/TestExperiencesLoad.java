@@ -1,4 +1,4 @@
-package com.example.Tests;
+package com.example.wanderdots;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
