@@ -13,7 +13,7 @@ import wanderdots.Dot;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static Context defaultContext;
+    private static Context defaultContext;
     private final int LOGIN_ID = 420 ;
 
     @Override
@@ -37,5 +37,9 @@ public class MainActivity extends AppCompatActivity {
     //SHOULD BE USED FOR TESTING ONLY
     public static void setDefaultContext(Context context){
         defaultContext = context ;
+    }
+
+    public static Context getDefaultContext(){
+        return defaultContext ;
     }
 }
