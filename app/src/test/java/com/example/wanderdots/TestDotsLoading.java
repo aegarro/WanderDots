@@ -12,9 +12,5 @@ public class TestDotsLoading {
 
     @Test
     public void test1(){
-
-        Dot dot = new Dot();
-        dot.addPictureId("5454545454544545");
-        Log.d("arodr", "dot: " + dot.toJSON().toString()) ;
     }
 }
