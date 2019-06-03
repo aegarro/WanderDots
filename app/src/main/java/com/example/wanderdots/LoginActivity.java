@@ -43,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SIGN_UP && resultCode == RESULT_OK) {
-                // TODO: Implement successful sign_up logic here
                 // By default we just finish the Activity and log them in automatically
                 this.finish();
         }
