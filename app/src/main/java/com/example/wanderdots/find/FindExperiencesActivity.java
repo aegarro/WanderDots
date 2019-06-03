@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.wanderdots.find.state.State;
@@ -48,6 +49,7 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
 
     private RecyclerView listContainer;
     private GoogleMap mMap;
+    private ToggleButton toggle;
 
     private Boolean mLocationPermissionGranted = false ; // Whether user has permitted us to access the devices location
 
@@ -60,6 +62,20 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.find_view);
         validateLocationPermission();
+
+        toggle = findViewById(R.id.listToggleButton);
+
+        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(!isChecked){
+                    // Toggle was changed
+                    Toast.makeText(FindExperiencesActivity.this, "Adventure Coming Soon!", Toast.LENGTH_SHORT)
+                            .show();
+                    toggle.setChecked(true);
+                }
+            }
+        });
 
         this.listContainer = (RecyclerView) findViewById(R.id.main_recycler_view);
         this.listContainer.setHasFixedSize(true);
