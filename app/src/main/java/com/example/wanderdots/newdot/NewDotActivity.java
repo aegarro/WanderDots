@@ -24,6 +24,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -92,6 +93,8 @@ public class NewDotActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
         this.map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+        UiSettings mapUiSettings = this.map.getUiSettings();
+        mapUiSettings.setZoomControlsEnabled(true);
         try {
             LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -102,6 +105,7 @@ public class NewDotActivity extends AppCompatActivity
             float zoom = 11f;
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, zoom));
             marker.setDraggable(true);
+            this.map.setMyLocationEnabled(true);
         }
         catch(SecurityException e){
             Log.e(TAG, e.toString());

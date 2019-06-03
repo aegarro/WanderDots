@@ -39,7 +39,7 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
         titleTxt.setText(intent.getStringExtra("title"));
         distanceTxt.setText("Distance: " + intent.getStringExtra("distance"));
         ratingTxt.setText("Rating: " + intent.getStringExtra("rating"));
-        describeTxt.setText("Description: ");
+        describeTxt.setText("Description: " + intent.getStringExtra("description"));
         latitude = Double.valueOf(intent.getStringExtra("latitude"));
         longitude = Double.valueOf(intent.getStringExtra("longitude"));
 
