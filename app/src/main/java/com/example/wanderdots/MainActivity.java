@@ -10,20 +10,20 @@ import com.example.wanderdots.find.FindExperiencesActivity;
 public class MainActivity extends AppCompatActivity {
 
     private static Context defaultContext;
-    private static final int loginId = 420 ;
+    private static final int LOGINID = 420 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.defaultContext = getApplicationContext() ;
         Intent loginIntent = new Intent(this, LoginActivity.class) ;
-        startActivityForResult(loginIntent, loginId);
+        startActivityForResult(loginIntent, LOGINID);
     }
 
     @Override
     //Runs after CreateDotActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == loginId && resultCode == RESULT_CANCELED){
+        if (requestCode == LOGINID && resultCode == RESULT_CANCELED){
             Intent intent = new Intent(this, FindExperiencesActivity.class);
             startActivity(intent);
         }
