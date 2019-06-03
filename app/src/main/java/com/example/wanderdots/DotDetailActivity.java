@@ -1,10 +1,7 @@
 package com.example.wanderdots;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -21,7 +18,8 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
 
     private ImageGetter imageGetter ;
     private ImageButton mainImage ;
-    private double latitude, longitude;
+    private double latitude;
+    private double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +40,6 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
         distanceTxt.setText("Distance: " + intent.getStringExtra("distance"));
         ratingTxt.setText("Rating: " + intent.getStringExtra("rating"));
         describeTxt.setText("Description: ");
-        System.out.println(intent.getStringExtra("latitude"));
         latitude = Double.valueOf(intent.getStringExtra("latitude"));
         longitude = Double.valueOf(intent.getStringExtra("longitude"));
 

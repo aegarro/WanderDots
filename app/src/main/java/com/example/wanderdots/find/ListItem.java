@@ -14,9 +14,9 @@ import wanderdots.Experience;
 
 public class ListItem extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView title;
-    public TextView distance;
-    public TextView rating;
+    private TextView title;
+    private TextView distance;
+    private TextView rating;
     private Experience experience ;
 
     private View mView;
@@ -34,6 +34,18 @@ public class ListItem extends RecyclerView.ViewHolder implements View.OnClickLis
         title = mView.findViewById(R.id.dot_item_title);
         distance = mView.findViewById(R.id.dot_item_dist);
         rating = mView.findViewById(R.id.dot_item_rating);
+    }
+
+    public TextView getTitle() {
+        return title;
+    }
+
+    public TextView getDistance() {
+        return distance;
+    }
+
+    public TextView getRating() {
+        return rating;
     }
 
     @Override
