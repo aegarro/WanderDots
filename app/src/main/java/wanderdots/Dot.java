@@ -4,7 +4,6 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,8 +25,8 @@ public class Dot extends Experience  {
 
     public Dot(JSONObject dot) throws org.json.JSONException{
         super(dot) ;
-        if(!containsRequiredFields(dot, requiredFields)){
-            Log.d(LOGTAG, "Dot Validation Error: Given Dot missing " + getMissingField(dot, requiredFields)) ;
+        if(!containsRequiredFields(dot, this.requiredFields)){
+            Log.d(LOGTAG, "Dot Validation Error: Given Dot missing " + getMissingField(dot, this.requiredFields)) ;
             return ;
         }
         instantiateFromJSON(dot) ;
@@ -42,7 +41,7 @@ public class Dot extends Experience  {
     public JSONObject toJSON(){
         try {
             JSONObject jdata = super.toJSON() ;
-            jdata.put(adventureString, (Object) adventureIds);
+            jdata.put(adventureString, (Object) this.adventureIds);
             return jdata ;
         }catch(JSONException e) {
             Log.d(LOGTAG, e.toString()) ;
