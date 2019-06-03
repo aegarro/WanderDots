@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 
 import wanderdots.Observer;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
