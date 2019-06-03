@@ -81,6 +81,8 @@ public class Adventure extends Experience {
     }
 
     public static void reload(){
+        setError(null) ;
+        data.clear() ;
         loader.reload();
     }
 }

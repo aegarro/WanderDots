@@ -53,7 +53,6 @@ public final class AdventureCreator implements Observer, Loader<Adventure> {
     }
 
     public void reload(){
-
         this.error = null ;
         this.adventures.clear() ;
         this.adventureGetter.loadData() ;

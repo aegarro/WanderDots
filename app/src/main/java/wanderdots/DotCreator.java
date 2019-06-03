@@ -1,5 +1,7 @@
 package wanderdots;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,6 +30,7 @@ public final class DotCreator implements Observer, Loader<Dot> {
      * @param {String} message - The type of update that occurred in Get.
      */
     public void subscriberHasChanged(String message){
+        Log.d("arodr", "DotCreator received new data") ;
         try {
             JSONObject response ;
             if(this.dotGetter.hasError())
@@ -47,7 +50,8 @@ public final class DotCreator implements Observer, Loader<Dot> {
         }catch(JSONException e){
             this.error = e.toString() ;
         }
-
+        Log.d("arodr", "DotCreator (error)" + this.error) ;
+        Log.d("arodr", "DotCreator (data size)" + this.dots.size()) ;
         Dot.dataFinishedLoading();
     }
 

@@ -66,10 +66,14 @@ public class Dot extends Experience  {
     }
 
     public static void dataFinishedLoading(){
-        if(loader.hasError())
+        if(loader.hasError()){
+            Log.d("arodr", "Dot received error while loading data") ;
+            Log.d("arodr", loader.getError()) ;
             setError(loader.getError()) ;
-        else
-            data = loader.getData() ;
+            return ;
+        }
+
+        data = loader.getData() ;
         notifyObservers();
     }
 
@@ -79,7 +83,9 @@ public class Dot extends Experience  {
     }
 
     public static void reload(){
-        loader.reload();
+        Log.d("arodr", "Reloading Dot loader") ;
         setError(null) ;
+        data.clear() ;
+        loader.reload();
     }
 }
