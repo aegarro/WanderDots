@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Dot extends Experience  {
 
@@ -64,7 +65,7 @@ public class Dot extends Experience  {
         observers.add(observer) ;
     }
 
-    public static ArrayList<Dot> getData(){
+    public static List<Dot> getData(){
         return data ;
     }
 

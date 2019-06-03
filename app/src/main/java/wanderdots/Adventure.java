@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /* Plays two different roles (unfortunately):
  * 1. Is the data structure of an Adventure
@@ -65,7 +66,7 @@ public class Adventure extends Experience {
         observers.add(observer) ;
     }
 
-    public static ArrayList<Adventure> getData(){
+    public static List<Adventure> getData(){
         return data ;
     }
 
