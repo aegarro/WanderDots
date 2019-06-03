@@ -16,6 +16,7 @@ import java.util.List;
  */
 public abstract class Experience {
 
+    private static final String TAG = "arodr" ;
     private static final String CATEGORIES_FIELD = "categories";
     private static final String CREATOR_FIELD = "creator";
     private static final String PICTUREIDS_FIELD = "pictureIds";
@@ -50,8 +51,10 @@ public abstract class Experience {
     }
 
     public void instantiateFromJSON(JSONObject experience) throws org.json.JSONException{
-        if(!containsRequiredFields(experience, requiredFields))
-            throw new RuntimeException("Experience missing field: " + getMissingField(experience, requiredFields)) ;
+        if(!containsRequiredFields(experience, requiredFields)){
+            Log.d(TAG, "Experience missing field: " + getMissingField(experience, requiredFields)) ;
+            return ;
+        }
 
         JSONArray jCategories = experience.getJSONArray(CATEGORIES_FIELD) ;
         this.categories = createStringList(jCategories) ;
