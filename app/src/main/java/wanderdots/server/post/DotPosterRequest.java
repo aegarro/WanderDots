@@ -8,6 +8,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import wanderdots.Dot;
 
+/* Provides the URL and wrapper for Request type for
+ * posting a Dot
+ */
 public class DotPosterRequest extends JsonObjectRequest {
 
     private static final String URL = "http://10.0.2.2:5000/api/post/Dot" ;

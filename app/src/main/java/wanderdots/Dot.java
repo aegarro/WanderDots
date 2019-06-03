@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/* Plays two different roles (unfortunately):
+ * 1. Is the data structure of an Dot
+ * 2. Statically loads Dots on the server whenever
+ * an observer attaches itself to it.
+ */
 public class Dot extends Experience  {
 
     private static ArrayList<Observer> observers = new ArrayList<>();

@@ -10,6 +10,7 @@ import com.android.volley.toolbox.ImageRequest;
 import wanderdots.server.ClientRequestQueue;
 import wanderdots.Observer ;
 
+/* Provides methods for downloading images from the server */
 public class ImageGetter implements Response.Listener<Bitmap>, Response.ErrorListener{
 
     private static final String BASE_URL = "http://10.0.2.2:5000/api/images" ;

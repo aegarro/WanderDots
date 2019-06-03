@@ -10,6 +10,10 @@ import com.example.Tests.MainActivity;
 
 import android.util.LruCache ;
 
+/* Provides a singleton for queueing server request and
+ * running them.
+ */
+
 public class ClientRequestQueue {
 
     private static ClientRequestQueue instance;

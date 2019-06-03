@@ -19,7 +19,7 @@ import java.io.IOException;
 import wanderdots.server.ClientRequestQueue;
 import wanderdots.Observer ;
 
-
+/* Takes care of posting an image using ImagePostRequest */
 public class ImagePoster implements Response.Listener<NetworkResponse>, Response.ErrorListener {
 
     private static final String URL = "http://10.0.2.2:5000/api/upload" ;
