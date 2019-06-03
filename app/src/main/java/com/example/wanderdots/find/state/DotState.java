@@ -16,12 +16,12 @@ public class DotState extends State<Dot> {
     }
 
     public void subscriberHasChanged(String message){
-        String TAG = "arodr";
-        Log.d(TAG, "Dot model has changed" + message) ;
+        String tag = "arodr";
+        Log.d(tag, "Dot model has changed" + message) ;
         if(Dot.hasError())
-            Log.d(TAG, "error occurred loading dots" + Dot.getError()) ;
+            Log.d(tag, "error occurred loading dots" + Dot.getError()) ;
         else{
-            Log.d(TAG, "Dot update: (new size)" + Dot.getData().size()) ;
+            Log.d(tag, "Dot update: (new size)" + Dot.getData().size()) ;
             setData(Dot.getData()) ; //auto updates DotState
         }
     }

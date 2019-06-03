@@ -45,8 +45,8 @@ import wanderdots.server.post.ImagePoster;
 public class NewDotActivity extends AppCompatActivity
         implements View.OnClickListener, Observer, OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
 
-    private final static String TAG = "newDotActivity";
-    private final static String LOGTAG = "arodr";
+    private static final String TAG = "newDotActivity";
+    private static final String LOGTAG = "arodr";
     private ImageView imageView4;
     private DotPoster dotPoster;
     private ImagePoster imagePoster ;

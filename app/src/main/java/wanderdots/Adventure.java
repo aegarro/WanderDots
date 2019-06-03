@@ -16,8 +16,8 @@ import java.util.HashMap;
  */
 public class Adventure extends Experience {
 
-    private final static String DOTS_V_STRING = "dotsVisited";
-    private final static String[] requiredFields = {DOTS_V_STRING} ;
+    private static final String DOTS_V_STRING = "dotsVisited";
+    private static final String[] requiredFields = {DOTS_V_STRING} ;
 
     private static ArrayList<Observer> observers = new ArrayList<>() ;
     private static ArrayList<Adventure> data = null ;

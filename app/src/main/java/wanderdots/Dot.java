@@ -8,13 +8,14 @@ import java.util.HashMap;
 
 public class Dot extends Experience  {
 
-    private static ArrayList<Observer> Observers = new ArrayList<>();
+    private static ArrayList<Observer> observers = new ArrayList<>();
     private static ArrayList<Dot> data = null ;
+    private static final String LOGTAG = "arodr";
     private static DotCreator loader = new DotCreator() ;
-    private static String adventure_string = "adventures";
+    private static String adventureString = "adventures";
 
     private ArrayList<String> adventureIds;
-    private String[] requiredFields = {adventure_string} ;
+    private String[] requiredFields = {adventureString} ;
 
     public Dot(){
         super() ;
@@ -31,13 +32,13 @@ public class Dot extends Experience  {
     @Override
     public void instantiateFromJSON(JSONObject dot) throws org.json.JSONException{
         super.instantiateFromJSON(dot) ;
-        createStringList(dot.getJSONArray(adventure_string)) ;
+        createStringList(dot.getJSONArray(adventureString)) ;
     }
 
     public JSONObject toJSON(){
         try {
             JSONObject jdata = super.toJSON() ;
-            jdata.put(adventure_string, (Object) adventureIds);
+            jdata.put(adventureString, (Object) adventureIds);
             return jdata ;
         }catch(JSONException e) {
             Log.d("arodr: (error) toJSON", e.toString()) ;
@@ -53,12 +54,12 @@ public class Dot extends Experience  {
     //Used for sending data to server to create Adventure
     public HashMap<String, String> toHashMap(){
         HashMap<String, String> dot = super.toHashMap() ;
-        dot.put(adventure_string, jsonifyArray(this.adventureIds)) ;
+        dot.put(adventureString, jsonifyArray(this.adventureIds)) ;
         return dot ;
     }
 
     public static void addObserver(Observer observer){
-        Observers.add(observer) ;
+        observers.add(observer) ;
     }
 
     public static ArrayList<Dot> getData(){
@@ -67,8 +68,8 @@ public class Dot extends Experience  {
 
     public static void dataFinishedLoading(){
         if(loader.hasError()){
-            Log.d("arodr", "Dot received error while loading data") ;
-            Log.d("arodr", loader.getError()) ;
+            Log.d(LOGTAG, "Dot received error while loading data") ;
+            Log.d(LOGTAG, loader.getError()) ;
             setError(loader.getError()) ;
             return ;
         }
@@ -78,12 +79,12 @@ public class Dot extends Experience  {
     }
 
     public static void notifyObservers(){
-        for(Observer observer : Observers)
+        for(Observer observer : observers)
             observer.subscriberHasChanged("update");
     }
 
     public static void reload(){
-        Log.d("arodr", "Reloading Dot loader") ;
+        Log.d(LOGTAG, "Reloading Dot loader") ;
         setError(null) ;
         data.clear() ;
         loader.reload();

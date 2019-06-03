@@ -17,6 +17,7 @@ public final class DotCreator implements Observer, Loader<Dot> {
 
     private ArrayList<Dot> dots ;
     private String error ;
+    private static final String LOGTAG = "arodr";
     private Get dotGetter ;
 
     public DotCreator(){
@@ -30,7 +31,7 @@ public final class DotCreator implements Observer, Loader<Dot> {
      * @param {String} message - The type of update that occurred in Get.
      */
     public void subscriberHasChanged(String message){
-        Log.d("arodr", "DotCreator received new data") ;
+        Log.d(LOGTAG, "DotCreator received new data") ;
         try {
             JSONObject response ;
             if(this.dotGetter.hasError())
@@ -50,8 +51,8 @@ public final class DotCreator implements Observer, Loader<Dot> {
         }catch(JSONException e){
             this.error = e.toString() ;
         }
-        Log.d("arodr", "DotCreator (error)" + this.error) ;
-        Log.d("arodr", "DotCreator (data size)" + this.dots.size()) ;
+        Log.d(LOGTAG, "DotCreator (error)" + this.error) ;
+        Log.d(LOGTAG, "DotCreator (data size)" + this.dots.size()) ;
         Dot.dataFinishedLoading();
     }
 

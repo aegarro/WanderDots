@@ -38,9 +38,9 @@ public final class AdventureCreator implements Observer, Loader<Adventure> {
             else if (response.has("error"))
                 this.error = response.getString("error") ;
             else{
-                JSONArray adventures = response.getJSONArray("adventures");
-                for (int i = 0; i < adventures.length(); i++) {
-                    JSONObject adventure = adventures.getJSONObject(i);
+                JSONArray adv = response.getJSONArray("adventures");
+                for (int i = 0; i < adv.length(); i++) {
+                    JSONObject adventure = adv.getJSONObject(i);
                     Adventure newAdventure = new Adventure(adventure) ;
                     this.adventures.add(newAdventure) ;
                 }
