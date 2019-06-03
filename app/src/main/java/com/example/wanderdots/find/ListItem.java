@@ -41,6 +41,8 @@ public class ListItem extends RecyclerView.ViewHolder implements View.OnClickLis
         Intent intent = new Intent(this.ctx, DotDetailActivity.class);
         intent.putExtra("title", title.getText());
         intent.putExtra("distance", distance.getText());
+        intent.putExtra("latitude", String.format("%f", experience.getLatitude()));
+        intent.putExtra("longitude", String.format("%f", experience.getLongitude()));
         intent.putExtra("rating", rating.getText());
         String imageID = experience.getPictureIds().get(0) ;
         Log.d("arodr:ListItem", "sending picture id " + imageID) ;

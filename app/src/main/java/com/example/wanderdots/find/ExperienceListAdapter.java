@@ -38,11 +38,12 @@ public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Ad
     public void onBindViewHolder(@NonNull ListItem viewHolder, int i) {
         //Displays the i'th element in the List
         viewHolder.title.setText(dotList.get(i).getName());
-        if(currentPosition == null)
+        if(currentPosition == null) {
             viewHolder.distance.setText("0 mi");
-        else
+        }
+        else{
             viewHolder.distance.setText(calculateDistance(dotList.get(i), currentPosition));
-
+        }
         viewHolder.rating.setText("5 Stars"); //TODO: Remove hardcoded rating
     }
 

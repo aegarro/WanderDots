@@ -249,13 +249,10 @@ public class NewDotActivity extends AppCompatActivity
         //how to Get data from multi-select (shaheen)
         dot.addCategory("Filler");
 
-        //multiple image functionality (abby)
         for(String pictureID : this.pictureIds)
             dot.addPictureId(pictureID);
-
-        //how to make a map marker and Get lat/long from that - for now stub using current loc (abby)
-        dot.setLongitude(latitude);
-        dot.setLatitude(longitude);
+        dot.setLongitude(longitude);
+        dot.setLatitude(latitude);
 
         this.dotPoster.postDot(dot) ;
     }
