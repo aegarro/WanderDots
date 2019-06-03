@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-    //TODO: implement check for login token, and redirect if token not given
 
     //SHOULD BE USED FOR TESTING ONLY
     public static void setDefaultContext(Context context){
