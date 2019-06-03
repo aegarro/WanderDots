@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Dot extends Experience  {
 
@@ -55,8 +56,8 @@ public class Dot extends Experience  {
 
     @Override
     //Used for sending data to server to create Adventure
-    public HashMap<String, String> toHashMap(){
-        HashMap<String, String> dot = super.toHashMap() ;
+    public Map<String, String> toHashMap(){
+        Map<String, String> dot = super.toHashMap() ;
         dot.put(adventureString, jsonifyArray(this.adventureIds)) ;
         return dot ;
     }

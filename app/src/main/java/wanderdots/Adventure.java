@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /* Plays two different roles (unfortunately):
  * 1. Is the data structure of an Adventure
@@ -56,8 +57,8 @@ public class Adventure extends Experience {
         }
     }
 
-    public HashMap<String, String> toHashMap(){
-        HashMap<String, String> adventure = super.toHashMap() ;
+    public Map<String, String> toHashMap(){
+        Map<String, String> adventure = super.toHashMap() ;
         adventure.put(DOTS_V_STRING, jsonifyArray(dotsVisited)) ;
         return adventure ;
     }

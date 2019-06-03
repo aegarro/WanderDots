@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /* Provides the super class functionality of Dot and Adventure
  * 1. Provides: Categories, PictureIds, Description, Creator, Location
@@ -104,7 +105,7 @@ public abstract class Experience {
     }
 
     public void addPictureId(String pictureId){
-        Log.d("arodr", "adding picture id" + pictureId) ;
+        Log.d(TAG, "adding picture id" + pictureId) ;
         this.pictureIds.add(pictureId) ;
     }
 
@@ -212,7 +213,7 @@ public abstract class Experience {
         }
     }
 
-    public HashMap<String, String> toHashMap(){
+    public Map<String, String> toHashMap(){
         HashMap<String, String> experience = new HashMap<String, String>() ;
         experience.put("name", this.name) ;
         experience.put(CREATOR_FIELD, this.creator) ;
