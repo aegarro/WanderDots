@@ -16,6 +16,7 @@ import wanderdots.Observer ;
 
 public class DotDetailActivity extends AppCompatActivity implements Observer, View.OnClickListener {
 
+    private static String TAG = "arodr" ;
     private ImageGetter imageGetter ;
     private ImageButton mainImage ;
     private double latitude;
@@ -23,8 +24,8 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "DotDetailActivity: onCreate") ;
         setContentView(R.layout.activity_dot_detail);
 
         this.imageGetter = new ImageGetter(this) ;
@@ -43,8 +44,10 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
         latitude = Double.valueOf(intent.getStringExtra("latitude"));
         longitude = Double.valueOf(intent.getStringExtra("longitude"));
 
-        String pictureID = intent.getStringExtra("pictureID") ;
-        this.imageGetter.loadImage(pictureID);
+        if(intent.hasExtra("pictureID")){
+            String pictureID = intent.getStringExtra("pictureID") ;
+            this.imageGetter.loadImage(pictureID);
+        }
 
         ImageButton imageButton = findViewById(R.id.imageButton);
         imageButton.setOnClickListener(this);

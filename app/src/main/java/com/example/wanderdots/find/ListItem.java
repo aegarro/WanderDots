@@ -55,8 +55,10 @@ public class ListItem extends RecyclerView.ViewHolder implements View.OnClickLis
         intent.putExtra("longitude", String.format("%f", experience.getLongitude()));
         intent.putExtra("rating", rating.getText());
 
-        String imageID = experience.getPictureIds().get(0) ;
-        intent.putExtra("pictureID", imageID) ;
+        if(experience.getPictureIds().size() > 0){
+            String imageID = experience.getPictureIds().get(0) ;
+            intent.putExtra("pictureID", imageID) ;
+        }
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.ctx.startActivity(intent);
