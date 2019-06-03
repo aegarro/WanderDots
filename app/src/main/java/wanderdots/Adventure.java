@@ -27,8 +27,10 @@ public class Adventure extends Experience {
 
     public Adventure(JSONObject adventure) throws org.json.JSONException{
         super(adventure) ;
-        if(!containsRequiredFields(adventure, requiredFields))
-            throw new RuntimeException("Adventure Validation Error: Missing Field: " + getMissingField(adventure, requiredFields)) ;
+        if(!containsRequiredFields(adventure, requiredFields)){
+            Log.d("arodr", "Adventure Validation Error: Missing Field: " + getMissingField(adventure, requiredFields)) ;
+            return ;
+        }
         instantiateFromJSON(adventure);
     }
 

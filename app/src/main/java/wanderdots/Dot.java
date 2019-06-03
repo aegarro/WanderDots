@@ -24,8 +24,10 @@ public class Dot extends Experience  {
 
     public Dot(JSONObject dot) throws org.json.JSONException{
         super(dot) ;
-        if(!containsRequiredFields(dot, requiredFields))
-            throw new RuntimeException("Dot Validation Error: Given Dot missing " + getMissingField(dot, requiredFields)) ;
+        if(!containsRequiredFields(dot, requiredFields)){
+            Log.d("arodr", "Dot Validation Error: Given Dot missing " + getMissingField(dot, requiredFields)) ;
+            return ;
+        }
         instantiateFromJSON(dot) ;
     }
 
