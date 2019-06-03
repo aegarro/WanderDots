@@ -26,7 +26,7 @@ public class Dot extends Experience  {
     public Dot(JSONObject dot) throws org.json.JSONException{
         super(dot) ;
         if(!containsRequiredFields(dot, requiredFields)){
-            Log.d("arodr", "Dot Validation Error: Given Dot missing " + getMissingField(dot, requiredFields)) ;
+            Log.d(LOGTAG, "Dot Validation Error: Given Dot missing " + getMissingField(dot, requiredFields)) ;
             return ;
         }
         instantiateFromJSON(dot) ;
@@ -44,7 +44,7 @@ public class Dot extends Experience  {
             jdata.put(adventureString, (Object) adventureIds);
             return jdata ;
         }catch(JSONException e) {
-            Log.d("arodr: (error) toJSON", e.toString()) ;
+            Log.d(LOGTAG, e.toString()) ;
             return null ;
         }
     }

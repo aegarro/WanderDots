@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/* Provides the super class functionality of Dot and Adventure
+ * 1. Provides: Categories, PictureIds, Description, Creator, Location
+ * 2. Provides: abstract methods stubs for Dot and Adventure
+ */
 public abstract class Experience {
 
     private static final String CATEGORIES_FIELD = "categories";
