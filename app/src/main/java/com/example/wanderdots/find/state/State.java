@@ -10,6 +10,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import wanderdots.Experience;
 import wanderdots.Observer;
@@ -85,7 +86,7 @@ public abstract class State<T extends Experience> implements Observer {
             ob.subscriberHasChanged("update");
     }
 
-    protected void setData(ArrayList<T> newData){
+    protected void setData(List<T> newData){
         this.data.clear();
         for(T elem : newData)
             this.data.add(elem) ;

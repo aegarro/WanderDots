@@ -24,7 +24,7 @@ public class Adventure extends Experience {
     private static ArrayList<Adventure> data = null ;
     private static AdventureCreator loader = new AdventureCreator() ;
 
-    private ArrayList<String> dotsVisited ;
+    private List<String> dotsVisited ;
 
     public Adventure(JSONObject adventure) throws org.json.JSONException{
         super(adventure) ;
