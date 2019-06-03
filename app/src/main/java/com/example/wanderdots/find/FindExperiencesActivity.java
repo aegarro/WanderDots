@@ -30,6 +30,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -161,6 +162,8 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         Log.d(TAG, "onMapRead: Map is ready");
         this.mMap = googleMap;
         this.mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+        UiSettings mapUiSettings = this.mMap.getUiSettings();
+        mapUiSettings.setZoomControlsEnabled(true);
 
         if (mLocationPermissionGranted){
             getDeviceLocation();
