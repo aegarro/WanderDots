@@ -12,7 +12,7 @@ import wanderdots.Observer ;
 
 public class ImageGetter implements Response.Listener<Bitmap>, Response.ErrorListener{
 
-    private static final String baseUrl = "http://10.0.2.2:5000/api/images" ;
+    private static final String BASE_URL = "http://10.0.2.2:5000/api/images" ;
     private Observer observer ;
     private Bitmap image ;
     private String error ;
@@ -23,7 +23,7 @@ public class ImageGetter implements Response.Listener<Bitmap>, Response.ErrorLis
 
     public void loadImage(String id){
         Log.d("arodr:ImageGetter", "loading image: " + id) ;
-        String url = baseUrl + "/" + id ;
+        String url = BASE_URL + "/" + id ;
         ImageRequest request = new ImageRequest(url, this, 0, 0, null, this) ;
         ClientRequestQueue.getInstance().addToRequestQueue(request);
     }
