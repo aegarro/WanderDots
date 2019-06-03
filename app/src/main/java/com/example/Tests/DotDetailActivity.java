@@ -1,4 +1,4 @@
-package com.example.wanderdots;
+package com.example.Tests;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;

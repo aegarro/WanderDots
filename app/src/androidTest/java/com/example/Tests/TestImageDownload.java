@@ -1,11 +1,10 @@
-package com.example.wanderdots;
+package com.example.Tests;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Picture;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,11 +13,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import wanderdots.Observer;
-import wanderdots.server.post.ImagePoster;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import wanderdots.server.get.ImageGetter ;
 
 /*
  * Verifies that
@@ -30,25 +25,24 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public class TestImageUpload implements Observer {
+public class TestImageDownload implements Observer {
 
     private CountDownLatch lock ;
 
     @Test
-    public void testUploadRick() {
+    public void testDownloadImage() {
         int timeout = 2000 ; //in millis
+        String imageID = "5cf453b7a023e331632cec12" ;
 
         this.lock = new CountDownLatch(1) ;
         Context appContext = InstrumentationRegistry.getTargetContext();
         MainActivity.setDefaultContext(appContext) ;
         try {
-            int width = 150, height = 150;
-            Bitmap.Config config = Bitmap.Config.ALPHA_8 ;
-            Picture emptyPicture = new Picture() ;
-            Bitmap emptyImage = Bitmap.createBitmap(emptyPicture, width, height, config) ;
-            ImagePoster fileUpload = new ImagePoster(this) ;
-            fileUpload.postImage(emptyImage);
+            ImageGetter imageGetter = new ImageGetter(this);
+            imageGetter.loadImage(imageID) ;
             lock.await(timeout, TimeUnit.MILLISECONDS);
+            Log.d("arodr", imageGetter.getImage().toString()) ;
+            assert(imageGetter.getImage() != null) ;
         }catch(InterruptedException e){
             e.printStackTrace();
         }

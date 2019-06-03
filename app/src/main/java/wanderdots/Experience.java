@@ -214,7 +214,7 @@ public abstract class Experience {
     }
 
     public Map<String, String> toHashMap(){
-        HashMap<String, String> experience = new HashMap<>() ;
+        Map<String, String> experience = new HashMap<>() ;
         experience.put("name", this.name) ;
         experience.put(CREATOR_FIELD, this.creator) ;
         experience.put(DESCRIPTION_FIELD, this.description);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
-    package="com.example.wanderdots">
+    package="com.example.Tests">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -18,15 +18,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".find.FindExperiencesActivity"
+            android:name="com.example.Tests.find.FindExperiencesActivity"
             android:label="@string/title_activity_find_view"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".newdot.NewDotActivity" />
-        <activity android:name=".DotDetailActivity" />
+        <activity android:name="com.example.Tests.newdot.NewDotActivity" />
+        <activity android:name="com.example.Tests.DotDetailActivity" />
         <activity
-            android:name=".LoginActivity"
+            android:name="com.example.Tests.LoginActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.example.Tests.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

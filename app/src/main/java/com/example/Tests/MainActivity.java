@@ -1,11 +1,11 @@
-package com.example.wanderdots;
+package com.example.Tests;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.wanderdots.find.FindExperiencesActivity;
+import com.example.Tests.find.FindExperiencesActivity;
 
 public class MainActivity extends AppCompatActivity {
 
