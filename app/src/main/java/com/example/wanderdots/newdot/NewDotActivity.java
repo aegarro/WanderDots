@@ -45,7 +45,7 @@ public class NewDotActivity extends AppCompatActivity
         implements View.OnClickListener, Observer, OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
 
     private static final String TAG = "newDotActivity" ;
-    private static final String logTag = "arodr" ;
+    private static final String LOGTAG = "arodr" ;
     private ImageView imageView4;
     private DotPoster dotPoster;
     private ImagePoster imagePoster ;
@@ -92,6 +92,7 @@ public class NewDotActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
         this.map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+
         try {
             LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -99,12 +100,12 @@ public class NewDotActivity extends AppCompatActivity
             longitude = location.getLongitude();
             LatLng pos = new LatLng(latitude, longitude);
             Marker marker = googleMap.addMarker(new MarkerOptions().position(pos).title("Hold and drag to the Dot's location."));
-            float zoom = 11f;
+            float zoom = 13f;
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, zoom));
             marker.setDraggable(true);
         }
         catch(SecurityException e){
-            Log.e("newDotActivity", e.toString());
+            Log.e(TAG, e.toString());
         }
     }
 
@@ -200,36 +201,36 @@ public class NewDotActivity extends AppCompatActivity
      */
     private void processPostImageResponse(){
         if(this.imagePoster.hasError()){
-            Log.d(logTag, "error posting image to server") ;
+            Log.d(LOGTAG, "error posting image to server") ;
             return ;
         }
 
         try {
             JSONObject response = this.imagePoster.getResponse() ;
             if(response.has("error")){
-                Log.d(logTag, "server send back an error while posting image") ;
-                Log.d(logTag, response.getString("error")) ;
+                Log.d(LOGTAG, "server send back an error while posting image") ;
+                Log.d(LOGTAG, response.getString("error")) ;
                 return ;
             }
 
             if(!response.has("id")){
-                Log.d(logTag, "received unknown server response while posting image") ;
-                Log.d(logTag, response.toString()) ;
+                Log.d(LOGTAG, "received unknown server response while posting image") ;
+                Log.d(LOGTAG, response.toString()) ;
                 return ;
             }
 
             String id = response.getString("id") ;
             this.pictureIds.add(id) ;
         }catch(JSONException e){
-            Log.d(logTag, "error occurred processing server json response") ;
-            Log.d(logTag, e.toString()) ;
+            Log.d(LOGTAG, "error occurred processing server json response") ;
+            Log.d(LOGTAG, e.toString()) ;
         }
     }
 
     private void processPostDotResponse(){
         if(this.dotPoster.hasError()){
-            Log.d(logTag, "error occurred while posting a dot") ;
-            Log.d(logTag, this.dotPoster.getError()) ;
+            Log.d(LOGTAG, "error occurred while posting a dot") ;
+            Log.d(LOGTAG, this.dotPoster.getError()) ;
             return;
         }
 
