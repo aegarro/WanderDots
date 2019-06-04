@@ -51,10 +51,7 @@ public class ListItem extends RecyclerView.ViewHolder implements View.OnClickLis
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this.ctx, DotDetailActivity.class);
-
         Double distance = Math.random() * 5 ;
-
-        Log.d("arodr", "distanceView generated: " + distance) ;
 
         if(this.experience != null){
             intent.putExtra("title", experience.getName());

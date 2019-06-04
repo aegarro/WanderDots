@@ -21,7 +21,6 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
     private ImageButton mainImage ;
     private Double latitude ;
     private Double longitude ;
-    private ImageButton weatherBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +30,7 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
 
         this.imageGetter = new ImageGetter(this) ;
         this.mainImage = findViewById(R.id.DotDetailImage) ;
-        weatherBtn = findViewById(R.id.weatherButton);
+        ImageButton weatherBtn = findViewById(R.id.weatherButton);
 
         weatherBtn.setOnClickListener(new View.OnClickListener() {
             @Override
