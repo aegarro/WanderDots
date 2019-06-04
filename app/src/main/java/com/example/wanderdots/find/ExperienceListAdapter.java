@@ -18,12 +18,12 @@ public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Ad
 
     private static float metersToMiles = 0.000621371f;
 
-    private List<T> dotList;
+    private List<T> experienceList;
     private Context ctx;
     private Location currentPosition;
 
-    public ExperienceListAdapter(ArrayList<T> dotList, Context ctx){
-        this.dotList = dotList;
+    public ExperienceListAdapter(ArrayList<T> experienceList, Context ctx){
+        this.experienceList = experienceList;
         this.ctx = ctx;
     }
 
@@ -31,25 +31,25 @@ public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Ad
     @Override
     public ListItem onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dot_list_item, viewGroup, false);
-        return new ListItem(view, ctx, dotList.get(i));
+        return new ListItem(view, ctx, experienceList.get(i));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ListItem viewHolder, int i) {
         //Displays the i'th element in the List
-        viewHolder.getTitleView().setText(dotList.get(i).getName());
+        viewHolder.getTitleView().setText(experienceList.get(i).getName());
         if(currentPosition == null) {
             viewHolder.getDistanceView().setText("0 mi");
         }
         else{
-            viewHolder.getDistanceView().setText(calculateDistance(dotList.get(i), currentPosition));
+            viewHolder.getDistanceView().setText(calculateDistance(experienceList.get(i), currentPosition));
         }
         viewHolder.getRatingsView().setText("5 Stars");
     }
 
     @Override
     public int getItemCount() {
-        return dotList.size();
+        return experienceList.size();
     }
 
     public void setLocation(Location loc){
