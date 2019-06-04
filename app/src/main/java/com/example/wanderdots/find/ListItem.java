@@ -9,16 +9,13 @@ import android.view.View;
 import android.widget.TextView;
 import com.example.wanderdots.DotDetailActivity;
 import com.example.wanderdots.R;
-
-import java.util.Random;
-
 import wanderdots.Experience;
 
 public class ListItem extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    private TextView title;
-    private TextView distance;
-    private TextView rating;
+    private TextView titleView;
+    private TextView distanceView;
+    private TextView ratingsView;
     private Experience experience ;
 
     private View mView;
@@ -31,37 +28,37 @@ public class ListItem extends RecyclerView.ViewHolder implements View.OnClickLis
         this.experience = experience ;
 
         itemView.setOnClickListener(this);
-        title = mView.findViewById(R.id.dot_item_title);
-        distance = mView.findViewById(R.id.dot_item_dist);
-        rating = mView.findViewById(R.id.dot_item_rating);
+        titleView = mView.findViewById(R.id.dot_item_title);
+        distanceView = mView.findViewById(R.id.dot_item_dist);
+        ratingsView = mView.findViewById(R.id.dot_item_rating);
     }
 
-    public TextView getTitle() {
-        return title;
+    public TextView getTitleView() {
+        return titleView;
     }
 
-    public TextView getDistance() {
-        return distance;
+    public TextView getDistanceView() {
+        return distanceView;
     }
 
-    public TextView getRating() {
-        return rating;
+    public TextView getRatingsView() {
+        return ratingsView;
     }
 
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this.ctx, DotDetailActivity.class);
 
-        Double distance = new Double(Math.random() * 5) ;
+        Double distance = Math.random() * 5 ;
 
-        Log.d("arodr", "distance generated: " + distance) ;
+        Log.d("arodr", "distanceView generated: " + distance) ;
 
-        intent.putExtra("title", experience.getName());
+        intent.putExtra("titleView", experience.getName());
         intent.putExtra("description", experience.getDescription()) ;
         intent.putExtra("latitude", String.format("%f", experience.getLatitude()));
         intent.putExtra("longitude", String.format("%f", experience.getLongitude()));
-        intent.putExtra("distance", String.format("%2f", distance)) ;
-        intent.putExtra("rating", rating.getText()); //Note, this is grabbing it from the text on the list item
+        intent.putExtra("distanceView", String.format("%2f", distance)) ;
+        intent.putExtra("ratingsView", ratingsView.getText()); //Note, this is grabbing it from the text on the list item
 
         if(experience.getPictureIds().size() > 0){
             String imageID = experience.getPictureIds().get(0) ;

@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState) ;
         setDefaultContext(getApplicationContext()) ;
         Log.d(TAG, "MainActivity: onCreate") ;
-        if(loggedIn == false) {
+        if(!loggedIn) {
             Intent loginIntent = new Intent(this, LoginActivity.class) ;
             startActivityForResult(loginIntent, LOGINID);
         }else {

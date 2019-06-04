@@ -49,13 +49,11 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
 
-    private RecyclerView listContainer;
+    private RecyclerView listView;
     private GoogleMap mMap;
-    private ToggleButton toggle;
-
-    private Boolean mLocationPermissionGranted = false ; // Whether user has permitted us to access the devices location
-
+    private ToggleButton experienceTypeToggleButton;
     private State state ;
+    private Boolean mLocationPermissionGranted = false ; // Whether user has permitted us to access the devices location
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,23 +63,23 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         setContentView(R.layout.find_view);
         validateLocationPermission();
 
-        this.toggle = findViewById(R.id.listToggleButton);
+        this.experienceTypeToggleButton = findViewById(R.id.listToggleButton);
 
-        this.toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        this.experienceTypeToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(!isChecked){
                     // Toggle was changed
                     Toast.makeText(FindExperiencesActivity.this, "Adventure Coming Soon!", Toast.LENGTH_SHORT)
                             .show();
-                    toggle.setChecked(true);
+                    experienceTypeToggleButton.setChecked(true);
                 }
             }
         });
 
-        this.listContainer = (RecyclerView) findViewById(R.id.main_recycler_view);
-        this.listContainer.setHasFixedSize(true);
-        this.listContainer.setLayoutManager(new LinearLayoutManager(this));
+        this.listView = (RecyclerView) findViewById(R.id.main_recycler_view);
+        this.listView.setHasFixedSize(true);
+        this.listView.setLayoutManager(new LinearLayoutManager(this));
 
         //SET CREATEBUTTON HANDLER
         newDotButton = (FloatingActionButton) findViewById(R.id.new_dot_btn);
@@ -96,7 +94,7 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         adventureState.setNextState(dotState) ;
 
         //Setting State on Startup
-        this.listContainer.setAdapter(dotState.getAdapter());
+        this.listView.setAdapter(dotState.getAdapter());
         this.state = dotState ;
         dotState.enter() ;
     }
@@ -111,7 +109,7 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         this.state.exit() ;
         this.state = newState ;
         this.state.enter() ;
-        listContainer.swapAdapter(newState.getAdapter(), false);
+        listView.swapAdapter(newState.getAdapter(), false);
     }
 
     //Runs whenever the NEWDOTBUTTON has been clicked, begins NewDotActivity
@@ -127,7 +125,6 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         if (requestCode == CREATE_DOT_ACTIVITY_ID && resultCode == RESULT_OK) {
             Dot.reload(); //checks for to include new Dot or Adventures
             Adventure.reload();
-            return ;
         }
     }
 

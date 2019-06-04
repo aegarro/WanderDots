@@ -1,6 +1,5 @@
 package com.example.wanderdots;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity implements Runnable, View.OnClickListener {
 
     private static final String TAG = "LoginActivity";
-    private static final int REQUEST_SIGN_UP = 0;
 
     private EditText emailText;
     private EditText passwordText;

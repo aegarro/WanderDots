@@ -19,8 +19,11 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
     private static String TAG = "arodr" ;
     private ImageGetter imageGetter ;
     private ImageButton mainImage ;
-    private double latitude;
-    private double longitude;
+    private String dotTitle, dotDescription, dotRating;
+    private String dotDistance;
+    private String dotPictureID;
+    private double dotLatitude;
+    private double dotLongitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,17 +41,21 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
 
         Intent intent = getIntent();
 
-        titleTxt.setText(intent.getStringExtra("title"));
-        distanceTxt.setText("Distance: " + intent.getStringExtra("distance"));
-        ratingTxt.setText("Rating: " + intent.getStringExtra("rating"));
-        descriptionBox.setText(intent.getStringExtra("description"));
+        this.dotTitle = intent.getStringExtra("dotTitle") ;
+        this.dotDescription = intent.getStringExtra("dotDescription") ;
+        this.dotDistance = intent.getStringExtra("dotDistance") ;
+        this.dotRating = intent.getStringExtra("dotRating") ;
+        this.dotLatitude = Double.valueOf(intent.getStringExtra("dotLatitude")) ;
+        this.dotLongitude = Double.valueOf(intent.getStringExtra("dotLongitude")) ;
 
-        latitude = Double.valueOf(intent.getStringExtra("latitude"));
-        longitude = Double.valueOf(intent.getStringExtra("longitude"));
+        titleTxt.setText(this.dotTitle);
+        distanceTxt.setText("Distance: " + this.dotDistance);
+        ratingTxt.setText("Rating: " + this.dotRating);
+        descriptionBox.setText(this.dotDescription) ;
 
         if(intent.hasExtra("pictureID")){
-            String pictureID = intent.getStringExtra("pictureID") ;
-            this.imageGetter.loadImage(pictureID);
+            this.dotPictureID = intent.getStringExtra("pictureID") ;
+            this.imageGetter.loadImage(this.dotPictureID);
         }
 
         ImageButton imageButton = findViewById(R.id.imageButton);
@@ -59,7 +66,7 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
         }
-        Uri navigationIntentUri = Uri.parse("google.navigation:q=" + latitude + "," + longitude);
+        Uri navigationIntentUri = Uri.parse("google.navigation:q=" + dotLatitude + "," + dotLongitude);
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, navigationIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         startActivity(mapIntent);
@@ -67,8 +74,8 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
 
     public void subscriberHasChanged(String message){
        if(imageGetter.hasError()){
-           Log.d("arodr", "Error loading image") ;
-           Log.d("arodr", imageGetter.getError()) ;
+           Log.d(TAG, "Error loading image") ;
+           Log.d(TAG, imageGetter.getError()) ;
            return ;
        }
        mainImage.setImageBitmap(imageGetter.getImage());

@@ -37,14 +37,14 @@ public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Ad
     @Override
     public void onBindViewHolder(@NonNull ListItem viewHolder, int i) {
         //Displays the i'th element in the List
-        viewHolder.getTitle().setText(dotList.get(i).getName());
+        viewHolder.getTitleView().setText(dotList.get(i).getName());
         if(currentPosition == null) {
-            viewHolder.getDistance().setText("0 mi");
+            viewHolder.getDistanceView().setText("0 mi");
         }
         else{
-            viewHolder.getDistance().setText(calculateDistance(dotList.get(i), currentPosition));
+            viewHolder.getDistanceView().setText(calculateDistance(dotList.get(i), currentPosition));
         }
-        viewHolder.getRating().setText("5 Stars");
+        viewHolder.getRatingsView().setText("5 Stars");
     }
 
     @Override
