@@ -237,7 +237,7 @@ public class NewDotActivity extends AppCompatActivity
             Log.d(LOGTAG, this.dotPoster.getError()) ;
             return;
         }
-
+        this.setResult(RESULT_OK) ;
         finish() ;
     }
 
