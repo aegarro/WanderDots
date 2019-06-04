@@ -36,15 +36,15 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
         TextView ratingTxt = findViewById(R.id.dotRating);
         TextView descriptionBox = findViewById(R.id.descriptionBox);
 
-        Intent intent = getIntent();
+        Intent intent = getIntent(); // See ListItem to get these fields
 
-        String dotTitle = intent.getStringExtra("dotTitle") ;
-        String dotDescription = intent.getStringExtra("dotDescription") ;
-        String dotDistance = intent.getStringExtra("dotDistance") ;
-        String dotRating = intent.getStringExtra("dotRating") ;
+        String dotTitle = intent.getStringExtra("title") ;
+        String dotDescription = intent.getStringExtra("description") ;
+        String dotDistance = intent.getStringExtra("distance") ;
+        String dotRating = intent.getStringExtra("rating") ;
 
-        this.latitude = Double.valueOf(intent.getStringExtra("dotLatitude")) ;
-        this.longitude = Double.valueOf(intent.getStringExtra("dotLongitude")) ;
+        this.latitude = Double.valueOf(intent.getStringExtra("latitude")) ;
+        this.longitude = Double.valueOf(intent.getStringExtra("longitude")) ;
 
         titleTxt.setText(dotTitle);
         distanceTxt.setText("Distance: " + dotDistance);

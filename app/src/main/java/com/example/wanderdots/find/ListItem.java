@@ -53,12 +53,12 @@ public class ListItem extends RecyclerView.ViewHolder implements View.OnClickLis
 
         Log.d("arodr", "distanceView generated: " + distance) ;
 
-        intent.putExtra("titleView", experience.getName());
+        intent.putExtra("title", experience.getName());
         intent.putExtra("description", experience.getDescription()) ;
         intent.putExtra("latitude", String.format("%f", experience.getLatitude()));
         intent.putExtra("longitude", String.format("%f", experience.getLongitude()));
-        intent.putExtra("distanceView", String.format("%2f", distance)) ;
-        intent.putExtra("ratingsView", ratingsView.getText()); //Note, this is grabbing it from the text on the list item
+        intent.putExtra("distance", String.format("%2f", distance)) ;
+        intent.putExtra("rating", "5 stars"); //Note, this is grabbing it from the text on the list item
 
         if(experience.getPictureIds().size() > 0){
             String imageID = experience.getPictureIds().get(0) ;
