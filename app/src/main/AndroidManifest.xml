@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <dist:module dist:instant="true" />
 
     <application
@@ -17,16 +18,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".WeatherForecast"></activity>
         <activity
-            android:name="com.example.wanderdots.find.FindExperiencesActivity"
+            android:name=".find.FindExperiencesActivity"
             android:label="@string/title_activity_find_view"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name="com.example.wanderdots.newdot.NewDotActivity" />
-        <activity android:name="com.example.wanderdots.DotDetailActivity" />
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".newdot.NewDotActivity" />
+        <activity android:name=".DotDetailActivity" />
         <activity
-            android:name="com.example.wanderdots.LoginActivity"
+            android:name=".LoginActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name="com.example.wanderdots.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

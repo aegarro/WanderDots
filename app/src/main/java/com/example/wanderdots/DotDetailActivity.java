@@ -21,6 +21,7 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
     private ImageButton mainImage ;
     private Double latitude ;
     private Double longitude ;
+    private ImageButton weatherBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,15 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
 
         this.imageGetter = new ImageGetter(this) ;
         this.mainImage = findViewById(R.id.DotDetailImage) ;
+        weatherBtn = findViewById(R.id.weatherButton);
+
+        weatherBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DotDetailActivity.this, WeatherForecast.class);
+                startActivity(intent);
+            }
+        });
 
         TextView titleTxt = findViewById(R.id.dotTitle);
         TextView distanceTxt = findViewById(R.id.dotDistance);
@@ -77,5 +87,6 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
            return ;
        }
        mainImage.setImageBitmap(imageGetter.getImage());
+
     }
 }
