@@ -19,7 +19,9 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
     private static String TAG = "arodr" ;
     private ImageGetter imageGetter ;
     private ImageButton mainImage ;
-    private String dotTitle, dotDescription, dotRating;
+    private String dotTitle ;
+    private String dotDescription ;
+    private String dotRating;
     private String dotDistance;
     private String dotPictureID;
     private double dotLatitude;
