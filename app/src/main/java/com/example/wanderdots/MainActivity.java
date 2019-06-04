@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     //Runs after CreateDotActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == LOGINID && resultCode == RESULT_CANCELED){
+        if (requestCode == LOGINID && resultCode == RESULT_OK){
             this.loggedIn = true ;
             startFindExperiences();
         }

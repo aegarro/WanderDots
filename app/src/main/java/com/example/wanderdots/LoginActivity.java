@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements Runnable, View.OnClickListener {
 
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGN_UP = 0;
@@ -30,22 +30,13 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = (Button) findViewById(R.id.btn_login);
         progressBar = (ProgressBar) findViewById(R.id.login_progressBar);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-                login();
-            }
-        });
+        loginButton.setOnClickListener(this) ;
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SIGN_UP && resultCode == RESULT_OK) {
-                // By default we just finish the Activity and log them in automatically
-                this.finish();
-        }
+    public void onClick(View v) {
+        progressBar.setVisibility(View.VISIBLE);
+        login();
     }
 
     public void login() {
@@ -57,24 +48,19 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         loginButton.setEnabled(false);
+        new android.os.Handler().postDelayed(this, 1000);
+    }
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        finish();
-                    }
-                }, 1000);
+    //runs after delay has been achieved
+    public void run(){
+       this.setResult(RESULT_OK) ;
+       this.finish() ;
     }
 
     @Override
     public void onBackPressed() {
         // Disable going back to the MainActivity
         moveTaskToBack(true);
-    }
-
-    public void onLoginSuccess() {
-        finish();
     }
 
     public void onLoginFailed() {
