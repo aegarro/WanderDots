@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import com.example.wanderdots.DotDetailActivity;
 import com.example.wanderdots.R;
+
+import java.util.Random;
 
 import wanderdots.Experience;
 
@@ -49,11 +52,16 @@ public class ListItem extends RecyclerView.ViewHolder implements View.OnClickLis
     public void onClick(View v) {
         Intent intent = new Intent(this.ctx, DotDetailActivity.class);
 
-        intent.putExtra("title", title.getText());
-        intent.putExtra("distance", distance.getText());
+        Double distance = new Double(Math.random() * 5) ;
+
+        Log.d("arodr", "distance generated: " + distance) ;
+
+        intent.putExtra("title", experience.getName());
+        intent.putExtra("description", experience.getDescription()) ;
         intent.putExtra("latitude", String.format("%f", experience.getLatitude()));
         intent.putExtra("longitude", String.format("%f", experience.getLongitude()));
-        intent.putExtra("rating", rating.getText());
+        intent.putExtra("distance", String.format("%2f", distance)) ;
+        intent.putExtra("rating", rating.getText()); //Note, this is grabbing it from the text on the list item
 
         if(experience.getPictureIds().size() > 0){
             String imageID = experience.getPictureIds().get(0) ;

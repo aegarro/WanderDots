@@ -35,30 +35,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.283" />
+        app:layout_constraintVertical_bias="0.261" />
 
     <TextView
         android:id="@+id/comment"
         android:layout_width="93dp"
         android:layout_height="24dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="35dp"
         android:text="Comment"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/userDescription"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.453"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dotDistance4"
-        app:layout_constraintVertical_bias="0.087" />
+        app:layout_constraintTop_toBottomOf="@+id/descriptionLabel" />
 
     <TextView
-        android:id="@+id/dotDistance4"
+        android:id="@+id/descriptionLabel"
         android:layout_width="93dp"
         android:layout_height="24dp"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="56dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="Description"
@@ -66,7 +63,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.538" />
+        app:layout_constraintVertical_bias="0.509" />
 
     <TextView
         android:id="@+id/Rate"
@@ -114,24 +111,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.128" />
 
-    <TextView
-        android:id="@+id/userDescription"
-        android:layout_width="321dp"
-        android:layout_height="79dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:foreground="@drawable/common_google_signin_btn_icon_dark_normal_background"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DotDetailImage"
-        app:layout_constraintVertical_bias="0.565"
-        tools:visibility="visible" />
-
     <RatingBar
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
@@ -162,5 +141,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.104" />
+
+    <TextView
+        android:id="@+id/commentBox"
+        android:layout_width="238dp"
+        android:layout_height="48dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="87dp"
+        tools:layout_editor_absoluteY="454dp" />
+
+    <TextView
+        android:id="@+id/descriptionBox"
+        android:layout_width="260dp"
+        android:layout_height="93dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.639" />
 
 </android.support.constraint.ConstraintLayout>

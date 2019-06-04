@@ -21,7 +21,7 @@ public class UserProfileActivity extends AppCompatActivity {
         titleTxt = findViewById(R.id.dotTitle);
         distanceTxt = findViewById(R.id.dotDistance);
         ratingTxt = findViewById(R.id.dotRating);
-        describeTxt = findViewById(R.id.userDescription);
+        describeTxt = findViewById(R.id.descriptionBox);
 
         Intent intent = getIntent();
         titleTxt.setText(intent.getStringExtra("title"));
