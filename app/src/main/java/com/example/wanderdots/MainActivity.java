@@ -11,7 +11,7 @@ import com.example.wanderdots.find.FindExperiencesActivity;
 public class MainActivity extends AppCompatActivity {
 
     private static Context defaultContext;
-    private static String TAG = "arodr" ;
+    private static final String TAG = "arodr" ;
     private static final int LOGINID = 420 ;
 
     private boolean loggedIn = false ;
