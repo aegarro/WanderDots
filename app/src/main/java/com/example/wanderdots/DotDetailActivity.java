@@ -63,6 +63,7 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
 
         if(intent.hasExtra("pictureID")){
             String dotPictureID = intent.getStringExtra("pictureID") ;
+            Log.d("arodr", dotPictureID) ;
             this.imageGetter.loadImage(dotPictureID);
         }
 
