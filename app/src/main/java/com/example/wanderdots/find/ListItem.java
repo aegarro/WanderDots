@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import com.example.wanderdots.DotDetailActivity;
@@ -21,11 +20,10 @@ public class ListItem extends RecyclerView.ViewHolder implements View.OnClickLis
     private View mView;
     private Context ctx;
 
-    public ListItem(@NonNull View itemView, Context ctx, Experience experience){
+    public ListItem(@NonNull View itemView, Context ctx){
         super(itemView);
         this.mView = itemView;
         this.ctx = ctx;
-        this.experience = experience ;
 
         itemView.setOnClickListener(this);
         titleView = mView.findViewById(R.id.dot_item_title);
@@ -35,6 +33,10 @@ public class ListItem extends RecyclerView.ViewHolder implements View.OnClickLis
 
     public TextView getTitleView() {
         return titleView;
+    }
+
+    public void setExperience(Experience experience){
+        this.experience = experience ;
     }
 
     public TextView getDistanceView() {
@@ -48,24 +50,24 @@ public class ListItem extends RecyclerView.ViewHolder implements View.OnClickLis
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this.ctx, DotDetailActivity.class);
-
         Double distance = Math.random() * 5 ;
 
-        Log.d("arodr", "distanceView generated: " + distance) ;
+        if(this.experience != null){
+            intent.putExtra("creator", experience.getCreator()) ;
+            intent.putExtra("title", experience.getName());
+            intent.putExtra("description", experience.getDescription()) ;
+            intent.putExtra("latitude", String.format("%f", experience.getLatitude()));
+            intent.putExtra("longitude", String.format("%f", experience.getLongitude()));
+            intent.putExtra("distance", String.format("%2f", distance)) ;
+            intent.putExtra("rating", "5 stars"); //Note, this is grabbing it from the text on the list item
 
-        intent.putExtra("title", experience.getName());
-        intent.putExtra("description", experience.getDescription()) ;
-        intent.putExtra("latitude", String.format("%f", experience.getLatitude()));
-        intent.putExtra("longitude", String.format("%f", experience.getLongitude()));
-        intent.putExtra("distance", String.format("%2f", distance)) ;
-        intent.putExtra("rating", "5 stars"); //Note, this is grabbing it from the text on the list item
+            if(experience.getPictureIds().size() > 0){
+                String imageID = experience.getPictureIds().get(0) ;
+                intent.putExtra("pictureID", imageID) ;
+            }
 
-        if(experience.getPictureIds().size() > 0){
-            String imageID = experience.getPictureIds().get(0) ;
-            intent.putExtra("pictureID", imageID) ;
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.ctx.startActivity(intent);
         }
-
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        this.ctx.startActivity(intent);
     }
 }

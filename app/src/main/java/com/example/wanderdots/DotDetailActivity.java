@@ -21,7 +21,6 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
     private ImageButton mainImage ;
     private Double latitude ;
     private Double longitude ;
-    private ImageButton weatherBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +30,7 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
 
         this.imageGetter = new ImageGetter(this) ;
         this.mainImage = findViewById(R.id.DotDetailImage) ;
-        weatherBtn = findViewById(R.id.weatherButton);
+        ImageButton weatherBtn = findViewById(R.id.weatherButton);
 
         weatherBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,10 +44,12 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
         TextView distanceTxt = findViewById(R.id.dotDistance);
         TextView ratingTxt = findViewById(R.id.dotRating);
         TextView descriptionBox = findViewById(R.id.descriptionBox);
+        TextView creatorView = findViewById(R.id.creatorView) ;
 
         Intent intent = getIntent(); // See ListItem to get these fields
 
         String dotTitle = intent.getStringExtra("title") ;
+        String dotCreator = intent.getStringExtra("creator");
         String dotDescription = intent.getStringExtra("description") ;
         String dotDistance = intent.getStringExtra("distance") ;
         String dotRating = intent.getStringExtra("rating") ;
@@ -57,6 +58,7 @@ public class DotDetailActivity extends AppCompatActivity implements Observer, Vi
         this.longitude = Double.valueOf(intent.getStringExtra("longitude")) ;
 
         titleTxt.setText(dotTitle);
+        creatorView.setText("By " + dotCreator) ;
         distanceTxt.setText("Distance: " + dotDistance);
         ratingTxt.setText("Rating: " + dotRating);
         descriptionBox.setText(dotDescription) ;

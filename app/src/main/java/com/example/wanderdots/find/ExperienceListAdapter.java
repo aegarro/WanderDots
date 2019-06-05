@@ -29,22 +29,23 @@ public class ExperienceListAdapter<T extends Experience> extends RecyclerView.Ad
 
     @NonNull
     @Override
-    public ListItem onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ListItem onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dot_list_item, viewGroup, false);
-        return new ListItem(view, ctx, experienceList.get(i));
+        return new ListItem(view, ctx);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListItem viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ListItem listItem, int i) {
         //Displays the i'th element in the List
-        viewHolder.getTitleView().setText(experienceList.get(i).getName());
+        listItem.setExperience(experienceList.get(i)) ;
+        listItem.getTitleView().setText(experienceList.get(i).getName());
         if(currentPosition == null) {
-            viewHolder.getDistanceView().setText("0 mi");
+             listItem.getDistanceView().setText("0 mi");
         }
         else{
-            viewHolder.getDistanceView().setText(calculateDistance(experienceList.get(i), currentPosition));
+             listItem.getDistanceView().setText(calculateDistance(experienceList.get(i), currentPosition));
         }
-        viewHolder.getRatingsView().setText("5 Stars");
+         listItem.getRatingsView().setText("5 Stars");
     }
 
     @Override

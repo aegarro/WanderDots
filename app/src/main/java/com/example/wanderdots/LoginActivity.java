@@ -9,9 +9,12 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import wanderdots.User;
+
 public class LoginActivity extends AppCompatActivity implements Runnable, View.OnClickListener {
 
     private static final String TAG = "LoginActivity";
+    private static final User user = new User() ;
 
     private EditText emailText;
     private EditText passwordText;
@@ -44,9 +47,13 @@ public class LoginActivity extends AppCompatActivity implements Runnable, View.O
             onLoginFailed();
             return;
         }
-
+        user.setUsername(this.emailText.getText().toString()) ;
         loginButton.setEnabled(false);
         new android.os.Handler().postDelayed(this, 1000);
+    }
+
+    public static String getUsername(){
+        return user.getUsername() ;
     }
 
     //runs after delay has been achieved

@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.content.Intent;
 
+import com.example.wanderdots.LoginActivity;
 import com.example.wanderdots.R;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -244,21 +245,20 @@ public class NewDotActivity extends AppCompatActivity
     //Runs when form is being submitted
     public void onClick(View v){
 
-        Log.d("wanderdots", "About to create a Dot...") ;
-        //create
-        Dot dot = new Dot();
         final EditText name = findViewById(R.id.NameTextbox);
-        dot.setName(name.getText().toString());
-        dot.setCreator("Username");
         final EditText description = findViewById(R.id.DescriptionTextbox);
-        dot.setDescription(description.getText().toString());
-        //how to Get data from multi-select (shaheen)
-        dot.addCategory("Filler");
+        final EditText categories = findViewById(R.id.CategoriesTextbox) ;
 
-        for(String pictureID : this.pictureIds)
-            dot.addPictureId(pictureID);
+        Dot dot = new Dot();
+
+        dot.setName(name.getText().toString());
+        dot.setCreator(LoginActivity.getUsername());
+        dot.setDescription(description.getText().toString());
+        dot.addCategory(categories.getText().toString());
         dot.setLongitude(longitude);
         dot.setLatitude(latitude);
+        for(String pictureID : this.pictureIds)
+            dot.addPictureId(pictureID);
 
         this.dotPoster.postDot(dot) ;
     }
