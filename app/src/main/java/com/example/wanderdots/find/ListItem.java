@@ -54,6 +54,7 @@ public class ListItem extends RecyclerView.ViewHolder implements View.OnClickLis
         Double distance = Math.random() * 5 ;
 
         if(this.experience != null){
+            intent.putExtra("creator", experience.getCreator()) ;
             intent.putExtra("title", experience.getName());
             intent.putExtra("description", experience.getDescription()) ;
             intent.putExtra("latitude", String.format("%f", experience.getLatitude()));
