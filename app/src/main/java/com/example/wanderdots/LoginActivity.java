@@ -87,8 +87,8 @@ public class LoginActivity extends AppCompatActivity implements Runnable, View.O
             emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            passwordText.setError("enter password");
+        if (password.isEmpty() || password.length() < 5 || password.length() > 10) {
+            passwordText.setError("invalid password");
             valid = false;
         } else {
             passwordText.setError(null);
