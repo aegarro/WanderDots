@@ -124,15 +124,14 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     @Override
     public void onClick(View v) {
         Intent intent;
-        switch(v.getId()) {
-            case (R.id.new_dot_btn):
-                intent = new Intent(this.getApplicationContext(), NewDotActivity.class);
-                startActivityForResult(intent, CREATE_DOT_ACTIVITY_ID);
-                break;
-            case (R.id.profile_btn):
-                intent = new Intent(this, UserProfileActivity.class);
-                startActivityForResult(intent, VIEW_USER_PROFILE);
-                break;
+        int id = v.getId();
+        if (id == R.id.new_dot_btn) {
+            intent = new Intent(this.getApplicationContext(), NewDotActivity.class);
+            startActivityForResult(intent, CREATE_DOT_ACTIVITY_ID);
+        }
+        else { //id == R.id.profile_btn):
+            intent = new Intent(this, UserProfileActivity.class);
+            startActivityForResult(intent, VIEW_USER_PROFILE);
         }
     }
 
@@ -142,10 +141,6 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         if (requestCode == CREATE_DOT_ACTIVITY_ID && resultCode == RESULT_OK) {
             Dot.reload(); //checks for to include new Dot or Adventures
             Adventure.reload();
-        }
-
-        if(requestCode == VIEW_USER_PROFILE && resultCode == RESULT_OK){
-
         }
     }
 

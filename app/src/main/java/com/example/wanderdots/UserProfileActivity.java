@@ -1,10 +1,7 @@
 package com.example.wanderdots;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.TextView;
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -12,10 +9,5 @@ public class UserProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-    }
-
-    private void done(){
-        setResult(RESULT_OK);
-        finish() ;
     }
 }
