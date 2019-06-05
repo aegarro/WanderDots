@@ -16,9 +16,11 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.example.wanderdots.UserProfileActivity;
 import com.example.wanderdots.find.state.State;
 import com.example.wanderdots.find.state.AdventureState;
 import com.example.wanderdots.find.state.DotState;
@@ -42,6 +44,7 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         View.OnClickListener, CompoundButton.OnCheckedChangeListener, OnCompleteListener {
 
     private static final int CREATE_DOT_ACTIVITY_ID = 69 ;
+    private static final int VIEW_USER_PROFILE = 420 ;
     private static final String TAG = "MainActivity";
     private static final float DEFAULT_ZOOM = 11f;
 
@@ -59,6 +62,8 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     protected void onCreate(Bundle savedInstanceState) {
 
         FloatingActionButton newDotButton;
+        ImageButton profileButton;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.find_view);
         validateLocationPermission();
@@ -84,6 +89,9 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         //SET CREATEBUTTON HANDLER
         newDotButton = (FloatingActionButton) findViewById(R.id.new_dot_btn);
         newDotButton.setOnClickListener(this) ;
+
+        profileButton = (ImageButton) findViewById(R.id.profile_btn);
+        profileButton.setOnClickListener(this) ;
 
         //STATE
         Context context = getApplicationContext() ;
@@ -115,8 +123,17 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
     //Runs whenever the NEWDOTBUTTON has been clicked, begins NewDotActivity
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(this.getApplicationContext(), NewDotActivity.class);
-        startActivityForResult(intent, CREATE_DOT_ACTIVITY_ID);
+        Intent intent;
+        switch(v.getId()) {
+            case (R.id.new_dot_btn):
+                intent = new Intent(this.getApplicationContext(), NewDotActivity.class);
+                startActivityForResult(intent, CREATE_DOT_ACTIVITY_ID);
+                break;
+            case (R.id.profile_btn):
+                intent = new Intent(this, UserProfileActivity.class);
+                startActivityForResult(intent, VIEW_USER_PROFILE);
+                break;
+        }
     }
 
     @Override
@@ -125,6 +142,10 @@ public class FindExperiencesActivity extends AppCompatActivity implements OnMapR
         if (requestCode == CREATE_DOT_ACTIVITY_ID && resultCode == RESULT_OK) {
             Dot.reload(); //checks for to include new Dot or Adventures
             Adventure.reload();
+        }
+
+        if(requestCode == VIEW_USER_PROFILE && resultCode == RESULT_OK){
+
         }
     }
 

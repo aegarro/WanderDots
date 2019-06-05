@@ -25,6 +25,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".newdot.NewDotActivity" />
         <activity android:name=".DotDetailActivity" />
+        <activity android:name=".UserProfileActivity" />
         <activity
             android:name=".LoginActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

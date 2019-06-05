@@ -14,26 +14,20 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "arodr" ;
     private static final int LOGINID = 420 ;
 
-    private boolean loggedIn = false ;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState) ;
         setDefaultContext(getApplicationContext()) ;
         Log.d(TAG, "MainActivity: onCreate") ;
-        if(!loggedIn) {
-            Intent loginIntent = new Intent(this, LoginActivity.class) ;
-            startActivityForResult(loginIntent, LOGINID);
-        }else {
-            startFindExperiences();
-        }
+
+        Intent loginIntent = new Intent(this, LoginActivity.class) ;
+        startActivityForResult(loginIntent, LOGINID);
     }
 
     @Override
     //Runs after CreateDotActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == LOGINID && resultCode == RESULT_OK){
-            this.loggedIn = true ;
             startFindExperiences();
         }
     }

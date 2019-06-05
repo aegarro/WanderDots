@@ -3,31 +3,19 @@ package com.example.wanderdots;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 public class UserProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        TextView titleTxt;
-        TextView distanceTxt;
-        TextView ratingTxt;
-        TextView describeTxt;
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dot_detail);
+        setContentView(R.layout.activity_user_profile);
+    }
 
-
-        titleTxt = findViewById(R.id.dotTitle);
-        distanceTxt = findViewById(R.id.dotDistance);
-        ratingTxt = findViewById(R.id.dotRating);
-        describeTxt = findViewById(R.id.descriptionBox);
-
-        Intent intent = getIntent();
-        titleTxt.setText(intent.getStringExtra("title"));
-        distanceTxt.setText("Distance: " + intent.getStringExtra("distance"));
-        ratingTxt.setText("Rating: " + intent.getStringExtra("rating"));
-        describeTxt.setText("Description: ");
-
+    private void done(){
+        setResult(RESULT_OK);
+        finish() ;
     }
 }
